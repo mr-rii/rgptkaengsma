@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Latihan TKA Bahasa Inggris</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #eff6ff;
+            --secondary: #475569;
+            --bg-main: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --success: #16a34a;
+            --success-light: #f0fdf4;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            color: #ffffff;
+            padding: 32px 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        header p {
+            color: #94a3b8;
+            font-size: 1rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 32px auto;
+            padding: 0 16px;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin: 32px 0 16px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-left: 4px solid var(--primary);
+            padding-left: 12px;
+        }
+
+        .grid-menu {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .menu-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            min-height: 120px;
+            border-left: 4px solid var(--success);
+        }
+
+        .menu-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary);
+            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.1);
+            border-left-color: var(--primary);
+        }
+
+        .menu-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .menu-title {
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--text-main);
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            background: var(--success-light);
+            color: var(--success);
+        }
+
+        .menu-footer {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .credits {
+            text-align: center;
+            margin-top: 48px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 640px) {
+            .grid-menu {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>DASHBOARD LATIHAN SOAL TKA BAHASA INGGRIS</h1>
+    <p>_______________</p>
+</header>
+
+<div class="container">
+
+    <!-- Post Test 1 - 5 -->
+    <div class="section-title">Post Test Meeting (1 - 5)</div>
+    <div class="grid-menu">
+        <a href="post_test_meeting_1.htm" class="menu-card">
+            <div class="menu-card-header">
+                <span class="menu-title">Post Test 1</span>
+                <span class="badge">Tersedia</span>
+            </div>
+            <div class="menu-footer">Mulai Latihan &rarr;</div>
+        </a>
+
+        <a href="post_test_meeting_2.htm" class="menu-card">
+            <div class="menu-card-header">
+                <span class="menu-title">Post Test 2</span>
+                <span class="badge">Tersedia</span>
+            </div>
+            <div class="menu-footer">Mulai Latihan &rarr;</div>
+        </a>
+
+        <a href="post_test_meeting_3.htm" class="menu-card">
+            <div class="menu-card-header">
+                <span class="menu-title">Post Test 3</span>
+                <span class="badge">Tersedia</span>
+            </div>
+            <div class="menu-footer">Mulai Latihan &rarr;</div>
+        </a>
+
+        <a href="post_test_meeting_4.htm" class="menu-card">
+            <div class="menu-card-header">
+                <span class="menu-title">Post Test 4</span>
+                <span class="badge">Tersedia</span>
+            </div>
+            <div class="menu-footer">Mulai Latihan &rarr;</div>
+        </a>
+
+        <a href="post_test_meeting_5.htm" class="menu-card">
+            <div class="menu-card-header">
+                <span class="menu-title">Post Test 5</span>
+                <span class="badge">Tersedia</span>
+            </div>
+            <div class="menu-footer">Mulai Latihan &rarr;</div>
+        </a>
+    </div>
+
+    <!-- Special Drills -->
+    <div class="section-title">Special Drill Soal</div>
+    <div class="grid-menu">
+        <a href="drill_soal_explicit_and_implicit_information.htm" class="menu-card">
+            <div class="menu-card-header">
+                <span class="menu-title">Drill Soal Explicit & Implicit Information</span>
+                <span class="badge">Tersedia</span>
+            </div>
+            <div class="menu-footer">Mulai Latihan &rarr;</div>
+        </a>
+    </div>
+
+    <!-- Post Test 6 - 10 -->
+    <div class="section-title">Post Test Meeting (6 - 10)</div>
+    <div class="grid-menu">
+        <a href="post_test_meeting_6.htm" class="menu-card">
+            <div class="menu-card-header">
+                <span class="menu-title">Post Test 6</span>
+                <span class="badge">Tersedia</span>
+            </div>
+            <div class="menu-footer">Mulai Latihan &rarr;</div>
+        </a>
+
+        <a href="post_test_meeting_7.htm" class="menu-card">
+            <div class="menu-card-header">
+                <span class="menu-title">Post Test 7</span>
+                <span class="badge">Tersedia</span>
+            </div>
+            <div class="menu-footer">Mulai Latihan &rarr;</div>
+        </a>
+
+        <a href="post_test_meeting_8.htm" class="menu-card">
+            <div class="menu-card-header">
+                <span class="menu-title">Post Test 8</span>
+                <span class="badge">Tersedia</span>
+            </div>
+            <div class="menu-footer">Mulai Latihan &rarr;</div>
+        </a>
+
+        <a href="post_test_meeting_9.htm" class="menu-card">
+            <div class="menu-card-header">
+                <span class="menu-title">Post Test 9</span>
+                <span class="badge">Tersedia</span>
+            </div>
+            <div class="menu-footer">Mulai Latihan &rarr;</div>
+        </a>
+
+        <a href="post_test_meeting_10.htm" class="menu-card">
+            <div class="menu-card-header">
+                <span class="menu-title">Post Test 10</span>
+                <span class="badge">Tersedia</span>
+            </div>
+            <div class="menu-footer">Mulai Latihan &rarr;</div>
+        </a>
+    </div>
+
+    <!-- Drill Soal Campuran 1 - 5 -->
+    <div class="section-title">Drill Soal Campuran (1 - 5)</div>
+    <div class="grid-menu">
+        <a href="drill_soal_campuran_1.htm" class="menu-card">
+            <div class="menu-card-header">
+                <span class="menu-title">Drill Campuran 1</span>
+                <span class="badge">Tersedia</span>
+            </div>
+            <div class="menu-footer">Mulai Latihan &rarr;</div>
+        </a>
+
+        <a href="drill_soal_campuran_2.htm" class="menu-card">
+            <div class="menu-card-header">
+                <span class="menu-title">Drill Campuran 2</span>
+                <span class="badge">Tersedia</span>
+            </div>
+            <div class="menu-footer">Mulai Latihan &rarr;</div>
+        </a>
+
+        <a href="drill_soal_campuran_3.htm" class="menu-card">
+            <div class="menu-card-header">
+                <span class="menu-title">Drill Campuran 3</span>
+                <span class="badge">Tersedia</span>
+            </div>
+            <div class="menu-footer">Mulai Latihan &rarr;</div>
+        </a>
+
+        <a href="drill_soal_campuran_4.htm" class="menu-card">
+            <div class="menu-card-header">
+                <span class="menu-title">Drill Campuran 4</span>
+                <span class="badge">Tersedia</span>
+            </div>
+            <div class="menu-footer">Mulai Latihan &rarr;</div>
+        </a>
+
+        <a href="drill_soal_campuran_5.htm" class="menu-card">
+            <div class="menu-card-header">
+                <span class="menu-title">Drill Campuran 5</span>
+                <span class="badge">Tersedia</span>
+            </div>
+            <div class="menu-footer">Mulai Latihan &rarr;</div>
+        </a>
+    </div>
+
+    <!-- CREDITS SECTION -->
+    <div class="credits">
+        CREDITS: This website was created by Riosepriyatna, S.Pd., Gr. Do not copy, download, or distribute without prior permission.
+    </div>
+
+</div>
+
+</body>
+</html>

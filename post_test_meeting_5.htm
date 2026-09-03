@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Test Meeting 5</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #eff6ff;
+            --secondary: #475569;
+            --bg-main: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --success: #16a34a;
+            --success-light: #f0fdf4;
+            --error: #dc2626;
+            --error-light: #fef2f2;
+            --warning: #d97706;
+            --warning-light: #fffbeb;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            color: #ffffff;
+            padding: 24px 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            margin-bottom: 6px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        header p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 24px auto;
+            padding: 0 16px;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .progress-bar-bg {
+            flex: 1;
+            height: 10px;
+            background-color: #e2e8f0;
+            border-radius: 999px;
+            overflow: hidden;
+            min-width: 200px;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #2563eb);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        /* Section & Passage Card */
+        .section-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            margin-bottom: 32px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: #f1f5f9;
+            padding: 14px 24px;
+            border-bottom: 1px solid var(--border);
+            font-weight: 700;
+            color: #1e293b;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .passage-box {
+            padding: 24px;
+            background: #fafafa;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.95rem;
+            color: #334155;
+        }
+
+        .passage-box h2 {
+            font-size: 1.15rem;
+            color: #0f172a;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .passage-box p {
+            margin-bottom: 12px;
+            text-align: justify;
+        }
+
+        .passage-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Question Box */
+        .questions-container {
+            padding: 24px;
+        }
+
+        .question-card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+            transition: border-color 0.2s ease;
+        }
+
+        .question-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .question-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .badge-num {
+            background: var(--primary-light);
+            color: var(--primary);
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+        }
+
+        .badge-type {
+            background: #f1f5f9;
+            color: var(--secondary);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .question-text {
+            font-weight: 600;
+            color: var(--text-main);
+            font-size: 0.975rem;
+            margin-bottom: 16px;
+        }
+
+        /* Options */
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            background: #ffffff;
+            font-size: 0.925rem;
+        }
+
+        .option-item:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+        }
+
+        .option-item input[type="radio"],
+        .option-item input[type="checkbox"] {
+            margin-top: 3px;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        .option-label {
+            flex: 1;
+            cursor: pointer;
+        }
+
+        /* Categorization Table */
+        .cat-table-wrapper {
+            overflow-x: auto;
+            margin-top: 12px;
+        }
+
+        .cat-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+
+        .cat-table th {
+            background: #f1f5f9;
+            padding: 10px;
+            text-align: center;
+            border: 1px solid var(--border);
+            font-weight: 600;
+        }
+
+        .cat-table th:first-child {
+            text-align: left;
+            width: 55%;
+        }
+
+        .cat-table td {
+            padding: 10px;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .cat-table td:first-child {
+            text-align: left;
+        }
+
+        .cat-table input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        /* Explanation Box */
+        .explanation-box {
+            display: none;
+            margin-top: 16px;
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            background: #f8fafc;
+            border-left: 4px solid var(--primary);
+        }
+
+        .explanation-box.show {
+            display: block;
+        }
+
+        .explanation-header {
+            font-weight: 700;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .user-status {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            margin-bottom: 8px;
+        }
+
+        .status-correct {
+            background: var(--success-light);
+            color: var(--success);
+            border: 1px solid #bbf7d0;
+        }
+
+        .status-incorrect {
+            background: var(--error-light);
+            color: var(--error);
+            border: 1px solid #fecaca;
+        }
+
+        /* Submit Button */
+        .submit-container {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 700;
+            padding: 14px 40px;
+            border: none;
+            border-radius: 999px;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+            transition: all 0.2s ease;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.45);
+        }
+
+        /* Result Dashboard */
+        .result-dashboard {
+            display: none;
+            background: white;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            padding: 32px;
+            margin-bottom: 32px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+            text-align: center;
+        }
+
+        .result-dashboard.show {
+            display: block;
+        }
+
+        .score-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            color: var(--primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            border: 4px solid var(--primary);
+        }
+
+        .score-num {
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .score-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--secondary);
+            margin-top: 2px;
+        }
+
+        .result-stats {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            background: #f8fafc;
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            min-width: 140px;
+        }
+
+        .stat-val {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .stat-lbl {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .btn-reset {
+            background: #e2e8f0;
+            color: #334155;
+            font-weight: 600;
+            padding: 10px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.2s;
+        }
+
+        .btn-reset:hover {
+            background: #cbd5e1;
+        }
+
+        @media (max-width: 640px) {
+            .passage-box { padding: 16px; }
+            .questions-container { padding: 16px; }
+            .question-card { padding: 16px; }
+            .stat-card { flex: 1; min-width: 100px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Post Test Meeting 5</h1>
+    <p>_______________</p>
+</header>
+
+<div class="container">
+
+    <!-- Progress Tracker -->
+    <div class="progress-container">
+        <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="progressBar"></div>
+        </div>
+        <div class="progress-text" id="progressText">Terjawab: 0 / 6</div>
+    </div>
+
+    <!-- Result Dashboard (Hidden initially) -->
+    <div class="result-dashboard" id="resultDashboard">
+        <h2>Hasil Post Test Anda</h2>
+        <p style="color: var(--text-muted); margin-bottom: 20px;">Berikut adalah ringkasan performa pengerjaan soal Anda:</p>
+        
+        <div class="score-circle">
+            <div class="score-num" id="finalScoreNum">0</div>
+            <div class="score-label">NILAI AKHIR</div>
+        </div>
+
+        <div class="result-stats">
+            <div class="stat-card">
+                <div class="stat-val" id="statCorrect" style="color: var(--success);">0</div>
+                <div class="stat-lbl">Jawaban Benar</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-val" id="statIncorrect" style="color: var(--error);">0</div>
+                <div class="stat-lbl">Jawaban Salah</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-val" id="statAccuracy">0%</div>
+                <div class="stat-lbl">Akurasi Total</div>
+            </div>
+        </div>
+
+        <button class="btn-reset" onclick="resetQuiz()">Ulangi Latihan</button>
+    </div>
+
+    <!-- FORM QUIZ -->
+    <form id="quizForm">
+
+        <!-- TEXT 1 -->
+        <div class="section-card">
+            <div class="section-header">
+                <span>TEXT 1: NARRATIVE TEXT</span>
+                <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">Soal 1 - 2</span>
+            </div>
+            <div class="passage-box">
+                <h2>The Golden Tapestry</h2>
+                <p>Once in a small village, a talented young weaver named Maya spent months crafting an intricate silk tapestry for the king’s annual competition. She was ambitious and wanted nothing more than to win the royal scholarship. On the night before the deadline, Maya noticed that her elderly neighbor, Mr. Harrison, was struggling in his workshop. His eyesight was failing, and he was weeping because he could not finish a simple cotton blanket that he needed to sell to pay his monthly rent.</p>
+                <p>Knowing that stepping away from her loom meant she might not finish her own elaborate tapestry in time, Maya hesitated for only a second. She quietly walked into Mr. Harrison's shop, took over his loom, and worked tirelessly through the night to complete his blanket. By dawn, Mr. Harrison’s rent was secured, but Maya’s tapestry remained unfinished. When the royal judge arrived, he learned of Maya's action and awarded her the scholarship anyway, stating that true mastery lies not just in technical skill, but in the heart of the artisan.</p>
+            </div>
+
+            <div class="questions-container">
+                <!-- Q1 -->
+                <div class="question-card" id="qc-q1">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 1</span>
+                        <span class="badge-type">Personality Traits (Multiple Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        Based on her actions in the story, which adjectives best describe Maya's personality? <em>(Select all correct options!)</em>
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="checkbox" name="q1" value="A"><span class="option-label">A. Selfless</span></label>
+                        <label class="option-item"><input type="checkbox" name="q1" value="B"><span class="option-label">B. Arrogant</span></label>
+                        <label class="option-item"><input type="checkbox" name="q1" value="C"><span class="option-label">C. Compassionate</span></label>
+                        <label class="option-item"><input type="checkbox" name="q1" value="D"><span class="option-label">D. Determined</span></label>
+                        <label class="option-item"><input type="checkbox" name="q1" value="E"><span class="option-label">E. Deceptive</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q1"></div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="question-card" id="qc-q2">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 2</span>
+                        <span class="badge-type">Comparison (Categorizing)</span>
+                    </div>
+                    <div class="question-text">
+                        Based on the text, classify whether each statement applies to Maya, Mr. Harrison, or Both.
+                    </div>
+                    <div class="cat-table-wrapper">
+                        <table class="cat-table">
+                            <thead>
+                                <tr>
+                                    <th>Statement</th>
+                                    <th>Maya</th>
+                                    <th>Mr. Harrison</th>
+                                    <th>Both</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1. Worked on a weaving craft for the king's competition.</td>
+                                    <td><input type="radio" name="q2_1" value="Maya"></td>
+                                    <td><input type="radio" name="q2_1" value="Mr. Harrison"></td>
+                                    <td><input type="radio" name="q2_1" value="Both"></td>
+                                </tr>
+                                <tr>
+                                    <td>2. Faced a personal crisis on the night before the deadline.</td>
+                                    <td><input type="radio" name="q2_2" value="Maya"></td>
+                                    <td><input type="radio" name="q2_2" value="Mr. Harrison"></td>
+                                    <td><input type="radio" name="q2_2" value="Both"></td>
+                                </tr>
+                                <tr>
+                                    <td>3. Valued the well-being of others over personal success.</td>
+                                    <td><input type="radio" name="q2_3" value="Maya"></td>
+                                    <td><input type="radio" name="q2_3" value="Mr. Harrison"></td>
+                                    <td><input type="radio" name="q2_3" value="Both"></td>
+                                </tr>
+                                <tr>
+                                    <td>4. Needed to complete a woven item for financial reasons.</td>
+                                    <td><input type="radio" name="q2_4" value="Maya"></td>
+                                    <td><input type="radio" name="q2_4" value="Mr. Harrison"></td>
+                                    <td><input type="radio" name="q2_4" value="Both"></td>
+                                </tr>
+                                <tr>
+                                    <td>5. Showed dedication to their weaving craft.</td>
+                                    <td><input type="radio" name="q2_5" value="Maya"></td>
+                                    <td><input type="radio" name="q2_5" value="Mr. Harrison"></td>
+                                    <td><input type="radio" name="q2_5" value="Both"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="explanation-box" id="exp-q2"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TEXT 2 -->
+        <div class="section-card">
+            <div class="section-header">
+                <span>TEXT 2: RECOUNT TEXT</span>
+                <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">Soal 3 - 4</span>
+            </div>
+            <div class="passage-box">
+                <h2>A Lesson on the Mountain Trail</h2>
+                <p>Last month, my friends Ryan and Julian went hiking up Mount Papandayan. Julian was overly confident about his fitness. He packed a heavy backpack full of gadgets and rushed ahead on the trail without bothering to check the map or weather forecast. Ryan, on the other hand, checked the trail conditions beforehand, brought essential emergency gear, and maintained a steady, cautious pace throughout the hike.</p>
+                <p>Halfway up the mountain, a thick fog suddenly rolled in, reducing visibility to almost zero. Julian panicked when his phone battery died, leaving him lost and unable to use his digital map. Meanwhile, Ryan remained calm, pulled out his physical compass and map, and used his whistle to locate Julian. Thanks to Ryan's careful preparation and composed attitude, both of them made it safely back to the campsite shelter.</p>
+            </div>
+
+            <div class="questions-container">
+                <!-- Q3 -->
+                <div class="question-card" id="qc-q3">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 3</span>
+                        <span class="badge-type">Personality Traits (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        Based on his actions during the hike, Julian can best be described as...
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q3" value="A"><span class="option-label">A. Cautious and well-prepared</span></label>
+                        <label class="option-item"><input type="radio" name="q3" value="B"><span class="option-label">B. Overconfident and reckless</span></label>
+                        <label class="option-item"><input type="radio" name="q3" value="C"><span class="option-label">C. Cold-hearted and selfish</span></label>
+                        <label class="option-item"><input type="radio" name="q3" value="D"><span class="option-label">D. Pessimistic and hesitant</span></label>
+                        <label class="option-item"><input type="radio" name="q3" value="E"><span class="option-label">E. Humble and cooperative</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q3"></div>
+                </div>
+
+                <!-- Q4 -->
+                <div class="question-card" id="qc-q4">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 4</span>
+                        <span class="badge-type">Comparison (Multiple Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        How did Ryan’s approach to the hike differ from Julian’s? <em>(Select all correct options!)</em>
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="checkbox" name="q4" value="A"><span class="option-label">A. Ryan relied on physical tools, whereas Julian relied on digital devices.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q4" value="B"><span class="option-label">B. Ryan maintained a steady pace, while Julian rushed ahead without checking the map.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q4" value="C"><span class="option-label">C. Ryan panicked when the fog appeared, whereas Julian stayed completely calm.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q4" value="D"><span class="option-label">D. Ryan checked the weather and trail conditions before hiking, unlike Julian.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q4" value="E"><span class="option-label">E. Ryan abandoned Julian on the trail, while Julian stayed near the shelter.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q4"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TEXT 3 -->
+        <div class="section-card">
+            <div class="section-header">
+                <span>TEXT 3: RECOUNT TEXT</span>
+                <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">Soal 5 - 6</span>
+            </div>
+            <div class="passage-box">
+                <h2>Two Approaches to a Science Fair</h2>
+                <p>Last semester, my classmates Chloe and Leo were assigned to build individual robotics projects for the regional science fair. Chloe started her research on day one, setting up a detailed daily schedule and consulting with the physics teacher whenever she encountered an error. When her circuit board failed a week before the deadline, she calmly troubleshot the problem until it worked perfectly.</p>
+                <p>On the other hand, Leo put off his work until three days before the exhibition. He tried to build a complex flying drone using cheap parts without reading the instruction manual carefully. When his drone crashed during his first test flight, he blamed the instructions, got frustrated, and gave up entirely, leaving his display booth empty on the day of the fair.</p>
+            </div>
+
+            <div class="questions-container">
+                <!-- Q5 -->
+                <div class="question-card" id="qc-q5">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 5</span>
+                        <span class="badge-type">Comparison (Categorizing)</span>
+                    </div>
+                    <div class="question-text">
+                        Categorize whether each personality trait or behavior describes Chloe or Leo based on their actions in the text.
+                    </div>
+                    <div class="cat-table-wrapper">
+                        <table class="cat-table">
+                            <thead>
+                                <tr>
+                                    <th>Personality Trait / Behavior</th>
+                                    <th>Chloe</th>
+                                    <th>Leo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1. Disciplined and organized in managing time</td>
+                                    <td><input type="radio" name="q5_1" value="Chloe"></td>
+                                    <td><input type="radio" name="q5_1" value="Leo"></td>
+                                </tr>
+                                <tr>
+                                    <td>2. Hot-tempered and easily frustrated by failure</td>
+                                    <td><input type="radio" name="q5_2" value="Chloe"></td>
+                                    <td><input type="radio" name="q5_2" value="Leo"></td>
+                                </tr>
+                                <tr>
+                                    <td>3. Resourceful and willing to seek guidance</td>
+                                    <td><input type="radio" name="q5_3" value="Chloe"></td>
+                                    <td><input type="radio" name="q5_3" value="Leo"></td>
+                                </tr>
+                                <tr>
+                                    <td>4. Careless and prone to procrastination</td>
+                                    <td><input type="radio" name="q5_4" value="Chloe"></td>
+                                    <td><input type="radio" name="q5_4" value="Leo"></td>
+                                </tr>
+                                <tr>
+                                    <td>5. Persistent when facing technical difficulties</td>
+                                    <td><input type="radio" name="q5_5" value="Chloe"></td>
+                                    <td><input type="radio" name="q5_5" value="Leo"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="explanation-box" id="exp-q5"></div>
+                </div>
+
+                <!-- Q6 -->
+                <div class="question-card" id="qc-q6">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 6</span>
+                        <span class="badge-type">Comparison (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        What is the main difference between Chloe's and Leo's outcomes in the science fair?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q6" value="A"><span class="option-label">A. Chloe built a flying drone, while Leo built a circuit board.</span></label>
+                        <label class="option-item"><input type="radio" name="q6" value="B"><span class="option-label">B. Chloe presented a working project, whereas Leo had an empty display booth.</span></label>
+                        <label class="option-item"><input type="radio" name="q6" value="C"><span class="option-label">C. Chloe failed because she started too early, while Leo succeeded at the last minute.</span></label>
+                        <label class="option-item"><input type="radio" name="q6" value="D"><span class="option-label">D. Chloe spent more money on parts, whereas Leo used high-quality materials.</span></label>
+                        <label class="option-item"><input type="radio" name="q6" value="E"><span class="option-label">E. Chloe gave up after her project crashed, while Leo consulted the physics teacher.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q6"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SUBMIT BUTTON -->
+        <div class="submit-container">
+            <button type="button" class="btn-submit" id="submitBtn" onclick="gradeQuiz()">Selesai & Lihat Hasil</button>
+        </div>
+
+    </form>
+</div>
+
+<script>
+    /* =========================================
+       QUIZ GRADING & PROGRESS LOGIC 
+       ========================================= */
+    const answerKey = {
+        q1: { type: 'multiple', key: ['A', 'C', 'D'], exp: '<b>Kunci Jawaban: A, C, dan D</b><br><b>Pembahasan:</b><br>• <b>A (Selfless) & C (Compassionate):</b> Maya mengorbankan proyek pribadinya demi membantu Mr. Harrison yang kesulitan bayar sewa.<br>• <b>D (Determined):</b> Maya tekun bekerja berbulan-bulan dan rela bergadang semalaman untuk menyelesaikan rajutan selimut.<br><i>Pilihan B (Arrogant) & E (Deceptive) salah karena tidak sesuai dengan sikap Maya dalam cerita.</i>' },
+        q2: { type: 'cat', key: { q2_1: 'Maya', q2_2: 'Mr. Harrison', q2_3: 'Maya', q2_4: 'Mr. Harrison', q2_5: 'Both' }, exp: '<b>Kunci Jawaban: 1. Maya | 2. Mr. Harrison | 3. Maya | 4. Mr. Harrison | 5. Both</b><br><b>Pembahasan:</b><br>1. <b>Maya:</b> Membuat rajutan sutra rumit untuk kompetisi raja.<br>2. <b>Mr. Harrison:</b> Mengalami krisis (penglihatan buram & terancam tak bisa bayar sewa) menjelang deadline.<br>3. <b>Maya:</b> Mendahulukan keselamatan/kebutuhan orang lain daripada kompetisi pribadi.<br>4. <b>Mr. Harrison:</b> Perlu menjual selimut untuk membayar sewa rumah harian.<br>5. <b>Both:</b> Keduanya menunjukkan dedikasi tinggi pada seni tenun.' },
+
+        q3: { type: 'single', key: 'B', exp: '<b>Kunci Jawaban: B</b><br><b>Pembahasan:</b> Julian bergerak terburu-buru tanpa mengecek peta atau prakiraan cuaca (<i>reckless</i>) serta merasa terlalu percaya diri dengan kemampuan fisiknya (<i>overconfident</i>).' },
+        q4: { type: 'multiple', key: ['A', 'B', 'D'], exp: '<b>Kunci Jawaban: A, B, dan D</b><br><b>Pembahasan:</b><br>• <b>A:</b> Ryan mengandalkan kompas & peta fisik, sedangkan Julian bergantung penuh pada gadget/digital.<br>• <b>B:</b> Ryan menjaga kecepatan langkah yang stabil, sedangkan Julian terburu-buru tanpa melihat peta.<br>• <b>D:</b> Ryan mengecek kondisi jalur & cuaca sebelum mendaki.<br><i>Opsi C & E salah karena bertolak belakang dengan isi teks.</i>' },
+
+        q5: { type: 'cat', key: { q5_1: 'Chloe', q5_2: 'Leo', q5_3: 'Chloe', q5_4: 'Leo', q5_5: 'Chloe' }, exp: '<b>Kunci Jawaban: 1. Chloe | 2. Leo | 3. Chloe | 4. Leo | 5. Chloe</b><br><b>Pembahasan:</b><br>1. <b>Chloe:</b> Disiplin menyusun jadwal harian sejak hari pertama.<br>2. <b>Leo:</b> Mudah marah dan menyalahkan petunjuk saat alatnya hancur.<br>3. <b>Chloe:</b> Aktif bertanya dan berkonsultasi dengan guru fisika.<br>4. <b>Leo:</b> Ceroboh dan menunda-nunda pekerjaan hingga H-3 (<i>procrastination</i>).<br>5. <b>Chloe:</b> Gigih memperbaiki kerusakan sirkuit hingga berfungsi sempurna.' },
+        q6: { type: 'single', key: 'B', exp: '<b>Kunci Jawaban: B</b><br><b>Pembahasan:</b> Chloe berhasil menampilkan karya robotik yang berfungsi dengan baik (<i>working project</i>), sedangkan bilik pameran (<i>display booth</i>) Leo kosong karena ia menyerah setelah robotnya hancur.' }
+    };
+
+    function updateProgress() {
+        let answeredCount = 0;
+        for (let i = 1; i <= 6; i++) {
+            let qKey = 'q' + i;
+            let qData = answerKey[qKey];
+            if (qData.type === 'cat') {
+                let subKeys = Object.keys(qData.key);
+                let allSubAnswered = subKeys.every(sKey => document.querySelector(`input[name="${sKey}"]:checked`));
+                if (allSubAnswered) answeredCount++;
+            } else {
+                let checked = document.querySelectorAll(`input[name="${qKey}"]:checked`);
+                if (checked.length > 0) answeredCount++;
+            }
+        }
+        let percent = (answeredCount / 6) * 100;
+        document.getElementById('progressBar').style.width = percent + '%';
+        document.getElementById('progressText').innerText = `Terjawab: ${answeredCount} / 6`;
+    }
+
+    document.querySelectorAll('input').forEach(input => {
+        input.addEventListener('change', updateProgress);
+    });
+
+    function gradeQuiz() {
+        let correctCount = 0;
+        let incorrectCount = 0;
+
+        for (let i = 1; i <= 6; i++) {
+            let qKey = 'q' + i;
+            let qData = answerKey[qKey];
+            let expBox = document.getElementById('exp-q' + i);
+            let isCorrect = false;
+            let userAnsText = '';
+
+            if (qData.type === 'single') {
+                let selected = document.querySelector(`input[name="${qKey}"]:checked`);
+                let userVal = selected ? selected.value : null;
+                userAnsText = userVal ? `Jawaban Anda: ${userVal}` : 'Jawaban Anda: (Belum diisi)';
+                if (userVal === qData.key) isCorrect = true;
+            } else if (qData.type === 'multiple') {
+                let selected = Array.from(document.querySelectorAll(`input[name="${qKey}"]:checked`)).map(cb => cb.value);
+                userAnsText = selected.length > 0 ? `Jawaban Anda: ${selected.join(', ')}` : 'Jawaban Anda: (Belum diisi)';
+                if (selected.length === qData.key.length && selected.every(val => qData.key.includes(val))) {
+                    isCorrect = true;
+                }
+            } else if (qData.type === 'cat') {
+                let subKeys = Object.keys(qData.key);
+                let catCorrectCount = 0;
+                let userSubAns = [];
+                subKeys.forEach(sKey => {
+                    let sel = document.querySelector(`input[name="${sKey}"]:checked`);
+                    let val = sel ? sel.value : '-';
+                    userSubAns.push(val);
+                    if (val === qData.key[sKey]) catCorrectCount++;
+                });
+                userAnsText = `Jawaban Anda: [ ${userSubAns.join(', ')} ]`;
+                if (catCorrectCount === subKeys.length) isCorrect = true;
+            }
+
+            let statusBadge = isCorrect 
+                ? `<span class="user-status status-correct">&#10004; BENAR</span>`
+                : `<span class="user-status status-incorrect">&#10008; SALAH</span>`;
+
+            expBox.innerHTML = `
+                <div class="explanation-header">${statusBadge} <span style="font-size:0.85rem; color:var(--text-muted);">${userAnsText}</span></div>
+                <div>${qData.exp}</div>
+            `;
+            expBox.classList.add('show');
+
+            if (isCorrect) correctCount++;
+            else incorrectCount++;
+        }
+
+        let finalScore = Math.round((correctCount / 6) * 100);
+        document.getElementById('finalScoreNum').innerText = finalScore;
+        document.getElementById('statCorrect').innerText = correctCount;
+        document.getElementById('statIncorrect').innerText = incorrectCount;
+        document.getElementById('statAccuracy').innerText = finalScore + '%';
+        
+        let dashboard = document.getElementById('resultDashboard');
+        dashboard.classList.add('show');
+        dashboard.scrollIntoView({ behavior: 'smooth' });
+
+        let submitBtn = document.getElementById('submitBtn');
+        submitBtn.innerText = 'Hasil Telah Ditampilkan';
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = '0.6';
+        submitBtn.style.cursor = 'not-allowed';
+    }
+
+    function resetQuiz() {
+        if (confirm("Apakah Anda yakin ingin mengulang Latihan dari awal? Semua jawaban akan direset.")) {
+            document.getElementById('quizForm').reset();
+            document.querySelectorAll('.explanation-box').forEach(box => {
+                box.classList.remove('show');
+                box.innerHTML = '';
+            });
+            document.getElementById('resultDashboard').classList.remove('show');
+            let submitBtn = document.getElementById('submitBtn');
+            submitBtn.innerText = 'Selesai & Lihat Hasil';
+            submitBtn.disabled = false;
+            submitBtn.style.opacity = '1';
+            submitBtn.style.cursor = 'pointer';
+            updateProgress();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    }
+</script>
+
+</body>
+</html>

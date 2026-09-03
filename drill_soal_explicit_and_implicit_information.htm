@@ -1,0 +1,1492 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drill Soal Explicit & Implicit Information</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #eff6ff;
+            --secondary: #475569;
+            --bg-main: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --success: #16a34a;
+            --success-light: #f0fdf4;
+            --error: #dc2626;
+            --error-light: #fef2f2;
+            --warning: #d97706;
+            --warning-light: #fffbeb;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            color: #ffffff;
+            padding: 24px 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            margin-bottom: 6px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        header p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 24px auto;
+            padding: 0 16px;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .progress-bar-bg {
+            flex: 1;
+            height: 10px;
+            background-color: #e2e8f0;
+            border-radius: 999px;
+            overflow: hidden;
+            min-width: 200px;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #2563eb);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        /* Section & Passage Card */
+        .section-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            margin-bottom: 32px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: #f1f5f9;
+            padding: 14px 24px;
+            border-bottom: 1px solid var(--border);
+            font-weight: 700;
+            color: #1e293b;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .passage-box {
+            padding: 24px;
+            background: #fafafa;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.95rem;
+            color: #334155;
+        }
+
+        .passage-box h2 {
+            font-size: 1.15rem;
+            color: #0f172a;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .passage-box p {
+            margin-bottom: 12px;
+            text-align: justify;
+        }
+
+        .passage-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Data Table inside Passage */
+        .passage-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 0.875rem;
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .passage-table th {
+            background: #e2e8f0;
+            color: #1e293b;
+            padding: 10px 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .passage-table td {
+            padding: 10px 12px;
+            border-top: 1px solid var(--border);
+        }
+
+        /* Question Box */
+        .questions-container {
+            padding: 24px;
+        }
+
+        .question-card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+            transition: border-color 0.2s ease;
+        }
+
+        .question-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .question-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .badge-num {
+            background: var(--primary-light);
+            color: var(--primary);
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+        }
+
+        .badge-type {
+            background: #f1f5f9;
+            color: var(--secondary);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .question-text {
+            font-weight: 600;
+            color: var(--text-main);
+            font-size: 0.975rem;
+            margin-bottom: 16px;
+        }
+
+        /* Options */
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            background: #ffffff;
+            font-size: 0.925rem;
+        }
+
+        .option-item:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+        }
+
+        .option-item input[type="radio"],
+        .option-item input[type="checkbox"] {
+            margin-top: 3px;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        .option-label {
+            flex: 1;
+            cursor: pointer;
+        }
+
+        /* Categorization Table */
+        .cat-table-wrapper {
+            overflow-x: auto;
+            margin-top: 12px;
+        }
+
+        .cat-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+
+        .cat-table th {
+            background: #f1f5f9;
+            padding: 10px;
+            text-align: center;
+            border: 1px solid var(--border);
+            font-weight: 600;
+        }
+
+        .cat-table th:first-child {
+            text-align: left;
+            width: 55%;
+        }
+
+        .cat-table td {
+            padding: 10px;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .cat-table td:first-child {
+            text-align: left;
+        }
+
+        .cat-table input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        /* Explanation Box */
+        .explanation-box {
+            display: none;
+            margin-top: 16px;
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            background: #f8fafc;
+            border-left: 4px solid var(--primary);
+        }
+
+        .explanation-box.show {
+            display: block;
+        }
+
+        .explanation-header {
+            font-weight: 700;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .user-status {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            margin-bottom: 8px;
+        }
+
+        .status-correct {
+            background: var(--success-light);
+            color: var(--success);
+            border: 1px solid #bbf7d0;
+        }
+
+        .status-incorrect {
+            background: var(--error-light);
+            color: var(--error);
+            border: 1px solid #fecaca;
+        }
+
+        /* Submit Button */
+        .submit-container {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 700;
+            padding: 14px 40px;
+            border: none;
+            border-radius: 999px;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+            transition: all 0.2s ease;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.45);
+        }
+
+        /* Result Dashboard */
+        .result-dashboard {
+            display: none;
+            background: white;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            padding: 32px;
+            margin-bottom: 32px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+            text-align: center;
+        }
+
+        .result-dashboard.show {
+            display: block;
+        }
+
+        .score-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            color: var(--primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            border: 4px solid var(--primary);
+        }
+
+        .score-num {
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .score-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--secondary);
+            margin-top: 2px;
+        }
+
+        .result-stats {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            background: #f8fafc;
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            min-width: 140px;
+        }
+
+        .stat-val {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .stat-lbl {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .btn-reset {
+            background: #e2e8f0;
+            color: #334155;
+            font-weight: 600;
+            padding: 10px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.2s;
+        }
+
+        .btn-reset:hover {
+            background: #cbd5e1;
+        }
+
+        /* --- NEW: TOOLTIP TRANSLATION STYLES --- */
+        .hoverable-word {
+            cursor: pointer;
+            border-bottom: 1px dashed #94a3b8;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .hoverable-word:hover {
+            background-color: #fef08a; /* Soft Yellow Highlight */
+            color: #0f172a;
+            border-bottom: 1px solid #d97706;
+        }
+
+        #wordTooltip {
+            position: absolute;
+            background-color: #1e293b;
+            color: #f8fafc;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            pointer-events: none;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 9999;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transform: translateY(-5px) translateX(-50%);
+            white-space: nowrap;
+            letter-spacing: 0.3px;
+        }
+
+        #wordTooltip.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) translateX(-50%);
+        }
+
+        /* Tooltip Arrow */
+        #wordTooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #1e293b transparent transparent transparent;
+        }
+
+        @media (max-width: 640px) {
+            .passage-box { padding: 16px; }
+            .questions-container { padding: 16px; }
+            .question-card { padding: 16px; }
+            .stat-card { flex: 1; min-width: 100px; }
+            
+            /* Make tooltip slightly larger on mobile for readability */
+            #wordTooltip {
+                font-size: 0.95rem;
+                padding: 8px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Drill Soal Explicit and Implicit Information</h1>
+    <p>_______________</p>
+</header>
+
+<div class="container">
+
+    <!-- Progress Tracker -->
+    <div class="progress-container">
+        <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="progressBar"></div>
+        </div>
+        <div class="progress-text" id="progressText">Terjawab: 0 / 20</div>
+    </div>
+
+    <!-- Result Dashboard (Hidden initially) -->
+    <div class="result-dashboard" id="resultDashboard">
+        <h2>Hasil Drill Soal Explicit & Implicit Information Anda</h2>
+        <p style="color: var(--text-muted); margin-bottom: 20px;">Berikut adalah ringkasan performa pengerjaan soal Anda:</p>
+        
+        <div class="score-circle">
+            <div class="score-num" id="finalScoreNum">0</div>
+            <div class="score-label">NILAI AKHIR</div>
+        </div>
+
+        <div class="result-stats">
+            <div class="stat-card">
+                <div class="stat-val" id="statCorrect" style="color: var(--success);">0</div>
+                <div class="stat-lbl">Jawaban Benar</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-val" id="statIncorrect" style="color: var(--error);">0</div>
+                <div class="stat-lbl">Jawaban Salah</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-val" id="statAccuracy">0%</div>
+                <div class="stat-lbl">Akurasi Total</div>
+            </div>
+        </div>
+
+        <button class="btn-reset" onclick="resetQuiz()">Ulangi Drill Soal</button>
+    </div>
+
+    <!-- FORM QUIZ -->
+    <form id="quizForm">
+
+        <!-- TEXT 1 -->
+        <div class="section-card">
+            <div class="section-header">
+                <span>TEXT 1: DESCRIPTIVE TEXT</span>
+                <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">Soal 1 - 4</span>
+            </div>
+            <div class="passage-box">
+                <h2>James Webb Space Telescope: A New Eye on the Universe</h2>
+                <p>The James Webb Space Telescope (JWST) is the most powerful space observatory ever built by human engineering. Positioned nearly 1.5 million kilometers away from Earth, it serves as a massive cosmic eye, allowing scientists to look deeper into the history of our universe than ever before. Unlike older telescopes, JWST is specifically designed to detect infrared light, which enables it to peer through dense clouds of interstellar dust and gas.</p>
+                <p>JWST consists of several key components that make its deep-space mission possible. Its primary structure features a gigantic gold-coated primary mirror made of 18 hexagonal segments, spanning 6.5 meters across. This mirror gathers faint light from the earliest stars and galaxies formed over 13 billion years ago. Beneath the mirror lies a tennis-court-sized sunshield made of five ultra-thin layers of Kapton material. This shield acts as a thermal barrier, blocking heat from the Sun, Earth, and Moon to keep the telescope’s instruments at an extremely cold operating temperature of below -220°C.</p>
+                <p>Looking ahead, astronomers plan to use JWST's highly sensitive spectroscopy tools to analyze the atmospheric compositions of distant exoplanets. By analyzing light passing through the atmospheres of planets orbiting other stars, scientists hope to detect chemical signatures like water vapor, carbon dioxide, and methane, which could indicate conditions suitable for extraterrestrial life.</p>
+            </div>
+
+            <div class="questions-container">
+                <!-- Q1 -->
+                <div class="question-card" id="qc-q1">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 1</span>
+                        <span class="badge-type">Outline (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        Look at the following structural outline of the text:<br>
+                        1. Introduction to JWST as the most powerful space observatory<br>
+                        2. <strong>[ . . . ]</strong><br>
+                        3. Future applications in searching for chemical signatures on exoplanets<br><br>
+                        Which option best fills in the blank for point 2?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q1" value="A"><span class="option-label">A. Detailed comparison between Hubble's visible light capabilities and JWST's infrared sensors</span></label>
+                        <label class="option-item"><input type="radio" name="q1" value="B"><span class="option-label">B. The structural components of JWST, including its primary mirror and sunshield</span></label>
+                        <label class="option-item"><input type="radio" name="q1" value="C"><span class="option-label">C. The historical background of international space agencies collaborating on the project</span></label>
+                        <label class="option-item"><input type="radio" name="q1" value="D"><span class="option-label">D. Step-by-step procedures for launching the sunshield into deep space</span></label>
+                        <label class="option-item"><input type="radio" name="q1" value="E"><span class="option-label">E. The financial budget required to build and maintain the observatory in orbit</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q1"></div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="question-card" id="qc-q2">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 2</span>
+                        <span class="badge-type">Specific Information (Multiple Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        According to paragraph 2, which statements accurately describe the physical features of the James Webb Space Telescope? <em>(Select all correct answers)</em>
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="checkbox" name="q2" value="A"><span class="option-label">A. Its primary mirror is made of 18 hexagonal gold-coated segments.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q2" value="B"><span class="option-label">B. The telescope operates at temperatures exceeding room temperature to detect infrared light.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q2" value="C"><span class="option-label">C. The sunshield consists of five ultra-thin layers of Kapton material.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q2" value="D"><span class="option-label">D. The primary mirror has a total width spanning 1.5 million kilometers.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q2" value="E"><span class="option-label">E. The sunshield functions to block heat from the Sun, Earth, and Moon.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q2"></div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="question-card" id="qc-q3">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 3</span>
+                        <span class="badge-type">Main Idea (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        What is the main idea of paragraph 1?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q3" value="A"><span class="option-label">A. JWST uses visible light to produce colorful images of nearby planets.</span></label>
+                        <label class="option-item"><input type="radio" name="q3" value="B"><span class="option-label">B. JWST is a powerful space observatory designed to detect infrared light and peer deep into the universe.</span></label>
+                        <label class="option-item"><input type="radio" name="q3" value="C"><span class="option-label">C. Infrared light is the only type of radiation existing in interstellar dust clouds.</span></label>
+                        <label class="option-item"><input type="radio" name="q3" value="D"><span class="option-label">D. Scientists built JWST mainly to replace all ground-based telescopes on Earth.</span></label>
+                        <label class="option-item"><input type="radio" name="q3" value="E"><span class="option-label">E. Earth's atmosphere prevents telescopes from operating closer than 1.5 million kilometers away.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q3"></div>
+                </div>
+
+                <!-- Q4 -->
+                <div class="question-card" id="qc-q4">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 4</span>
+                        <span class="badge-type">Following Paragraph (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        The paragraph following the passage will most likely discuss...
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q4" value="A"><span class="option-label">A. The detailed chemical breakdown and detection results from specific exoplanet atmospheres studied by JWST.</span></label>
+                        <label class="option-item"><input type="radio" name="q4" value="B"><span class="option-label">B. The structural engineering breakdown of how the telescope's mirror was manufactured on Earth.</span></label>
+                        <label class="option-item"><input type="radio" name="q4" value="C"><span class="option-label">C. A biographical summary of the astronomer James Webb and his early career in aviation.</span></label>
+                        <label class="option-item"><input type="radio" name="q4" value="D"><span class="option-label">D. The history of ancient stargazing tools used before modern space telescopes were invented.</span></label>
+                        <label class="option-item"><input type="radio" name="q4" value="E"><span class="option-label">E. A list of commercial satellite companies offering space tourism trips to low Earth orbit.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q4"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TEXT 2 -->
+        <div class="section-card">
+            <div class="section-header">
+                <span>TEXT 2: RECOUNT TEXT</span>
+                <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">Soal 5 - 8</span>
+            </div>
+            <div class="passage-box">
+                <h2>The Discovery of Penicillin</h2>
+                <p>In September 1928, Scottish scientist Alexander Fleming returned to his laboratory at St. Mary's Hospital in London after a long family holiday. Before leaving, he had accidentally left several culture dishes of <em>Staphylococcus</em> bacteria on his lab bench. Upon returning, Fleming began inspecting the dirty dishes to clean them.</p>
+                <p>While examining the culture plates, he noticed something unusual on one dish. A spot of blue-green mold had grown, and the colony of bacteria immediately surrounding the mold had been completely destroyed. Intrigued, Fleming isolated the mold and identified it as belonging to the <em>Penicillium</em> genus. He discovered that the mold produced a natural substance that inhibited bacterial growth, which he officially named "penicillin."</p>
+                <p>Although Fleming published his groundbreaking findings in 1929, he struggled to produce large, stable quantities of penicillin for medical treatments. A decade later, a team of researchers at Oxford University, led by Howard Florey and Ernst Chain, took up the challenge. They successfully purified penicillin and developed mass-production techniques, turning the substance into a life-saving antibiotic during World War II.</p>
+            </div>
+
+            <div class="questions-container">
+                <!-- Q5 -->
+                <div class="question-card" id="qc-q5">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 5</span>
+                        <span class="badge-type">Summary (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        Which statement is the best summary of the text?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q5" value="A"><span class="option-label">A. Alexander Fleming invented synthetic bacteria in 1928 to help soldiers during World War II.</span></label>
+                        <label class="option-item"><input type="radio" name="q5" value="B"><span class="option-label">B. Howard Florey and Ernst Chain stole Alexander Fleming's dirty lab dishes to claim discovery of penicillin.</span></label>
+                        <label class="option-item"><input type="radio" name="q5" value="C"><span class="option-label">C. Alexander Fleming accidentally discovered penicillin from mold, which was later purified by Oxford researchers into a mass-produced antibiotic.</span></label>
+                        <label class="option-item"><input type="radio" name="q5" value="D"><span class="option-label">D. Bacterial infections were completely untreatable in London until scientists built modern clean laboratories in 1929.</span></label>
+                        <label class="option-item"><input type="radio" name="q5" value="E"><span class="option-label">E. Scottish laboratories are famous for leaving culture dishes dirty to create new types of blue-green molds.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q5"></div>
+                </div>
+
+                <!-- Q6 -->
+                <div class="question-card" id="qc-q6">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 6</span>
+                        <span class="badge-type">Classify (Categorizing)</span>
+                    </div>
+                    <div class="question-text">
+                        Based on the text, classify whether each event or milestone is associated with <strong>Alexander Fleming</strong> or <strong>The Oxford Team (Florey & Chain)</strong>.
+                    </div>
+                    <div class="cat-table-wrapper">
+                        <table class="cat-table">
+                            <thead>
+                                <tr>
+                                    <th>Event / Milestone</th>
+                                    <th>Alexander Fleming</th>
+                                    <th>The Oxford Team</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1. Observed destroyed bacteria around mold after returning from holiday</td>
+                                    <td><input type="radio" name="q6_1" value="Fleming"></td>
+                                    <td><input type="radio" name="q6_1" value="Oxford"></td>
+                                </tr>
+                                <tr>
+                                    <td>2. Named the antibacterial mold substance "penicillin"</td>
+                                    <td><input type="radio" name="q6_2" value="Fleming"></td>
+                                    <td><input type="radio" name="q6_2" value="Oxford"></td>
+                                </tr>
+                                <tr>
+                                    <td>3. Published the initial discovery findings in 1929</td>
+                                    <td><input type="radio" name="q6_3" value="Fleming"></td>
+                                    <td><input type="radio" name="q6_3" value="Oxford"></td>
+                                </tr>
+                                <tr>
+                                    <td>4. Successfully purified penicillin for stable medical use</td>
+                                    <td><input type="radio" name="q6_4" value="Fleming"></td>
+                                    <td><input type="radio" name="q6_4" value="Oxford"></td>
+                                </tr>
+                                <tr>
+                                    <td>5. Developed mass-production techniques for World War II</td>
+                                    <td><input type="radio" name="q6_5" value="Fleming"></td>
+                                    <td><input type="radio" name="q6_5" value="Oxford"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="explanation-box" id="exp-q6"></div>
+                </div>
+
+                <!-- Q7 -->
+                <div class="question-card" id="qc-q7">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 7</span>
+                        <span class="badge-type">Purpose (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        What is the primary purpose of the author in writing the text?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q7" value="A"><span class="option-label">A. To persuade readers to maintain strict cleanliness standards in modern biological laboratories.</span></label>
+                        <label class="option-item"><input type="radio" name="q7" value="B"><span class="option-label">B. To retell the historical sequence of events leading to the discovery and development of penicillin.</span></label>
+                        <label class="option-item"><input type="radio" name="q7" value="C"><span class="option-label">C. To explain the step-by-step chemical reaction occurring between mold spores and human blood cells.</span></label>
+                        <label class="option-item"><input type="radio" name="q7" value="D"><span class="option-label">D. To argue that Alexander Fleming should have received all credit without help from Oxford researchers.</span></label>
+                        <label class="option-item"><input type="radio" name="q7" value="E"><span class="option-label">E. To describe the physical microscopic appearance of Staphylococcus bacteria strains.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q7"></div>
+                </div>
+
+                <!-- Q8 -->
+                <div class="question-card" id="qc-q8">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 8</span>
+                        <span class="badge-type">Comparison (Categorizing)</span>
+                    </div>
+                    <div class="question-text">
+                        Based on the text, classify whether each statement represents a <strong>Similarity</strong> or a <strong>Difference</strong> between the work of Alexander Fleming and the Oxford Team.
+                    </div>
+                    <div class="cat-table-wrapper">
+                        <table class="cat-table">
+                            <thead>
+                                <tr>
+                                    <th>Statement</th>
+                                    <th>Similarity</th>
+                                    <th>Difference</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1. Both focused their research efforts on the therapeutic capabilities of Penicillium mold.</td>
+                                    <td><input type="radio" name="q8_1" value="Similarity"></td>
+                                    <td><input type="radio" name="q8_1" value="Difference"></td>
+                                </tr>
+                                <tr>
+                                    <td>2. Fleming made his discovery by accident, whereas the Oxford Team conducted intentional purification research.</td>
+                                    <td><input type="radio" name="q8_2" value="Similarity"></td>
+                                    <td><input type="radio" name="q8_2" value="Difference"></td>
+                                </tr>
+                                <tr>
+                                    <td>3. Both contributed directly to advancing medicine to combat bacterial infections.</td>
+                                    <td><input type="radio" name="q8_3" value="Similarity"></td>
+                                    <td><input type="radio" name="q8_3" value="Difference"></td>
+                                </tr>
+                                <tr>
+                                    <td>4. Fleming struggled with mass production, whereas the Oxford Team successfully solved mass-production techniques.</td>
+                                    <td><input type="radio" name="q8_4" value="Similarity"></td>
+                                    <td><input type="radio" name="q8_4" value="Difference"></td>
+                                </tr>
+                                <tr>
+                                    <td>5. Both published their initial research papers in the exact same year, 1929.</td>
+                                    <td><input type="radio" name="q8_5" value="Similarity"></td>
+                                    <td><input type="radio" name="q8_5" value="Difference"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="explanation-box" id="exp-q8"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TEXT 3 -->
+        <div class="section-card">
+            <div class="section-header">
+                <span>TEXT 3: PROCEDURE TEXT</span>
+                <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">Soal 9 - 12</span>
+            </div>
+            <div class="passage-box">
+                <h2>How to Set Up Two-Factor Authentication (2FA) for Digital Security</h2>
+                <p>Securing your online accounts with Two-Factor Authentication (2FA) adds a crucial extra layer of protection against cyberattacks. Even if a hacker steals your password, 2FA prevents unauthorized access by requiring a second verification step. Follow these simple steps to activate 2FA on your accounts:</p>
+                <p style="margin-left: 10px;">
+                    <strong>1. Access Security Settings:</strong> Log in to your digital account (such as email or social media) and navigate to the "Account Settings" menu. Select the "Security and Privacy" section.<br>
+                    <strong>2. Choose 2FA Option:</strong> Locate the "Two-Factor Authentication" or "Two-Step Verification" option and click "Enable."<br>
+                    <strong>3. Select Verification Method:</strong> Choose your preferred secondary verification method. Using an authenticator app (such as Google Authenticator) is highly recommended over SMS text messages, as app tokens cannot be intercepted by SIM-swapping attacks.<br>
+                    <strong>4. Scan QR Code:</strong> Open your chosen authenticator app on your smartphone, select "Add Account," and scan the QR code displayed on your computer screen.<br>
+                    <strong>5. Save Backup Codes:</strong> Write down the emergency backup recovery codes generated by the system and store them in a secure physical location. These codes allow you to regain account access if you lose your mobile phone.
+                </p>
+                <p>Regularly auditing your digital security settings ensures that your personal data remains protected against evolving cybersecurity threats.</p>
+            </div>
+
+            <div class="questions-container">
+                <!-- Q9 -->
+                <div class="question-card" id="qc-q9">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 9</span>
+                        <span class="badge-type">Main Idea (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        What is the main topic of the guide?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q9" value="A"><span class="option-label">A. The history of passwords and data encryption protocols.</span></label>
+                        <label class="option-item"><input type="radio" name="q9" value="B"><span class="option-label">B. Step-by-step instructions on setting up 2FA to improve digital account security.</span></label>
+                        <label class="option-item"><input type="radio" name="q9" value="C"><span class="option-label">C. Methods for recovering stolen smartphones without using backup codes.</span></label>
+                        <label class="option-item"><input type="radio" name="q9" value="D"><span class="option-label">D. How hackers perform SIM-swapping attacks on mobile phone carriers.</span></label>
+                        <label class="option-item"><input type="radio" name="q9" value="E"><span class="option-label">E. Developing authenticator applications for smartphone operating systems.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q9"></div>
+                </div>
+
+                <!-- Q10 -->
+                <div class="question-card" id="qc-q10">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 10</span>
+                        <span class="badge-type">Outline (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        Which option best summarizes the core sequence of setting up 2FA according to the text?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q10" value="A"><span class="option-label">A. Enable 2FA &rarr; Scan QR Code &rarr; Change Password &rarr; Delete Account</span></label>
+                        <label class="option-item"><input type="radio" name="q10" value="B"><span class="option-label">B. Access Security Settings &rarr; Enable 2FA &rarr; Select Verification Method &rarr; Scan QR Code &rarr; Save Backup Codes</span></label>
+                        <label class="option-item"><input type="radio" name="q10" value="C"><span class="option-label">C. Download Authenticator App &rarr; Send SMS &rarr; Contact Customer Support &rarr; Reset Phone</span></label>
+                        <label class="option-item"><input type="radio" name="q10" value="D"><span class="option-label">D. Write Backup Codes &rarr; Log out of Account &rarr; Turn off Wi-Fi &rarr; Scan Computer Screen</span></label>
+                        <label class="option-item"><input type="radio" name="q10" value="E"><span class="option-label">E. Select SMS Method &rarr; Delete Security Settings &rarr; Share Verification Code &rarr; Enable 2FA</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q10"></div>
+                </div>
+
+                <!-- Q11 -->
+                <div class="question-card" id="qc-q11">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 11</span>
+                        <span class="badge-type">Target Reader (Multiple Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        Who would benefit most from reading this procedural guide? <em>(Select all correct answers)</em>
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="checkbox" name="q11" value="A"><span class="option-label">A. Internet users who want to protect their personal digital accounts from unauthorized access.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q11" value="B"><span class="option-label">B. Cybercriminals searching for vulnerabilities in outdated mobile software.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q11" value="C"><span class="option-label">C. Individuals who frequently handle sensitive online data and want to prevent account hijacking.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q11" value="D"><span class="option-label">D. Professional hardware engineers designing physical motherboard components.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q11" value="E"><span class="option-label">E. Students setting up new email accounts who are unfamiliar with digital security settings.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q11"></div>
+                </div>
+
+                <!-- Q12 -->
+                <div class="question-card" id="qc-q12">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 12</span>
+                        <span class="badge-type">Coherence (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        What is the logical relationship between Step 3 (Selecting Verification Method) and Step 5 (Saving Backup Codes)?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q12" value="A"><span class="option-label">A. Step 5 provides an alternative primary login password if Step 3 fails.</span></label>
+                        <label class="option-item"><input type="radio" name="q12" value="B"><span class="option-label">B. Step 3 sets up the active daily verification process, while Step 5 provides a contingency safety net if the primary verification device is lost.</span></label>
+                        <label class="option-item"><input type="radio" name="q12" value="C"><span class="option-label">C. Step 5 causes the authenticator app chosen in Step 3 to stop generating security tokens.</span></label>
+                        <label class="option-item"><input type="radio" name="q12" value="D"><span class="option-label">D. Step 3 contradicts the security benefits outlined in Step 5.</span></label>
+                        <label class="option-item"><input type="radio" name="q12" value="E"><span class="option-label">E. Step 3 explains the historical background of the backup codes saved in Step 5.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q12"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TEXT 4 -->
+        <div class="section-card">
+            <div class="section-header">
+                <span>TEXT 4: NARRATIVE TEXT</span>
+                <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">Soal 13 - 16</span>
+            </div>
+            <div class="passage-box">
+                <h2>The Automated Greenhouse</h2>
+                <p>In a near-future farming village, a young roboticist named Elian designed "Aura"—an AI-driven automated greenhouse. Equipped with advanced sensors, Aura monitored soil nutrients, controlled temperature, and distributed precise amounts of water to crops. Elian believed his technology could eliminate human error entirely, allowing local farmers to harvest crops without lifting a finger.</p>
+                <p>Old Master Dan, a veteran farmer who had tilled the land for fifty years, warned Elian. "Technology is a wonderful tool, Elian," Dan said gently, "but plants respond to more than just numbers on a screen. A farmer’s eye catches what a sensor might miss." Elian merely smiled, convinced that Dan’s traditional ways were obsolete.</p>
+                <p>For months, Aura produced record yields. Proud of his success, Elian stopped inspecting the crops physically, relying entirely on Aura’s automated digital dashboard. However, during a hot summer week, a microscopic fungal blight began spreading underneath the leaves. Because the sensors only scanned soil moisture and surface temperature, Aura failed to register the infection.</p>
+                <p>When Master Dan walked past the greenhouse, he noticed subtle discoloration on the outer leaves and immediately alerted Elian. Shocked, Elian rushed inside and realized that half his crop was on the verge of ruin. Working together, Dan used his knowledge of natural organic remedies to treat the leaves, while Elian reprogrammed Aura’s optical sensors to spot fungal patterns. Thanks to Dan’s sharp eyes and early intervention, the harvest was saved. Elian realized that the best future lay not in replacing human wisdom with machines, but in pairing them together.</p>
+            </div>
+
+            <div class="questions-container">
+                <!-- Q13 -->
+                <div class="question-card" id="qc-q13">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 13</span>
+                        <span class="badge-type">Purpose (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        What is the primary purpose of the author in writing this story?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q13" value="A"><span class="option-label">A. To provide step-by-step technical blueprints for building an automated AI greenhouse.</span></label>
+                        <label class="option-item"><input type="radio" name="q13" value="B"><span class="option-label">B. To entertain readers with a story about the value of combining human wisdom with modern technology.</span></label>
+                        <label class="option-item"><input type="radio" name="q13" value="C"><span class="option-label">C. To convince readers that all automated technology in agriculture leads to ruin.</span></label>
+                        <label class="option-item"><input type="radio" name="q13" value="D"><span class="option-label">D. To explain how microscopic fungal blights infect summer crops.</span></label>
+                        <label class="option-item"><input type="radio" name="q13" value="E"><span class="option-label">E. To criticize old farmers who refuse to adopt computer systems.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q13"></div>
+                </div>
+
+                <!-- Q14 -->
+                <div class="question-card" id="qc-q14">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 14</span>
+                        <span class="badge-type">Summary (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        Which statement is the best summary of the story?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q14" value="A"><span class="option-label">A. Elian built an AI greenhouse that functioned perfectly without any human intervention or advice.</span></label>
+                        <label class="option-item"><input type="radio" name="q14" value="B"><span class="option-label">B. Master Dan destroyed Elian's AI greenhouse because he disliked modern robotic technology.</span></label>
+                        <label class="option-item"><input type="radio" name="q14" value="C"><span class="option-label">C. Elian's overreliance on his AI greenhouse allowed a crop disease to spread, but working with experienced Master Dan saved the harvest and taught Elian to combine human wisdom with tech.</span></label>
+                        <label class="option-item"><input type="radio" name="q14" value="D"><span class="option-label">D. A fungal infection destroyed all crops in the village because Aura's sensors were completely broken.</span></label>
+                        <label class="option-item"><input type="radio" name="q14" value="E"><span class="option-label">E. Master Dan learned how to code AI software from Elian to replace traditional farming tools entirely.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q14"></div>
+                </div>
+
+                <!-- Q15 -->
+                <div class="question-card" id="qc-q15">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 15</span>
+                        <span class="badge-type">Moral Value (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        What key lesson can be learned from the story?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q15" value="A"><span class="option-label">A. Advanced technology should completely replace human experience in every industry.</span></label>
+                        <label class="option-item"><input type="radio" name="q15" value="B"><span class="option-label">B. True progress comes from integrating technological innovation with human wisdom and experience.</span></label>
+                        <label class="option-item"><input type="radio" name="q15" value="C"><span class="option-label">C. Traditional methods are always superior to digital sensors and automation.</span></label>
+                        <label class="option-item"><input type="radio" name="q15" value="D"><span class="option-label">D. Ignoring advice from experienced elders leads to unavoidable total failure.</span></label>
+                        <label class="option-item"><input type="radio" name="q15" value="E"><span class="option-label">E. Machines are completely unreliable and should never be used in agriculture.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q15"></div>
+                </div>
+
+                <!-- Q16 -->
+                <div class="question-card" id="qc-q16">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 16</span>
+                        <span class="badge-type">Character's Personality (Categorizing)</span>
+                    </div>
+                    <div class="question-text">
+                        Based on the text, classify whether each personality trait describes <strong>Elian</strong> or <strong>Master Dan</strong>.
+                    </div>
+                    <div class="cat-table-wrapper">
+                        <table class="cat-table">
+                            <thead>
+                                <tr>
+                                    <th>Personality Trait</th>
+                                    <th>Elian</th>
+                                    <th>Master Dan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1. Overconfident in automated technology at first</td>
+                                    <td><input type="radio" name="q16_1" value="Elian"></td>
+                                    <td><input type="radio" name="q16_1" value="Dan"></td>
+                                </tr>
+                                <tr>
+                                    <td>2. Observant and deeply experienced in traditional farming</td>
+                                    <td><input type="radio" name="q16_2" value="Elian"></td>
+                                    <td><input type="radio" name="q16_2" value="Dan"></td>
+                                </tr>
+                                <tr>
+                                    <td>3. Humble enough to learn from mistakes and adapt</td>
+                                    <td><input type="radio" name="q16_3" value="Elian"></td>
+                                    <td><input type="radio" name="q16_3" value="Dan"></td>
+                                </tr>
+                                <tr>
+                                    <td>4. Wise and cautious regarding the limits of machines</td>
+                                    <td><input type="radio" name="q16_4" value="Elian"></td>
+                                    <td><input type="radio" name="q16_4" value="Dan"></td>
+                                </tr>
+                                <tr>
+                                    <td>5. Highly skilled in coding and AI sensor integration</td>
+                                    <td><input type="radio" name="q16_5" value="Elian"></td>
+                                    <td><input type="radio" name="q16_5" value="Dan"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="explanation-box" id="exp-q16"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TEXT 5 -->
+        <div class="section-card">
+            <div class="section-header">
+                <span>TEXT 5: ANALYTICAL EXPOSITION + DATA TABLE</span>
+                <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">Soal 17 - 20</span>
+            </div>
+            <div class="passage-box">
+                <h2>Artificial Intelligence in Healthcare</h2>
+                <p>The integration of Artificial Intelligence (AI) into modern healthcare systems is revolutionizing medical diagnostics and patient care. AI-powered diagnostic algorithms can process thousands of medical imaging scans—such as X-rays, MRIs, and CT scans—within seconds. By identifying subtle anomalies that might escape the human eye, AI assists doctors in detecting diseases like cancer at much earlier stages. Furthermore, automated administrative AI tools reduce paperwork burdens, allowing physicians to spend more time directly interacting with patients.</p>
+                <p>However, adoption rates vary significantly across different hospital departments due to implementation costs, technical training requirements, and data privacy concerns.</p>
+                
+                <h3 style="font-size: 1rem; margin-top: 16px; font-weight: 700;">Table 1: Hospital Department AI Adoption Rate & Diagnostic Accuracy Survey</h3>
+                <table class="passage-table">
+                    <thead>
+                        <tr>
+                            <th>Hospital Department</th>
+                            <th>AI Adoption Rate (%)</th>
+                            <th>Average Diagnostic Accuracy with AI (%)</th>
+                            <th>Staff Training Hours Required</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Radiology</strong></td>
+                            <td>82%</td>
+                            <td>96%</td>
+                            <td>40 hours</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cardiology</strong></td>
+                            <td>64%</td>
+                            <td>91%</td>
+                            <td>35 hours</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Oncology</strong></td>
+                            <td>58%</td>
+                            <td>94%</td>
+                            <td>50 hours</td>
+                        </tr>
+                        <tr>
+                            <td><strong>General Pediatrics</strong></td>
+                            <td>25%</td>
+                            <td>85%</td>
+                            <td>15 hours</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="questions-container">
+                <!-- Q17 -->
+                <div class="question-card" id="qc-q17">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 17</span>
+                        <span class="badge-type">Synthesis (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        Based on both the passage and Table 1, which statement best synthesizes the relationship between AI adoption and diagnostic outcomes in medical departments?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q17" value="A"><span class="option-label">A. Departments requiring the fewest staff training hours always achieve the highest AI adoption rates.</span></label>
+                        <label class="option-item"><input type="radio" name="q17" value="B"><span class="option-label">B. High AI adoption in specialized imaging departments (like Radiology) correlates with high diagnostic accuracy, though it requires substantial staff training.</span></label>
+                        <label class="option-item"><input type="radio" name="q17" value="C"><span class="option-label">C. General Pediatrics has the highest AI adoption rate because pediatric care requires no complex data privacy compliance.</span></label>
+                        <label class="option-item"><input type="radio" name="q17" value="D"><span class="option-label">D. AI diagnostic accuracy remains identical at 85% across all hospital departments regardless of training.</span></label>
+                        <label class="option-item"><input type="radio" name="q17" value="E"><span class="option-label">E. Implementation costs prevent all medical departments from achieving diagnostic accuracy above 50%.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q17"></div>
+                </div>
+
+                <!-- Q18 -->
+                <div class="question-card" id="qc-q18">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 18</span>
+                        <span class="badge-type">Specific Information (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        According to Table 1, which department registered an AI adoption rate of 64% and an average diagnostic accuracy of 91%?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q18" value="A"><span class="option-label">A. Radiology</span></label>
+                        <label class="option-item"><input type="radio" name="q18" value="B"><span class="option-label">B. General Pediatrics</span></label>
+                        <label class="option-item"><input type="radio" name="q18" value="C"><span class="option-label">C. Oncology</span></label>
+                        <label class="option-item"><input type="radio" name="q18" value="D"><span class="option-label">D. Cardiology</span></label>
+                        <label class="option-item"><input type="radio" name="q18" value="E"><span class="option-label">E. Health Administration</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q18"></div>
+                </div>
+
+                <!-- Q19 -->
+                <div class="question-card" id="qc-q19">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 19</span>
+                        <span class="badge-type">Inference (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        What can be inferred from the low AI adoption rate (25%) in General Pediatrics compared to Radiology (82%)?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q19" value="A"><span class="option-label">A. General Pediatrics doctors refuse to use computers under any circumstances.</span></label>
+                        <label class="option-item"><input type="radio" name="q19" value="B"><span class="option-label">B. Pediatric care may rely more on direct physical exams and patient interaction than on heavy medical imaging scans.</span></label>
+                        <label class="option-item"><input type="radio" name="q19" value="C"><span class="option-label">C. Radiology departments have lower budgets than General Pediatrics departments.</span></label>
+                        <label class="option-item"><input type="radio" name="q19" value="D"><span class="option-label">D. AI algorithms are incapable of analyzing pediatric medical data accurately.</span></label>
+                        <label class="option-item"><input type="radio" name="q19" value="E"><span class="option-label">E. General Pediatrics requires more staff training hours than any other department.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q19"></div>
+                </div>
+
+                <!-- Q20 -->
+                <div class="question-card" id="qc-q20">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 20</span>
+                        <span class="badge-type">Prediction (Multiple Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        Based on the trend shown in the passage and Table 1, what will most likely happen if a hospital increases AI training hours and funding for its Oncology department next year? <em>(Select all correct answers)</em>
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="checkbox" name="q20" value="A"><span class="option-label">A. The department's diagnostic accuracy will likely remain high or improve further due to better staff proficiency with AI tools.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q20" value="B"><span class="option-label">B. AI adoption rate in Oncology will likely increase as staff become more comfortable using the technology.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q20" value="C"><span class="option-label">C. Automated AI administrative tools will increase paperwork burdens for oncology doctors.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q20" value="D"><span class="option-label">D. Physicians will be able to detect cancer anomalies earlier through enhanced diagnostic support.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q20" value="E"><span class="option-label">E. The hospital will completely eliminate the need for human oncologists in cancer treatment.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q20"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SUBMIT BUTTON -->
+        <div class="submit-container">
+            <button type="button" class="btn-submit" id="submitBtn" onclick="gradeQuiz()">Selesai & Lihat Hasil</button>
+        </div>
+
+    </form>
+</div>
+
+<!-- TOOLTIP ELEMENT -->
+<div id="wordTooltip">Terjemahan</div>
+
+<script>
+    /* =========================================
+       DICTIONARY & HOVER TRANSLATION FEATURE 
+       ========================================= */
+    const enIdDictionary = {
+        // Teks 1
+        "telescope": "teleskop", "space": "luar angkasa", "observatory": "observatorium", "powerful": "sangat kuat",
+        "built": "dibangun", "engineering": "rekayasa / teknik", "positioned": "ditempatkan", "massive": "sangat besar",
+        "cosmic": "kosmik", "allowing": "memungkinkan", "scientists": "ilmuwan", "deeper": "lebih dalam", 
+        "history": "sejarah", "universe": "alam semesta", "specifically": "secara khusus", "designed": "dirancang", 
+        "detect": "mendeteksi", "infrared": "inframerah", "peer": "mengintip / melihat ke dalam", "dense": "padat / tebal", 
+        "clouds": "awan", "interstellar": "antarbintang", "dust": "debu", "consists": "terdiri", 
+        "components": "komponen / bagian", "gigantic": "raksasa", "coated": "berlapis", "mirror": "cermin", 
+        "hexagonal": "segi enam", "segments": "segmen / potongan", "spanning": "membentang", "gathers": "mengumpulkan", 
+        "faint": "redup", "earliest": "paling awal", "stars": "bintang-bintang", "galaxies": "galaksi", 
+        "formed": "terbentuk", "beneath": "di bawah", "sunshield": "pelindung matahari", "layers": "lapisan", 
+        "thermal": "panas / termal", "barrier": "penghalang", "blocking": "menghalangi", "heat": "panas", 
+        "extremely": "sangat", "temperature": "suhu", "ahead": "ke depan", "astronomers": "astronom", 
+        "sensitive": "peka / sensitif", "analyze": "menganalisis", "atmospheric": "atmosfer", 
+        "compositions": "komposisi", "distant": "jauh", "orbiting": "mengorbit", "signatures": "tanda / jejak", 
+        "vapor": "uap", "methane": "metana", "indicate": "menunjukkan", "conditions": "kondisi", 
+        "suitable": "cocok", "extraterrestrial": "di luar bumi / alien",
+
+        // Teks 2
+        "scientist": "ilmuwan", "returned": "kembali", "laboratory": "laboratorium", "accidentally": "secara tidak sengaja",
+        "culture": "kultur / biakan", "dishes": "cawan", "inspecting": "memeriksa", "dirty": "kotor",
+        "examining": "menguji / memeriksa", "unusual": "tidak biasa", "mold": "jamur / kapang", "colony": "koloni",
+        "surrounding": "mengelilingi", "destroyed": "hancur", "intrigued": "tertarik / penasaran", "isolated": "mengisolasi",
+        "identified": "mengidentifikasi", "substance": "zat", "inhibited": "menghambat", "growth": "pertumbuhan",
+        "groundbreaking": "terobosan / inovatif", "findings": "temuan", "struggled": "berjuang / kesulitan",
+        "quantities": "jumlah", "stable": "stabil", "treatments": "perawatan / pengobatan", "decade": "dekade (10 tahun)",
+        "researchers": "peneliti", "purified": "memurnikan", "mass": "massal", "techniques": "teknik", "antibiotic": "antibiotik",
+
+        // Teks 3
+        "securing": "mengamankan", "accounts": "akun", "crucial": "krusial / sangat penting", "layer": "lapisan",
+        "protection": "perlindungan", "against": "terhadap", "cyberattacks": "serangan siber", "steals": "mencuri",
+        "password": "kata sandi", "prevents": "mencegah", "unauthorized": "tidak sah", "access": "akses",
+        "requiring": "membutuhkan", "verification": "verifikasi", "navigate": "arahkan", "locate": "temukan",
+        "preferred": "disukai / pilihan", "authenticator": "pengautentikasi", "recommended": "disarankan",
+        "intercepted": "disadap", "swapping": "penukaran", "backup": "cadangan", "recovery": "pemulihan",
+        "generated": "dihasilkan", "physical": "fisik", "location": "lokasi", "regain": "mendapatkan kembali", 
+        "auditing": "mengaudit", "ensures": "memastikan", "evolving": "berkembang", "threats": "ancaman",
+
+        // Teks 4
+        "automated": "otomatis", "greenhouse": "rumah kaca", "village": "desa", "roboticist": "ahli robotik",
+        "equipped": "dilengkapi", "advanced": "canggih", "sensors": "sensor", "monitored": "dipantau",
+        "soil": "tanah", "nutrients": "nutrisi", "distributed": "didistribusikan", "precise": "tepat",
+        "eliminate": "menghilangkan", "error": "kesalahan", "entirely": "sepenuhnya", "harvest": "memanen / panen",
+        "veteran": "berpengalaman", "tilled": "menggarap", "warned": "memperingatkan", "gently": "dengan lembut",
+        "respond": "merespons", "catches": "menangkap / melihat", "obsolete": "usang / kuno", "yields": "hasil panen",
+        "relying": "mengandalkan", "dashboard": "dasbor", "microscopic": "mikroskopis", "fungal": "jamur",
+        "blight": "penyakit tanaman", "spreading": "menyebar", "moisture": "kelembapan", "surface": "permukaan",
+        "register": "mencatat / mendeteksi", "infection": "infeksi", "subtle": "samar / halus", "discoloration": "perubahan warna",
+        "alerted": "memberi tahu / memperingatkan", "shocked": "terkejut", "rushed": "bergegas", "ruin": "kehancuran",
+        "remedies": "obat / solusi", "treat": "merawat / mengobati", "reprogrammed": "memprogram ulang",
+        "optical": "optik", "patterns": "pola", "sharp": "tajam", "intervention": "intervensi", "saved": "diselamatkan",
+        "wisdom": "kebijaksanaan", "pairing": "memasangkan / menggabungkan",
+
+        // Teks 5
+        "integration": "integrasi", "healthcare": "kesehatan", "systems": "sistem", "revolutionizing": "merevolusi",
+        "medical": "medis", "diagnostics": "diagnostik", "algorithms": "algoritma", "process": "memproses",
+        "imaging": "pencitraan", "scans": "pemindaian", "seconds": "detik", "identifying": "mengidentifikasi",
+        "anomalies": "anomali / kelainan", "escape": "luput / lolos", "assists": "membantu", "detecting": "mendeteksi",
+        "diseases": "penyakit", "cancer": "kanker", "stages": "tahap", "administrative": "administratif",
+        "burdens": "beban", "physicians": "dokter", "interacting": "berinteraksi", "patients": "pasien",
+        "adoption": "adopsi / penerapan", "rates": "tingkat", "vary": "bervariasi", "significantly": "secara signifikan",
+        "departments": "departemen", "implementation": "implementasi", "costs": "biaya", "requirements": "persyaratan",
+        "privacy": "privasi", "concerns": "kekhawatiran / masalah"
+    };
+
+    function wrapTranslatableWords(node) {
+        // Skip script and style tags
+        if (node.nodeType === Node.ELEMENT_NODE && (node.nodeName === 'SCRIPT' || node.nodeName === 'STYLE')) {
+            return;
+        }
+
+        if (node.nodeType === Node.TEXT_NODE) {
+            // Split text by word boundaries, keeping punctuation separate
+            let words = node.nodeValue.split(/(\b[A-Za-z]+(?:'[a-z]+)?\b)/);
+            let needsReplacement = false;
+            let fragment = document.createDocumentFragment();
+
+            words.forEach(word => {
+                let lowerWord = word.toLowerCase();
+                if (enIdDictionary[lowerWord]) {
+                    needsReplacement = true;
+                    let span = document.createElement('span');
+                    span.className = 'hoverable-word';
+                    span.textContent = word; // preserve original casing
+                    span.setAttribute('data-trans', enIdDictionary[lowerWord]);
+                    fragment.appendChild(span);
+                } else {
+                    fragment.appendChild(document.createTextNode(word));
+                }
+            });
+
+            if (needsReplacement) {
+                node.parentNode.replaceChild(fragment, node);
+            }
+        } else if (node.nodeType === Node.ELEMENT_NODE) {
+            // Convert childNodes to array because we might modify the DOM during iteration
+            Array.from(node.childNodes).forEach(wrapTranslatableWords);
+        }
+    }
+
+    // Apply the translation wrapper to passage boxes and question texts
+    document.querySelectorAll('.passage-box, .question-text').forEach(box => {
+        wrapTranslatableWords(box);
+    });
+
+    // Tooltip Logic
+    const tooltip = document.getElementById('wordTooltip');
+
+    function positionTooltip(e) {
+        let x = e.pageX;
+        let y = e.pageY - 35; // Position slightly above the cursor
+        
+        tooltip.style.left = x + 'px';
+        tooltip.style.top = y + 'px';
+        
+        // Prevent tooltip from going off-screen on the right
+        let rect = tooltip.getBoundingClientRect();
+        if (rect.right > window.innerWidth) {
+            tooltip.style.left = (window.innerWidth - rect.width / 2 - 10) + 'px';
+        }
+        if (rect.left < 0) {
+            tooltip.style.left = (rect.width / 2 + 10) + 'px';
+        }
+    }
+
+    document.addEventListener('mouseover', function(e) {
+        if(e.target.classList.contains('hoverable-word')) {
+            tooltip.innerText = e.target.getAttribute('data-trans');
+            tooltip.classList.add('show');
+            positionTooltip(e);
+        }
+    });
+
+    document.addEventListener('mousemove', function(e) {
+        if(e.target.classList.contains('hoverable-word')) {
+            positionTooltip(e);
+        }
+    });
+
+    document.addEventListener('mouseout', function(e) {
+        if(e.target.classList.contains('hoverable-word')) {
+            tooltip.classList.remove('show');
+        }
+    });
+
+    // Mobile touch support
+    document.addEventListener('click', function(e) {
+        if(e.target.classList.contains('hoverable-word')) {
+            tooltip.innerText = e.target.getAttribute('data-trans');
+            tooltip.classList.add('show');
+            positionTooltip(e);
+        } else {
+            tooltip.classList.remove('show'); // tap outside to close
+        }
+    });
+
+
+    /* =========================================
+       QUIZ GRADING & PROGRESS LOGIC 
+       ========================================= */
+    const answerKey = {
+        q1: { type: 'single', key: 'B', exp: '<b>Kunci Jawaban: B</b><br><b>Pembahasan:</b> Paragraf 2 berfokus pada struktur dan komponen fisik JWST (cermin utama 18 segmen heksagonal dan sunshield 5 lapis Kapton). Maka poin 2 yang paling tepat mengisi kerangka teks adalah B.' },
+        q2: { type: 'multiple', key: ['A', 'C', 'E'], exp: '<b>Kunci Jawaban: A, C, dan E</b><br><b>Pembahasan:</b><br>- A Benar ("primary mirror made of 18 hexagonal segments").<br>- B Salah (Suhu operasi sangat dingin di bawah -220°C, bukan di atas suhu ruang).<br>- C Benar ("sunshield made of five ultra-thin layers of Kapton").<br>- D Salah (Lebar cermin 6.5m, sedangkan 1.5 juta km adalah jarak lokasi dari Bumi).<br>- E Benar ("blocking heat from the Sun, Earth, and Moon").' },
+        q3: { type: 'single', key: 'B', exp: '<b>Kunci Jawaban: B</b><br><b>Pembahasan:</b> Paragraf 1 secara umum menjelaskan JWST sebagai teleskop luar angkasa canggih yang dirancang khusus mendeteksi sinar inframerah untuk mengamati bagian dalam alam semesta.' },
+        q4: { type: 'single', key: 'A', exp: '<b>Kunci Jawaban: A</b><br><b>Pembahasan:</b> Kalimat terakhir paragraf 3 menyebutkan analisis komposisi atmosfer exoplanet untuk mencari jejak zat kimia. Paragraf selanjutnya secara logis akan membahas hasil rincian zat kimia/analisis exoplanet tersebut.' },
+        
+        q5: { type: 'single', key: 'C', exp: '<b>Kunci Jawaban: C</b><br><b>Pembahasan:</b> Ringkasan terbaik memuat seluruh ide utama teks: Penemuan tidak sengaja penililin dari jamur oleh Fleming, yang kemudian dimurnikan dan diproduksi massal oleh tim peneliti Oxford.' },
+        q6: { type: 'cat', key: { q6_1: 'Fleming', q6_2: 'Fleming', q6_3: 'Fleming', q6_4: 'Oxford', q6_5: 'Oxford' }, exp: '<b>Kunci Jawaban: 1. Fleming | 2. Fleming | 3. Fleming | 4. The Oxford Team | 5. The Oxford Team</b><br><b>Pembahasan:</b> Poin 1, 2, dan 3 dilakukan oleh Fleming saat penemuan awal (1928-1929). Poin 4 dan 5 dilakukan oleh tim Oxford (Florey & Chain) satu dekade kemudian untuk pemurnian dan produksi massal PD II.' },
+        q7: { type: 'single', key: 'B', exp: '<b>Kunci Jawaban: B</b><br><b>Pembahasan:</b> Teks recount ini bertujuan untuk menceritakan kembali urutan sejarah (historical sequence) penemuan dan pengembangan penisilin.' },
+        q8: { type: 'cat', key: { q8_1: 'Similarity', q8_2: 'Difference', q8_3: 'Similarity', q8_4: 'Difference', q8_5: 'Difference' }, exp: '<b>Kunci Jawaban: 1. Similarity | 2. Difference | 3. Similarity | 4. Difference | 5. Difference</b><br><b>Pembahasan:</b> Keduanya meneliti penisilin (1) dan memajukan dunia medis (3). Perbedaannya: Fleming secara tidak sengaja sedangkan Oxford sengaja (2), Fleming kesulitan produksi massal sedangkan Oxford berhasil (4), Fleming publikasi 1929 sedangkan Oxford meneliti 10 tahun kemudian (5).' },
+
+        q9: { type: 'single', key: 'B', exp: '<b>Kunci Jawaban: B</b><br><b>Pembahasan:</b> Topik utama panduan prosedur ini adalah langkah demi langkah mengaktifkan 2FA demi meningkatkan keamanan akun digital.' },
+        q10: { type: 'single', key: 'B', exp: '<b>Kunci Jawaban: B</b><br><b>Pembahasan:</b> Urutan langkah yang benar sesuai teks: Access Security Settings (1) &rarr; Enable 2FA (2) &rarr; Select Verification Method (3) &rarr; Scan QR Code (4) &rarr; Save Backup Codes (5).' },
+        q11: { type: 'multiple', key: ['A', 'C', 'E'], exp: '<b>Kunci Jawaban: A, C, dan E</b><br><b>Pembahasan:</b> Target pembaca yang paling diuntungkan adalah pengguna internet umum (A), orang yang menangani data sensitif (C), serta siswa yang baru membuat email (E). Peretas (B) dan insinyur hardware (D) tidak relevan.' },
+        q12: { type: 'single', key: 'B', exp: '<b>Kunci Jawaban: B</b><br><b>Pembahasan:</b> Langkah 3 mengatur proses verifikasi harian (seperti aplikasi authenticator), sedangkan Langkah 5 menyediakan kode cadangan darurat jika perangkat utama hilang.' },
+
+        q13: { type: 'single', key: 'B', exp: '<b>Kunci Jawaban: B</b><br><b>Pembahasan:</b> Tujuan teks naratif ini adalah menghibur pembaca sekaligus menyampaikan pesan moral tentang pentingnya menggabungkan kearifan manusia dengan teknologi modern.' },
+        q14: { type: 'single', key: 'C', exp: '<b>Kunci Jawaban: C</b><br><b>Pembahasan:</b> Ringkasan mencakup konflik (Elian terlalu percaya AI), puncak masalah (penyakit tanaman menyebar), dan penyelesaian (kerja sama dengan Master Dan menyelamatkan panen).' },
+        q15: { type: 'single', key: 'B', exp: '<b>Kunci Jawaban: B</b><br><b>Pembahasan:</b> Nilai moral utama cerita dinyatakan di akhir: kemajuan sejati diperoleh dari mengintegrasikan inovasi teknologi dengan pengalaman dan kearifan manusia.' },
+        q16: { type: 'cat', key: { q16_1: 'Elian', q16_2: 'Dan', q16_3: 'Elian', q16_4: 'Dan', q16_5: 'Elian' }, exp: '<b>Kunci Jawaban: 1. Elian | 2. Master Dan | 3. Elian | 4. Master Dan | 5. Elian</b><br><b>Pembahasan:</b> Elian adalah perancang AI yang awalnya terlalu percaya diri lalu belajar dari kesalahan. Master Dan adalah petani senior yang bijak, berpengalaman, dan paham keterbatasan mesin.' },
+
+        q17: { type: 'single', key: 'B', exp: '<b>Kunci Jawaban: B</b><br><b>Pembahasan:</b> Sintesis teks dan Tabel 1 menunjukkan bahwa departemen pencitraan seperti Radiologi memiliki adopsi AI tinggi (82%) dan akurasi tinggi (96%), meskipun membutuhkan durasi pelatihan staf yang tinggi (40 jam).' },
+        q18: { type: 'single', key: 'D', exp: '<b>Kunci Jawaban: D</b><br><b>Pembahasan:</b> Berdasarkan data pada Tabel 1, departemen Cardiology mencatatkan AI Adoption Rate 64% dan Diagnostic Accuracy 91%.' },
+        q19: { type: 'single', key: 'B', exp: '<b>Kunci Jawaban: B</b><br><b>Pembahasan:</b> Inferensi paling logis rendahnya adopsi AI di General Pediatrics (25%) adalah karena perawatan anak lebih banyak bertumpu pada pemeriksaan fisik langsung dibanding pemindaian gambar (imaging scans).' },
+        q20: { type: 'multiple', key: ['A', 'B', 'D'], exp: '<b>Kunci Jawaban: A, B, dan D</b><br><b>Pembahasan:</b><br>- A Benar (Pelatihan staf meningkatkan kemahiran dan menjaga akurasi tinggi).<br>- B Benar (Peningkatan dana/pelatihan akan meningkatkan adopsi AI).<br>- C Salah (Teks menyebut AI mengurangi beban administrasi).<br>- D Benar (AI membantu mendeteksi anomali kanker lebih awal).<br>- E Salah (AI membantu dokter, bukan menggantikan posisi dokter secara penuh).' }
+    };
+
+    function updateProgress() {
+        let answeredCount = 0;
+        for (let i = 1; i <= 20; i++) {
+            if (i === 6 || i === 8 || i === 16) {
+                let subNames = i === 6 ? ['q6_1','q6_2','q6_3','q6_4','q6_5'] :
+                               i === 8 ? ['q8_1','q8_2','q8_3','q8_4','q8_5'] :
+                                         ['q16_1','q16_2','q16_3','q16_4','q16_5'];
+                let allSubAnswered = subNames.every(name => document.querySelector(`input[name="${name}"]:checked`));
+                if (allSubAnswered) answeredCount++;
+            } else {
+                let checked = document.querySelectorAll(`input[name="q${i}"]:checked`);
+                if (checked.length > 0) answeredCount++;
+            }
+        }
+        let percent = (answeredCount / 20) * 100;
+        document.getElementById('progressBar').style.width = percent + '%';
+        document.getElementById('progressText').innerText = `Terjawab: ${answeredCount} / 20`;
+    }
+
+    document.querySelectorAll('input').forEach(input => {
+        input.addEventListener('change', updateProgress);
+    });
+
+    function gradeQuiz() {
+        let totalScorePoints = 0;
+        let correctCount = 0;
+        let incorrectCount = 0;
+
+        for (let i = 1; i <= 20; i++) {
+            let qKey = 'q' + i;
+            let qData = answerKey[qKey];
+            let expBox = document.getElementById('exp-q' + i);
+            let isCorrect = false;
+            let userAnsText = '';
+
+            if (qData.type === 'single') {
+                let selected = document.querySelector(`input[name="${qKey}"]:checked`);
+                let userVal = selected ? selected.value : null;
+                userAnsText = userVal ? `Jawaban Anda: ${userVal}` : 'Jawaban Anda: (Belum diisi)';
+                if (userVal === qData.key) isCorrect = true;
+            } else if (qData.type === 'multiple') {
+                let selected = Array.from(document.querySelectorAll(`input[name="${qKey}"]:checked`)).map(cb => cb.value);
+                userAnsText = selected.length > 0 ? `Jawaban Anda: ${selected.join(', ')}` : 'Jawaban Anda: (Belum diisi)';
+                if (selected.length === qData.key.length && selected.every(val => qData.key.includes(val))) {
+                    isCorrect = true;
+                }
+            } else if (qData.type === 'cat') {
+                let subKeys = Object.keys(qData.key);
+                let catCorrectCount = 0;
+                let userSubAns = [];
+                subKeys.forEach(sKey => {
+                    let sel = document.querySelector(`input[name="${sKey}"]:checked`);
+                    let val = sel ? sel.value : '-';
+                    userSubAns.push(val);
+                    if (val === qData.key[sKey]) catCorrectCount++;
+                });
+                userAnsText = `Jawaban Anda: [ ${userSubAns.join(', ')} ]`;
+                if (catCorrectCount === subKeys.length) isCorrect = true;
+            }
+
+            let statusBadge = isCorrect 
+                ? `<span class="user-status status-correct">&#10004; BENAR</span>`
+                : `<span class="user-status status-incorrect">&#10008; SALAH</span>`;
+
+            expBox.innerHTML = `
+                <div class="explanation-header">${statusBadge} <span style="font-size:0.85rem; color:var(--text-muted);">${userAnsText}</span></div>
+                <div>${qData.exp}</div>
+            `;
+            expBox.classList.add('show');
+
+            if (isCorrect) correctCount++;
+            else incorrectCount++;
+        }
+
+        let finalScore = Math.round((correctCount / 20) * 100);
+        document.getElementById('finalScoreNum').innerText = finalScore;
+        document.getElementById('statCorrect').innerText = correctCount;
+        document.getElementById('statIncorrect').innerText = incorrectCount;
+        document.getElementById('statAccuracy').innerText = finalScore + '%';
+        
+        let dashboard = document.getElementById('resultDashboard');
+        dashboard.classList.add('show');
+        dashboard.scrollIntoView({ behavior: 'smooth' });
+
+        let submitBtn = document.getElementById('submitBtn');
+        submitBtn.innerText = 'Hasil Telah Ditampilkan';
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = '0.6';
+        submitBtn.style.cursor = 'not-allowed';
+    }
+
+    function resetQuiz() {
+        if (confirm("Apakah Anda yakin ingin mengulang Drill Soal dari awal? Semua jawaban akan direset.")) {
+            document.getElementById('quizForm').reset();
+            document.querySelectorAll('.explanation-box').forEach(box => {
+                box.classList.remove('show');
+                box.innerHTML = '';
+            });
+            document.getElementById('resultDashboard').classList.remove('show');
+            let submitBtn = document.getElementById('submitBtn');
+            submitBtn.innerText = 'Selesai & Lihat Hasil';
+            submitBtn.disabled = false;
+            submitBtn.style.opacity = '1';
+            submitBtn.style.cursor = 'pointer';
+            updateProgress();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    }
+</script>
+
+</body>
+</html>

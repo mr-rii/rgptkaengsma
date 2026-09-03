@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Test Meeting 3</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #eff6ff;
+            --secondary: #475569;
+            --bg-main: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --success: #16a34a;
+            --success-light: #f0fdf4;
+            --error: #dc2626;
+            --error-light: #fef2f2;
+            --warning: #d97706;
+            --warning-light: #fffbeb;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            color: #ffffff;
+            padding: 24px 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            margin-bottom: 6px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        header p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 24px auto;
+            padding: 0 16px;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .progress-bar-bg {
+            flex: 1;
+            height: 10px;
+            background-color: #e2e8f0;
+            border-radius: 999px;
+            overflow: hidden;
+            min-width: 200px;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #2563eb);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        /* Section & Passage Card */
+        .section-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            margin-bottom: 32px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: #f1f5f9;
+            padding: 14px 24px;
+            border-bottom: 1px solid var(--border);
+            font-weight: 700;
+            color: #1e293b;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .passage-box {
+            padding: 24px;
+            background: #fafafa;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.95rem;
+            color: #334155;
+        }
+
+        .passage-box h2 {
+            font-size: 1.15rem;
+            color: #0f172a;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .passage-box p {
+            margin-bottom: 12px;
+            text-align: justify;
+        }
+
+        .passage-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Passage Table Styling */
+        .passage-table-wrapper {
+            overflow-x: auto;
+            margin-top: 16px;
+        }
+
+        .passage-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .passage-table caption {
+            caption-side: top;
+            text-align: left;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .passage-table th {
+            background: #f1f5f9;
+            padding: 10px 12px;
+            text-align: left;
+            border: 1px solid var(--border);
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        .passage-table td {
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            color: #334155;
+        }
+
+        /* Question Box */
+        .questions-container {
+            padding: 24px;
+        }
+
+        .question-card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+            transition: border-color 0.2s ease;
+        }
+
+        .question-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .question-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .badge-num {
+            background: var(--primary-light);
+            color: var(--primary);
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+        }
+
+        .badge-type {
+            background: #f1f5f9;
+            color: var(--secondary);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .question-text {
+            font-weight: 600;
+            color: var(--text-main);
+            font-size: 0.975rem;
+            margin-bottom: 16px;
+        }
+
+        /* Options */
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            background: #ffffff;
+            font-size: 0.925rem;
+        }
+
+        .option-item:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+        }
+
+        .option-item input[type="radio"],
+        .option-item input[type="checkbox"] {
+            margin-top: 3px;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        .option-label {
+            flex: 1;
+            cursor: pointer;
+        }
+
+        /* Explanation Box */
+        .explanation-box {
+            display: none;
+            margin-top: 16px;
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            background: #f8fafc;
+            border-left: 4px solid var(--primary);
+        }
+
+        .explanation-box.show {
+            display: block;
+        }
+
+        .explanation-header {
+            font-weight: 700;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .user-status {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            margin-bottom: 8px;
+        }
+
+        .status-correct {
+            background: var(--success-light);
+            color: var(--success);
+            border: 1px solid #bbf7d0;
+        }
+
+        .status-incorrect {
+            background: var(--error-light);
+            color: var(--error);
+            border: 1px solid #fecaca;
+        }
+
+        /* Submit Button */
+        .submit-container {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 700;
+            padding: 14px 40px;
+            border: none;
+            border-radius: 999px;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+            transition: all 0.2s ease;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.45);
+        }
+
+        /* Result Dashboard */
+        .result-dashboard {
+            display: none;
+            background: white;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            padding: 32px;
+            margin-bottom: 32px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+            text-align: center;
+        }
+
+        .result-dashboard.show {
+            display: block;
+        }
+
+        .score-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            color: var(--primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            border: 4px solid var(--primary);
+        }
+
+        .score-num {
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .score-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--secondary);
+            margin-top: 2px;
+        }
+
+        .result-stats {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            background: #f8fafc;
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            min-width: 140px;
+        }
+
+        .stat-val {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .stat-lbl {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .btn-reset {
+            background: #e2e8f0;
+            color: #334155;
+            font-weight: 600;
+            padding: 10px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.2s;
+        }
+
+        .btn-reset:hover {
+            background: #cbd5e1;
+        }
+
+        @media (max-width: 640px) {
+            .passage-box { padding: 16px; }
+            .questions-container { padding: 16px; }
+            .question-card { padding: 16px; }
+            .stat-card { flex: 1; min-width: 100px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Post Test Meeting 3</h1>
+    <p>_______________</p>
+</header>
+
+<div class="container">
+
+    <!-- Progress Tracker -->
+    <div class="progress-container">
+        <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="progressBar"></div>
+        </div>
+        <div class="progress-text" id="progressText">Terjawab: 0 / 11</div>
+    </div>
+
+    <!-- Result Dashboard (Hidden initially) -->
+    <div class="result-dashboard" id="resultDashboard">
+        <h2>Hasil Post Test Anda</h2>
+        <p style="color: var(--text-muted); margin-bottom: 20px;">Berikut adalah ringkasan performa pengerjaan soal Anda:</p>
+        
+        <div class="score-circle">
+            <div class="score-num" id="finalScoreNum">0</div>
+            <div class="score-label">NILAI AKHIR</div>
+        </div>
+
+        <div class="result-stats">
+            <div class="stat-card">
+                <div class="stat-val" id="statCorrect" style="color: var(--success);">0</div>
+                <div class="stat-lbl">Jawaban Benar</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-val" id="statIncorrect" style="color: var(--error);">0</div>
+                <div class="stat-lbl">Jawaban Salah</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-val" id="statAccuracy">0%</div>
+                <div class="stat-lbl">Akurasi Total</div>
+            </div>
+        </div>
+
+        <button class="btn-reset" onclick="resetQuiz()">Ulangi Latihan</button>
+    </div>
+
+    <!-- FORM QUIZ -->
+    <form id="quizForm">
+
+        <!-- TEXT 1 -->
+        <div class="section-card">
+            <div class="section-header">
+                <span>TEXT 1: RECOUNT TEXT</span>
+                <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">Soal 1 - 6</span>
+            </div>
+            <div class="passage-box">
+                <h2>My Experience Organizing the School Book Fair</h2>
+                <p>Last semester, I had the chance to lead our school's annual charity book fair. As a 12th-grade student, I felt quite nervous because I had never managed a large event before. Our main objective was to collect donated books from students and raise money to support a rural elementary school library.</p>
+                <p>During the first two weeks, my team and I collected over 500 books from students and teachers. We sorted them into categories such as fiction, science, and children's books. To attract visitors, we created colorful posters around the school and promoted the event on our school’s official social media page.</p>
+                <p>On the event day, many students, parents, and teachers came to support us. We sold most of the books at very affordable prices. Although we were completely exhausted by the end of the day, seeing the empty tables and counting the funds we raised made all our hard work worthwhile.</p>
+                <p>Looking back, this experience taught me how to communicate better and work effectively in a team. It was not just about selling books, but about making a real difference together.</p>
+                
+                <div class="passage-table-wrapper">
+                    <table class="passage-table">
+                        <caption>Table 1: School Charity Book Fair Results</caption>
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Books Collected</th>
+                                <th>Money Raised (IDR)</th>
+                                <th>Main Volunteer Tasks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Fiction</strong></td>
+                                <td>250 books</td>
+                                <td>1,500,000</td>
+                                <td>Sorting and pricing books</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Science & Non-Fiction</strong></td>
+                                <td>150 books</td>
+                                <td>1,000,000</td>
+                                <td>Promoting on social media</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Children's Books</strong></td>
+                                <td>100 books</td>
+                                <td>800,000</td>
+                                <td>Setting up display tables</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="questions-container">
+                <!-- Q1 -->
+                <div class="question-card" id="qc-q1">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 1</span>
+                        <span class="badge-type">Summary (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        Which of the following is the best summary of the text?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q1" value="A"><span class="option-label">A. A 12th-grade student felt nervous about leading a school team to collect over 500 fiction and science books.</span></label>
+                        <label class="option-item"><input type="radio" name="q1" value="B"><span class="option-label">B. Organizing a school charity book fair involved collecting, sorting, and selling donated books to raise money for a rural library.</span></label>
+                        <label class="option-item"><input type="radio" name="q1" value="C"><span class="option-label">C. Promoting events on social media is the most effective way to attract parents and students to buy cheap books.</span></label>
+                        <label class="option-item"><input type="radio" name="q1" value="D"><span class="option-label">D. Selling children's books and fiction raised millions of rupiahs for an elementary school in a rural area.</span></label>
+                        <label class="option-item"><input type="radio" name="q1" value="E"><span class="option-label">E. Working in a team during a school event is exhausting, but it teaches students how to price books properly.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q1"></div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="question-card" id="qc-q2">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 2</span>
+                        <span class="badge-type">Synthesis (Multiple Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        According to both the text and Table 1, which actions contributed to the success of the charity book fair? <em>(Select all correct answers)</em>
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="checkbox" name="q2" value="A"><span class="option-label">A. Sorting and pricing the collected books before the event day.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q2" value="B"><span class="option-label">B. Promoting the event on social media to reach more visitors.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q2" value="C"><span class="option-label">C. Selling all the collected books at high prices to maximize profit.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q2" value="D"><span class="option-label">D. Setting up display tables to present children's books neatly.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q2" value="E"><span class="option-label">E. Keeping all the raised funds to buy new video games for the school.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q2"></div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="question-card" id="qc-q3">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 3</span>
+                        <span class="badge-type">Main Idea (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        What is the main idea of paragraph 2?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q3" value="A"><span class="option-label">A. The team collected books and promoted the event through various channels.</span></label>
+                        <label class="option-item"><input type="radio" name="q3" value="B"><span class="option-label">B. Social media is the best tool for high school students to collect money.</span></label>
+                        <label class="option-item"><input type="radio" name="q3" value="C"><span class="option-label">C. Teachers donated more books than students during the two-week preparation.</span></label>
+                        <label class="option-item"><input type="radio" name="q3" value="D"><span class="option-label">D. Fiction books were more popular among visitors than science books.</span></label>
+                        <label class="option-item"><input type="radio" name="q3" value="E"><span class="option-label">E. Sorting books into categories is a very difficult task for volunteers.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q3"></div>
+                </div>
+
+                <!-- Q4 -->
+                <div class="question-card" id="qc-q4">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 4</span>
+                        <span class="badge-type">Purpose (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        What is the author's primary purpose in writing the text?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q4" value="A"><span class="option-label">A. To persuade readers to buy second-hand fiction and science books.</span></label>
+                        <label class="option-item"><input type="radio" name="q4" value="B"><span class="option-label">B. To retell a personal experience of organizing a successful school charity event.</span></label>
+                        <label class="option-item"><input type="radio" name="q4" value="C"><span class="option-label">C. To explain step-by-step instructions on how to set up a rural library.</span></label>
+                        <label class="option-item"><input type="radio" name="q4" value="D"><span class="option-label">D. To analyze the financial results of different categories of donated books.</span></label>
+                        <label class="option-item"><input type="radio" name="q4" value="E"><span class="option-label">E. To criticize school events that make senior high students exhausted.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q4"></div>
+                </div>
+
+                <!-- Q5 -->
+                <div class="question-card" id="qc-q5">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 5</span>
+                        <span class="badge-type">Target Reader (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        Who would benefit the most from reading this text?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q5" value="A"><span class="option-label">A. Elementary school kids who want to learn how to sell expensive items.</span></label>
+                        <label class="option-item"><input type="radio" name="q5" value="B"><span class="option-label">B. High school students who are planning to organize a school community project.</span></label>
+                        <label class="option-item"><input type="radio" name="q5" value="C"><span class="option-label">C. Professional accountants who manage corporate financial statements.</span></label>
+                        <label class="option-item"><input type="radio" name="q5" value="D"><span class="option-label">D. Social media influencers who specialize in book review videos.</span></label>
+                        <label class="option-item"><input type="radio" name="q5" value="E"><span class="option-label">E. Book publishers who want to print new children's storybooks.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q5"></div>
+                </div>
+
+                <!-- Q6 -->
+                <div class="question-card" id="qc-q6">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 6</span>
+                        <span class="badge-type">Moral Value (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        What lesson can be learned from the writer's experience?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q6" value="A"><span class="option-label">A. Leading an event alone is much better than asking for help from a team.</span></label>
+                        <label class="option-item"><input type="radio" name="q6" value="B"><span class="option-label">B. Working hard together for a good cause brings meaningful results and personal growth.</span></label>
+                        <label class="option-item"><input type="radio" name="q6" value="C"><span class="option-label">C. You should only organize events if you already have prior leadership experience.</span></label>
+                        <label class="option-item"><input type="radio" name="q6" value="D"><span class="option-label">D. Money is the only indicator of success when running a charity project.</span></label>
+                        <label class="option-item"><input type="radio" name="q6" value="E"><span class="option-label">E. Raising prices high is necessary when selling donated items to adults.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q6"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TEXT 2 -->
+        <div class="section-card">
+            <div class="section-header">
+                <span>TEXT 2: NARRATIVE TEXT</span>
+                <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">Soal 7 - 11</span>
+            </div>
+            <div class="passage-box">
+                <h2>The Honest Fisherman and the Golden Shell</h2>
+                <p>Long ago, in a quiet coastal village, lived a poor fisherman named Budi. Unlike other fishermen who used giant nets to catch as many fish as possible, Budi only caught what his family needed for the day. He believed that taking too much from the sea was greedy and harmful to nature.</p>
+                <p>One evening, Budi pulled up his net and found a heavy, shimmering golden shell. To his surprise, a gentle voice spoke from inside, "Kind fisherman, please release me back into the ocean, and I will protect your waters." Seeing that the shell belonged to the sea, Budi gently tossed it back without asking for any reward.</p>
+                <p>A greedy villager named Darno secretly watched from behind a rock. The next morning, Darno threw a massive net into the deep water and trapped the golden shell. He shouted, "Give me three chests of gold right now, or I will crush you!" The shell warned him that greed would bring ruin, but Darno demanded his wish immediately.</p>
+                <p>Suddenly, a giant wave rose from the calm sea, destroying Darno’s boat and washing away his heavy net. Darno barely survived and returned to the shore with nothing. Meanwhile, Budi’s modest nets were always filled with enough fish to feed his family, as the ocean blessed his honesty and respect.</p>
+
+                <div class="passage-table-wrapper">
+                    <table class="passage-table">
+                        <caption>Comparison Note: Village Fishermen</caption>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Fishing Technique</th>
+                                <th>Reaction to the Golden Shell</th>
+                                <th>Final Result</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Budi</strong></td>
+                                <td>Catches only daily needs</td>
+                                <td>Releases the shell respectfully without demands</td>
+                                <td>Blessed with daily fish and ocean protection</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Darno</strong></td>
+                                <td>Uses giant nets to maximize catch</td>
+                                <td>Demands chests of gold with threats</td>
+                                <td>Lost his boat and belongings to a giant wave</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="questions-container">
+                <!-- Q7 -->
+                <div class="question-card" id="qc-q7">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 7</span>
+                        <span class="badge-type">Summary (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        Which of the following best summarizes the story?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q7" value="A"><span class="option-label">A. A poor fisherman found a golden shell and became the richest man in his village after making a wish.</span></label>
+                        <label class="option-item"><input type="radio" name="q7" value="B"><span class="option-label">B. An honest fisherman released a magical shell and was blessed, while a greedy villager demanded gold and lost everything.</span></label>
+                        <label class="option-item"><input type="radio" name="q7" value="C"><span class="option-label">C. A giant wave destroyed a fishing village because the villagers used massive nets in deep waters.</span></label>
+                        <label class="option-item"><input type="radio" name="q7" value="D"><span class="option-label">D. Darno trapped a magical golden shell to buy a new boat after his old one sank in the ocean.</span></label>
+                        <label class="option-item"><input type="radio" name="q7" value="E"><span class="option-label">E. Budi and Darno decided to team up to search for treasure chests hidden in the deep sea.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q7"></div>
+                </div>
+
+                <!-- Q8 -->
+                <div class="question-card" id="qc-q8">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 8</span>
+                        <span class="badge-type">Main Idea (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        What is the main idea of the passage?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q8" value="A"><span class="option-label">A. Golden shells are dangerous creatures that bring giant waves to coastal villages.</span></label>
+                        <label class="option-item"><input type="radio" name="q8" value="B"><span class="option-label">B. Honesty and respect for nature bring lasting peace, while greed leads to destruction.</span></label>
+                        <label class="option-item"><input type="radio" name="q8" value="C"><span class="option-label">C. Fishermen should always use giant nets if they want to catch magical ocean creatures.</span></label>
+                        <label class="option-item"><input type="radio" name="q8" value="D"><span class="option-label">D. Demanding gold from magical animals is the fastest way to become a successful fisherman.</span></label>
+                        <label class="option-item"><input type="radio" name="q8" value="E"><span class="option-label">E. Small coastal villages often suffer from unpredictable weather and heavy storms.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q8"></div>
+                </div>
+
+                <!-- Q9 -->
+                <div class="question-card" id="qc-q9">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 9</span>
+                        <span class="badge-type">Purpose (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        What is the writer's main intention in telling this story?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q9" value="A"><span class="option-label">A. To describe the physical features of golden shells found in deep oceans.</span></label>
+                        <label class="option-item"><input type="radio" name="q9" value="B"><span class="option-label">B. To teach readers a moral lesson about the consequences of greed versus honesty.</span></label>
+                        <label class="option-item"><input type="radio" name="q9" value="C"><span class="option-label">C. To instruct fishermen on how to repair boats damaged by giant waves.</span></label>
+                        <label class="option-item"><input type="radio" name="q9" value="D"><span class="option-label">D. To persuade readers to buy local seafood from coastal village markets.</span></label>
+                        <label class="option-item"><input type="radio" name="q9" value="E"><span class="option-label">E. To compare the market prices of gold chests and fishing nets.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q9"></div>
+                </div>
+
+                <!-- Q10 -->
+                <div class="question-card" id="qc-q10">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 10</span>
+                        <span class="badge-type">Target Reader (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        Who is the primary target reader of this story?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q10" value="A"><span class="option-label">A. Marine biologists studying rare species of ocean mollusks.</span></label>
+                        <label class="option-item"><input type="radio" name="q10" value="B"><span class="option-label">B. Young readers and students who are learning character values and ethics.</span></label>
+                        <label class="option-item"><input type="radio" name="q10" value="C"><span class="option-label">C. Professional sailors who need navigational guides for stormy seas.</span></label>
+                        <label class="option-item"><input type="radio" name="q10" value="D"><span class="option-label">D. Government officials who regulate commercial shipping licenses.</span></label>
+                        <label class="option-item"><input type="radio" name="q10" value="E"><span class="option-label">E. Coast guard officers who monitor giant waves in coastal areas.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q10"></div>
+                </div>
+
+                <!-- Q11 -->
+                <div class="question-card" id="qc-q11">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 11</span>
+                        <span class="badge-type">Moral Value (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        What can we learn from Budi's and Darno's actions in the story?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q11" value="A"><span class="option-label">A. Taking more than you need will always guarantee a comfortable life.</span></label>
+                        <label class="option-item"><input type="radio" name="q11" value="B"><span class="option-label">B. True fortune comes from contentment and honesty, not from greedy demands.</span></label>
+                        <label class="option-item"><input type="radio" name="q11" value="C"><span class="option-label">C. You should never help magical creatures unless they pay you upfront.</span></label>
+                        <label class="option-item"><input type="radio" name="q11" value="D"><span class="option-label">D. Threatening others is an effective way to get what you want quickly.</span></label>
+                        <label class="option-item"><input type="radio" name="q11" value="E"><span class="option-label">E. Hard work is useless if you do not have a golden shell.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q11"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SUBMIT BUTTON -->
+        <div class="submit-container">
+            <button type="button" class="btn-submit" id="submitBtn" onclick="gradeQuiz()">Selesai & Lihat Hasil</button>
+        </div>
+
+    </form>
+</div>
+
+<script>
+    /* =========================================
+       QUIZ GRADING & PROGRESS LOGIC 
+       ========================================= */
+    const answerKey = {
+        q1: { type: 'single', key: 'B', exp: '<b>Kunci Jawaban: B</b><br><b>Pembahasan:</b> Ringkasan (summary) yang baik harus mencakup inti alur dari seluruh teks. Opsi B secara lengkap merangkum tujuan, proses (mengumpulkan, memilah, menjual), dan hasil kegiatan bazaar buku. Opsi A, C, D, dan E terlalu spesifik (too narrow) karena hanya mengambil satu detail kecil.' },
+        q2: { type: 'multiple', key: ['A', 'B', 'D'], exp: '<b>Kunci Jawaban: A, B, dan D</b><br><b>Pembahasan:</b><br>• <b>A:</b> Paragraf 2 & Tabel 1 menyebutkan memilah (sorting) dan memberi harga.<br>• <b>B:</b> Paragraf 2 & Tabel 1 mencantumkan promosi media sosial.<br>• <b>D:</b> Tabel 1 mencantumkan penataan meja display untuk buku anak-anak.<br><i>Opsi C salah karena buku dijual terjangkau. Opsi E salah karena dana dialokasikan untuk perpustakaan SD.</i>' },
+        q3: { type: 'single', key: 'A', exp: '<b>Kunci Jawaban: A</b><br><b>Pembahasan:</b> Paragraf 2 menceritakan persiapan tim dalam mengumpulkan 500+ buku, mengelompokkannya, dan mempromosikannya lewat poster serta media sosial.' },
+        q4: { type: 'single', key: 'B', exp: '<b>Kunci Jawaban: B</b><br><b>Pembahasan:</b> Sebagai teks Recount, tujuan utama penulisan adalah menceritakan kembali pengalaman pribadi di masa lalu (to retell a personal experience).' },
+        q5: { type: 'single', key: 'B', exp: '<b>Kunci Jawaban: B</b><br><b>Pembahasan:</b> Teks ini memberikan inspirasi dan langkah praktis bagi sesama siswa SMA yang ingin merencanakan atau memimpin proyek sosial/komunitas sekolah.' },
+        q6: { type: 'single', key: 'B', exp: '<b>Kunci Jawaban: B</b><br><b>Pembahasan:</b> Paragraf terakhir menekankan bahwa kerja keras tim untuk tujuan baik menghasilkan dampak nyata serta pengalaman belajar komunikasi dan kepemimpinan yang berharga.' },
+
+        q7: { type: 'single', key: 'B', exp: '<b>Kunci Jawaban: B</b><br><b>Pembahasan:</b> Opsi B merangkum seluruh konflik utama naratif: kebaikan Budi yang membawa berkah vs. keserakahan Darno yang membawa kehancuran.' },
+        q8: { type: 'single', key: 'B', exp: '<b>Kunci Jawaban: B</b><br><b>Pembahasan:</b> Gagasan utama cerita berpusat pada pesan moral bahwa sikap jujur dan menghargai alam mendatangkan ketenangan/keberkahan, sedangkan keserakahan merusak segalanya.' },
+        q9: { type: 'single', key: 'B', exp: '<b>Kunci Jawaban: B</b><br><b>Pembahasan:</b> Tujuan penulisan teks Narrative berupa mendongeng (storytelling) adalah menghibur sekaligus menyampaikan pesan moral kepada pembaca.' },
+        q10: { type: 'single', key: 'B', exp: '<b>Kunci Jawaban: B</b><br><b>Pembahasan:</b> Dongeng moral dengan alur sederhana seperti ini utamanya ditujukan untuk pembaca muda/siswa dalam mempelajari nilai-nilai etika dan karakter.' },
+        q11: { type: 'single', key: 'B', exp: '<b>Kunci Jawaban: B</b><br><b>Pembahasan:</b> Pesan moral cerita ini mengajarkan bahwa keberuntungan sejati datang dari rasa cukup (contentment) dan kejujuran, bukan dari tuntutan yang serakah.' }
+    };
+
+    function updateProgress() {
+        let answeredCount = 0;
+        for (let i = 1; i <= 11; i++) {
+            let checked = document.querySelectorAll(`input[name="q${i}"]:checked`);
+            if (checked.length > 0) answeredCount++;
+        }
+        let percent = (answeredCount / 11) * 100;
+        document.getElementById('progressBar').style.width = percent + '%';
+        document.getElementById('progressText').innerText = `Terjawab: ${answeredCount} / 11`;
+    }
+
+    document.querySelectorAll('input').forEach(input => {
+        input.addEventListener('change', updateProgress);
+    });
+
+    function gradeQuiz() {
+        let correctCount = 0;
+        let incorrectCount = 0;
+
+        for (let i = 1; i <= 11; i++) {
+            let qKey = 'q' + i;
+            let qData = answerKey[qKey];
+            let expBox = document.getElementById('exp-q' + i);
+            let isCorrect = false;
+            let userAnsText = '';
+
+            if (qData.type === 'single') {
+                let selected = document.querySelector(`input[name="${qKey}"]:checked`);
+                let userVal = selected ? selected.value : null;
+                userAnsText = userVal ? `Jawaban Anda: ${userVal}` : 'Jawaban Anda: (Belum diisi)';
+                if (userVal === qData.key) isCorrect = true;
+            } else if (qData.type === 'multiple') {
+                let selected = Array.from(document.querySelectorAll(`input[name="${qKey}"]:checked`)).map(cb => cb.value);
+                userAnsText = selected.length > 0 ? `Jawaban Anda: ${selected.join(', ')}` : 'Jawaban Anda: (Belum diisi)';
+                if (selected.length === qData.key.length && selected.every(val => qData.key.includes(val))) {
+                    isCorrect = true;
+                }
+            }
+
+            let statusBadge = isCorrect 
+                ? `<span class="user-status status-correct">&#10004; BENAR</span>`
+                : `<span class="user-status status-incorrect">&#10008; SALAH</span>`;
+
+            expBox.innerHTML = `
+                <div class="explanation-header">${statusBadge} <span style="font-size:0.85rem; color:var(--text-muted);">${userAnsText}</span></div>
+                <div>${qData.exp}</div>
+            `;
+            expBox.classList.add('show');
+
+            if (isCorrect) correctCount++;
+            else incorrectCount++;
+        }
+
+        let finalScore = Math.round((correctCount / 11) * 100);
+        document.getElementById('finalScoreNum').innerText = finalScore;
+        document.getElementById('statCorrect').innerText = correctCount;
+        document.getElementById('statIncorrect').innerText = incorrectCount;
+        document.getElementById('statAccuracy').innerText = finalScore + '%';
+        
+        let dashboard = document.getElementById('resultDashboard');
+        dashboard.classList.add('show');
+        dashboard.scrollIntoView({ behavior: 'smooth' });
+
+        let submitBtn = document.getElementById('submitBtn');
+        submitBtn.innerText = 'Hasil Telah Ditampilkan';
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = '0.6';
+        submitBtn.style.cursor = 'not-allowed';
+    }
+
+    function resetQuiz() {
+        if (confirm("Apakah Anda yakin ingin mengulang Latihan dari awal? Semua jawaban akan direset.")) {
+            document.getElementById('quizForm').reset();
+            document.querySelectorAll('.explanation-box').forEach(box => {
+                box.classList.remove('show');
+                box.innerHTML = '';
+            });
+            document.getElementById('resultDashboard').classList.remove('show');
+            let submitBtn = document.getElementById('submitBtn');
+            submitBtn.innerText = 'Selesai & Lihat Hasil';
+            submitBtn.disabled = false;
+            submitBtn.style.opacity = '1';
+            submitBtn.style.cursor = 'pointer';
+            updateProgress();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    }
+</script>
+
+</body>
+</html>

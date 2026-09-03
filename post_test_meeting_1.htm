@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Test of Meeting 1</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #eff6ff;
+            --secondary: #475569;
+            --bg-main: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --success: #16a34a;
+            --success-light: #f0fdf4;
+            --error: #dc2626;
+            --error-light: #fef2f2;
+            --warning: #d97706;
+            --warning-light: #fffbeb;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            color: #ffffff;
+            padding: 24px 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            margin-bottom: 6px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        header p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 24px auto;
+            padding: 0 16px;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .progress-bar-bg {
+            flex: 1;
+            height: 10px;
+            background-color: #e2e8f0;
+            border-radius: 999px;
+            overflow: hidden;
+            min-width: 200px;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #2563eb);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        /* Section & Passage Card */
+        .section-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            margin-bottom: 32px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: #f1f5f9;
+            padding: 14px 24px;
+            border-bottom: 1px solid var(--border);
+            font-weight: 700;
+            color: #1e293b;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .passage-box {
+            padding: 24px;
+            background: #fafafa;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.95rem;
+            color: #334155;
+        }
+
+        .passage-box h2 {
+            font-size: 1.15rem;
+            color: #0f172a;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .passage-box p {
+            margin-bottom: 12px;
+            text-align: justify;
+        }
+
+        .passage-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Question Box */
+        .questions-container {
+            padding: 24px;
+        }
+
+        .question-card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+            transition: border-color 0.2s ease;
+        }
+
+        .question-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .question-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .badge-num {
+            background: var(--primary-light);
+            color: var(--primary);
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+        }
+
+        .badge-type {
+            background: #f1f5f9;
+            color: var(--secondary);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .question-text {
+            font-weight: 600;
+            color: var(--text-main);
+            font-size: 0.975rem;
+            margin-bottom: 16px;
+        }
+
+        /* Options */
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            background: #ffffff;
+            font-size: 0.925rem;
+        }
+
+        .option-item:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+        }
+
+        .option-item input[type="radio"],
+        .option-item input[type="checkbox"] {
+            margin-top: 3px;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        .option-label {
+            flex: 1;
+            cursor: pointer;
+        }
+
+        /* Categorization Table */
+        .cat-table-wrapper {
+            overflow-x: auto;
+            margin-top: 12px;
+        }
+
+        .cat-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+
+        .cat-table th {
+            background: #f1f5f9;
+            padding: 10px;
+            text-align: center;
+            border: 1px solid var(--border);
+            font-weight: 600;
+        }
+
+        .cat-table th:first-child {
+            text-align: left;
+            width: 60%;
+        }
+
+        .cat-table td {
+            padding: 10px;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .cat-table td:first-child {
+            text-align: left;
+        }
+
+        .cat-table input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        /* Explanation Box */
+        .explanation-box {
+            display: none;
+            margin-top: 16px;
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            background: #f8fafc;
+            border-left: 4px solid var(--primary);
+        }
+
+        .explanation-box.show {
+            display: block;
+        }
+
+        .explanation-header {
+            font-weight: 700;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .user-status {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            margin-bottom: 8px;
+        }
+
+        .status-correct {
+            background: var(--success-light);
+            color: var(--success);
+            border: 1px solid #bbf7d0;
+        }
+
+        .status-incorrect {
+            background: var(--error-light);
+            color: var(--error);
+            border: 1px solid #fecaca;
+        }
+
+        /* Submit Button */
+        .submit-container {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 700;
+            padding: 14px 40px;
+            border: none;
+            border-radius: 999px;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+            transition: all 0.2s ease;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.45);
+        }
+
+        /* Result Dashboard */
+        .result-dashboard {
+            display: none;
+            background: white;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            padding: 32px;
+            margin-bottom: 32px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+            text-align: center;
+        }
+
+        .result-dashboard.show {
+            display: block;
+        }
+
+        .score-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            color: var(--primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            border: 4px solid var(--primary);
+        }
+
+        .score-num {
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .score-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--secondary);
+            margin-top: 2px;
+        }
+
+        .result-stats {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            background: #f8fafc;
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            min-width: 140px;
+        }
+
+        .stat-val {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .stat-lbl {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .btn-reset {
+            background: #e2e8f0;
+            color: #334155;
+            font-weight: 600;
+            padding: 10px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.2s;
+        }
+
+        .btn-reset:hover {
+            background: #cbd5e1;
+        }
+
+        @media (max-width: 640px) {
+            .passage-box { padding: 16px; }
+            .questions-container { padding: 16px; }
+            .question-card { padding: 16px; }
+            .stat-card { flex: 1; min-width: 100px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Post Test of Meeting 1</h1>
+    <p>_______________</p>
+</header>
+
+<div class="container">
+
+    <!-- Progress Tracker -->
+    <div class="progress-container">
+        <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="progressBar"></div>
+        </div>
+        <div class="progress-text" id="progressText">Terjawab: 0 / 25</div>
+    </div>
+
+    <!-- Result Dashboard (Hidden initially) -->
+    <div class="result-dashboard" id="resultDashboard">
+        <h2>Hasil Post Test Meeting 1 Anda</h2>
+        <p style="color: var(--text-muted); margin-bottom: 20px;">Berikut adalah ringkasan performa pengerjaan soal Anda:</p>
+        
+        <div class="score-circle">
+            <div class="score-num" id="finalScoreNum">0</div>
+            <div class="score-label">NILAI AKHIR</div>
+        </div>
+
+        <div class="result-stats">
+            <div class="stat-card">
+                <div class="stat-val" id="statCorrect" style="color: var(--success);">0</div>
+                <div class="stat-lbl">Jawaban Benar</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-val" id="statIncorrect" style="color: var(--error);">0</div>
+                <div class="stat-lbl">Jawaban Salah</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-val" id="statAccuracy">0%</div>
+                <div class="stat-lbl">Akurasi Total</div>
+            </div>
+        </div>
+
+        <button class="btn-reset" onclick="resetQuiz()">Ulangi Latihan</button>
+    </div>
+
+    <!-- FORM QUIZ -->
+    <form id="quizForm">
+
+        <!-- TEXT 1 -->
+        <div class="section-card">
+            <div class="section-header">
+                <span>TEXT 1: DESCRIPTIVE TEXT</span>
+                <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">Soal 1 - 5</span>
+            </div>
+            <div class="passage-box">
+                <h2>Exploring Makassar: A City of Sea and History</h2>
+                <p>Makassar is a busy port city on the island of Sulawesi in Indonesia. It is famous for its long history, delicious food, and beautiful seaside views. For tourists, Makassar offers a wonderful mix of nature, city life, and culture. Here are three iconic places you must visit.</p>
+                <p>First, you cannot miss Losari Beach. This is not a beach for swimming, but it is the heart of the city. Every evening, hundreds of people come here to walk, talk, and enjoy the famous sunset. The view of the sea is calm and beautiful. Across the street, you can find many food stalls selling local Makassar dishes. It is the perfect place to feel the energy of the city.</p>
+                <p>For nature lovers, Samalona Island is a short boat trip from the city. The water around this small island is very clear and blue. You can swim, snorkel to see colourful fish, or simply relax on the white sand. It feels like a peaceful escape from the busy city. Remember to bring your sunscreen and a hat!</p>
+                <p>Finally, to understand the history of this region, visit Fort Rotterdam. This is a large, old fort built from dark stone. It was very important for trade hundreds of years ago. Now, it is a museum. You can walk inside the strong walls, see old rooms, and learn about local history and culture. It is a quiet and interesting place that tells the story of Makassar's past.</p>
+                <p>In conclusion, Makassar is a fascinating destination. You can enjoy a modern city sunset at Losari, discover underwater beauty at Samalona, and walk through history at Fort Rotterdam. It is a trip you will always remember.</p>
+            </div>
+
+            <div class="questions-container">
+                <!-- Q1 -->
+                <div class="question-card" id="qc-q1">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 1</span>
+                        <span class="badge-type">Main Idea (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        What is the text about?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q1" value="A"><span class="option-label">A. Makassar as a tourist city with three key attractions</span></label>
+                        <label class="option-item"><input type="radio" name="q1" value="B"><span class="option-label">B. The culinary history and famous local dishes found in Makassar</span></label>
+                        <label class="option-item"><input type="radio" name="q1" value="C"><span class="option-label">C. A detailed comparison of Sulawesi’s beaches, including Losari Beach and Samalona Island</span></label>
+                        <label class="option-item"><input type="radio" name="q1" value="D"><span class="option-label">D. The historical role of Fort Rotterdam in Indonesia’s colonial past</span></label>
+                        <label class="option-item"><input type="radio" name="q1" value="E"><span class="option-label">E. Marine conservation efforts around Samalona Island</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q1"></div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="question-card" id="qc-q2">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 2</span>
+                        <span class="badge-type">Specific Info (Categorizing)</span>
+                    </div>
+                    <div class="question-text">
+                        There are several reasons why people visit Makassar. Which place(s) is suitable for swimming?
+                    </div>
+                    <div class="cat-table-wrapper">
+                        <table class="cat-table">
+                            <thead>
+                                <tr>
+                                    <th>Place</th>
+                                    <th>Swimming</th>
+                                    <th>No Swimming</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1. Losari Beach</td>
+                                    <td><input type="radio" name="q2_1" value="Swimming"></td>
+                                    <td><input type="radio" name="q2_1" value="No Swimming"></td>
+                                </tr>
+                                <tr>
+                                    <td>2. Samalona Island</td>
+                                    <td><input type="radio" name="q2_2" value="Swimming"></td>
+                                    <td><input type="radio" name="q2_2" value="No Swimming"></td>
+                                </tr>
+                                <tr>
+                                    <td>3. Fort Rotterdam</td>
+                                    <td><input type="radio" name="q2_3" value="Swimming"></td>
+                                    <td><input type="radio" name="q2_3" value="No Swimming"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="explanation-box" id="exp-q2"></div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="question-card" id="qc-q3">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 3</span>
+                        <span class="badge-type">Fact vs Opinion (Categorizing)</span>
+                    </div>
+                    <div class="question-text">
+                        Which of the following is a fact and an opinion?
+                    </div>
+                    <div class="cat-table-wrapper">
+                        <table class="cat-table">
+                            <thead>
+                                <tr>
+                                    <th>Sentence</th>
+                                    <th>Fact</th>
+                                    <th>Opinion</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1. Every evening, hundreds of people come here to walk, talk, and enjoy the famous sunset.</td>
+                                    <td><input type="radio" name="q3_1" value="Fact"></td>
+                                    <td><input type="radio" name="q3_1" value="Opinion"></td>
+                                </tr>
+                                <tr>
+                                    <td>2. It is the perfect place to feel the energy of the city.</td>
+                                    <td><input type="radio" name="q3_2" value="Fact"></td>
+                                    <td><input type="radio" name="q3_2" value="Opinion"></td>
+                                </tr>
+                                <tr>
+                                    <td>3. It feels like a peaceful escape from the busy city.</td>
+                                    <td><input type="radio" name="q3_3" value="Fact"></td>
+                                    <td><input type="radio" name="q3_3" value="Opinion"></td>
+                                </tr>
+                                <tr>
+                                    <td>4. This is a large, old fort built from dark stone.</td>
+                                    <td><input type="radio" name="q3_4" value="Fact"></td>
+                                    <td><input type="radio" name="q3_4" value="Opinion"></td>
+                                </tr>
+                                <tr>
+                                    <td>5. It is a trip you will always remember.</td>
+                                    <td><input type="radio" name="q3_5" value="Fact"></td>
+                                    <td><input type="radio" name="q3_5" value="Opinion"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="explanation-box" id="exp-q3"></div>
+                </div>
+
+                <!-- Q4 -->
+                <div class="question-card" id="qc-q4">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 4</span>
+                        <span class="badge-type">Detail Information (Multiple Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        Which sentences support the idea of the calmness of Makassar? <em>(Select all correct answers)</em>
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="checkbox" name="q4" value="A"><span class="option-label">A. The view of the sea is calm and beautiful.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q4" value="B"><span class="option-label">B. Every evening, hundreds of people come here to walk, talk, and enjoy the famous sunset.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q4" value="C"><span class="option-label">C. It feels like a peaceful escape from the busy city.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q4" value="D"><span class="option-label">D. You can walk inside the strong walls, see old rooms, and learn about local history and culture.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q4" value="E"><span class="option-label">E. It is a quiet and interesting place that tells the story of Makassar’s past.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q4"></div>
+                </div>
+
+                <!-- Q5 -->
+                <div class="question-card" id="qc-q5">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 5</span>
+                        <span class="badge-type">Inference (Multiple Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        Which of the following additional information will make the text useful for the future visitors of the Fort? <em>(Select all correct answers)</em>
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="checkbox" name="q5" value="A"><span class="option-label">A. The exact date when the fort's construction began.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q5" value="B"><span class="option-label">B. The opening hours and entrance fee for Fort Rotterdam.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q5" value="C"><span class="option-label">C. The name of the original architect who designed Fort Rotterdam.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q5" value="D"><span class="option-label">D. The main historical exhibits or collections featured inside the museum.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q5" value="E"><span class="option-label">E. How to get to Fort Rotterdam from the city center (e.g., transport options).</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q5"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TEXT 2 -->
+        <div class="section-card">
+            <div class="section-header">
+                <span>TEXT 2: RECOUNT TEXT</span>
+                <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">Soal 6 - 10</span>
+            </div>
+            <div class="passage-box">
+                <h2>A Lost Friendship</h2>
+                <p>I want to tell you about one of my saddest experiences from when I was fifteen years old. It wasn’t a big disaster, but it was the slow end of my closest friendship.</p>
+                <p>My best friend's name was Leo. We did everything together since primary school. We played football every afternoon, we liked the same video games, and we even helped each other with homework. I thought our friendship would last forever.</p>
+                <p>The problem started when we went to different high schools. At first, we called each other every weekend and met every month. But slowly, our lives became different. I joined the school band and made new friends there. Leo joined the basketball team and was always busy with practice. We started to call less often. When we did talk, the conversations felt short and a little awkward. We didn’t have the same daily experiences to share anymore.</p>
+                <p>One day, I saw a photo online. It was Leo with his new basketball friends on a trip I didn’t know about. That was the moment I felt a deep sadness. I realised we were already living separate lives. I sent him a message, "Looks like a fun trip!" He replied quickly, "Yeah, it was great! We should catch up soon." But we both knew that "soon" would probably never come. We never had a big fight or argument. The friendship just faded away quietly, like a song ending.</p>
+                <p>Even now, many years later, I still feel a little sad when I remember Leo. I learned that some friendships are for a season of your life. You can be very close for a time, and then your paths simply go in different directions. It’s a natural part of growing up, but it still hurts.</p>
+            </div>
+
+            <div class="questions-container">
+                <!-- Q6 -->
+                <div class="question-card" id="qc-q6">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 6</span>
+                        <span class="badge-type">Vocabulary in Context (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        "I learned that some friendships are <u>for a season of your life</u>." (Last Paragraph). The underlined phrase means that...
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q6" value="A"><span class="option-label">A. Friendships are strongest during the summer and winter holidays.</span></label>
+                        <label class="option-item"><input type="radio" name="q6" value="B"><span class="option-label">B. People should only make friends with those in the same school term.</span></label>
+                        <label class="option-item"><input type="radio" name="q6" value="C"><span class="option-label">C. Some friendships are only close and meaningful for a certain period of time.</span></label>
+                        <label class="option-item"><input type="radio" name="q6" value="D"><span class="option-label">D. The writer and Leo were friends only because they liked seasonal sports.</span></label>
+                        <label class="option-item"><input type="radio" name="q6" value="E"><span class="option-label">E. True friendship requires you to change with every new season.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q6"></div>
+                </div>
+
+                <!-- Q7 -->
+                <div class="question-card" id="qc-q7">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 7</span>
+                        <span class="badge-type">Specific Info (Multiple Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        Which of the following are correct according to the text? <em>(Select all correct answers)</em>
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="checkbox" name="q7" value="A"><span class="option-label">A. The writer and Leo had been friends since primary school.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q7" value="B"><span class="option-label">B. Their friendship changed after they attended different high schools.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q7" value="C"><span class="option-label">C. The writer felt a deep sadness when he saw a photo of Leo with new friends.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q7" value="D"><span class="option-label">D. They stopped being friends because they had a big argument.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q7" value="E"><span class="option-label">E. The writer was jealous that Leo made new friends.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q7"></div>
+                </div>
+
+                <!-- Q8 -->
+                <div class="question-card" id="qc-q8">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 8</span>
+                        <span class="badge-type">Conclusion (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        It can be concluded that.....
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q8" value="A"><span class="option-label">A. Leo valued his new friends more than his old friendship.</span></label>
+                        <label class="option-item"><input type="radio" name="q8" value="B"><span class="option-label">B. The writer regrets joining the school band instead of the basketball team.</span></label>
+                        <label class="option-item"><input type="radio" name="q8" value="C"><span class="option-label">C. Their friendship would have lasted if they had had the same club.</span></label>
+                        <label class="option-item"><input type="radio" name="q8" value="D"><span class="option-label">D. It is impossible to maintain childhood friendships.</span></label>
+                        <label class="option-item"><input type="radio" name="q8" value="E"><span class="option-label">E. The friendship ended not from anger, but from growing apart naturally.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q8"></div>
+                </div>
+
+                <!-- Q9 -->
+                <div class="question-card" id="qc-q9">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 9</span>
+                        <span class="badge-type">Synthesis (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        What can we tell about the similarity between the writer and his friend Leo regarding their friendship?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q9" value="A"><span class="option-label">A. They both intentionally stopped calling each other.</span></label>
+                        <label class="option-item"><input type="radio" name="q9" value="B"><span class="option-label">B. They both felt angry and betrayed by the other.</span></label>
+                        <label class="option-item"><input type="radio" name="q9" value="C"><span class="option-label">C. They both believed their friendship could be saved easily.</span></label>
+                        <label class="option-item"><input type="radio" name="q9" value="D"><span class="option-label">D. They both made new friends in their new schools.</span></label>
+                        <label class="option-item"><input type="radio" name="q9" value="E"><span class="option-label">E. They both preferred their old friends over their new ones.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q9"></div>
+                </div>
+
+                <!-- Q10 -->
+                <div class="question-card" id="qc-q10">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 10</span>
+                        <span class="badge-type">Application (Multiple Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        If you were the writer, what would you do differently to save the friendship? <em>(Select all correct answers)</em>
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="checkbox" name="q10" value="A"><span class="option-label">A. Make a specific plan to meet, like a monthly football game, instead of a vague "catch up soon."</span></label>
+                        <label class="option-item"><input type="checkbox" name="q10" value="B"><span class="option-label">B. Transfer to Leo’s high school and ask to be in the same class to be together again.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q10" value="C"><span class="option-label">C. Stop making new friends to focus only on the precious old friendship.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q10" value="D"><span class="option-label">D. Actively share details about your new life and ask about his to stay connected.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q10" value="E"><span class="option-label">E. Confront Leo about the photo, ask why he didn't invite you, and said you were sad.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q10"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TEXT 3 -->
+        <div class="section-card">
+            <div class="section-header">
+                <span>TEXT 3: PROCEDURE/EXPOSITION</span>
+                <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">Soal 11 - 15</span>
+            </div>
+            <div class="passage-box">
+                <h2>Becoming a Politically Aware Person</h2>
+                <p>Being politically aware doesn’t mean you have to argue about complicated laws all the time. It simply means understanding how decisions are made in your community and country, and how they affect your life. As a teenager, you can start this journey with small, manageable steps. Here is how you can begin.</p>
+                <p>First, find reliable sources of information. This is the most important step. Do not believe everything you see on social media. Follow a few trusted news websites, newspapers, or TV channels. Start with just 10 minutes a day. Read headlines or watch one short news summary. Good sources give facts, not just strong opinions.</p>
+                <p>Next, talk and listen to people around you. Have calm conversations with your family, teachers, or friends about things happening in your city or school. Ask questions like, "What do you think about this new rule?" or "How does this problem affect us?" Listen carefully to different opinions. This helps you see one issue from many sides.</p>
+                <p>Then, connect politics to your own life. Politics isn’t just about big leaders in a faraway capital. Think about your school. Are there rules you think are unfair? Think about your town. Is the park clean? Is public transport good? These are all local political issues. Understanding this connection makes politics real and interesting for you.</p>
+                <p>Finally, take one small action. Awareness leads to action. You don’t need to start a big protest. You can write a respectful email to your school council about an idea you have. You can join a school club that focuses on the environment or community service. You can even just vote in a student election. These actions teach you how change happens.</p>
+                <p>Remember, becoming politically aware is a process. Start small, stay curious, and use your voice respectfully. Your perspective as a young person is important for the future.</p>
+            </div>
+
+            <div class="questions-container">
+                <!-- Q11 -->
+                <div class="question-card" id="qc-q11">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 11</span>
+                        <span class="badge-type">Purpose (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        What is the aim of the text?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q11" value="A"><span class="option-label">A. To list the most reliable news websites and TV channels for political news</span></label>
+                        <label class="option-item"><input type="radio" name="q11" value="B"><span class="option-label">B. To explain the history and structure of political systems in communities.</span></label>
+                        <label class="option-item"><input type="radio" name="q11" value="C"><span class="option-label">C. To give readers practical steps to start becoming more aware of politics</span></label>
+                        <label class="option-item"><input type="radio" name="q11" value="D"><span class="option-label">D. To persuade readers to immediately take action on a specific political issue</span></label>
+                        <label class="option-item"><input type="radio" name="q11" value="E"><span class="option-label">E. To analyze the main challenges teenagers face when discussing politics</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q11"></div>
+                </div>
+
+                <!-- Q12 -->
+                <div class="question-card" id="qc-q12">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 12</span>
+                        <span class="badge-type">Specific Info (Multiple Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        Which of the following information is correct according to the text? <em>(Select all correct answers)</em>
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="checkbox" name="q12" value="A"><span class="option-label">A. Good news sources give facts, not just strong opinions.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q12" value="B"><span class="option-label">B. You should spend at least one hour every day watching the news.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q12" value="C"><span class="option-label">C. Having calm conversations helps you see an issue from many sides.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q12" value="D"><span class="option-label">D. A small action you can take is to vote in a student election.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q12" value="E"><span class="option-label">E. Politics is only about big leaders and laws made in the capital city.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q12"></div>
+                </div>
+
+                <!-- Q13 -->
+                <div class="question-card" id="qc-q13">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 13</span>
+                        <span class="badge-type">Inference (Categorizing)</span>
+                    </div>
+                    <div class="question-text">
+                        Which of the following inferences is true?
+                    </div>
+                    <div class="cat-table-wrapper">
+                        <table class="cat-table">
+                            <thead>
+                                <tr>
+                                    <th>Statement</th>
+                                    <th>True</th>
+                                    <th>False</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1. Family and teachers are the only reliable sources of political information.</td>
+                                    <td><input type="radio" name="q13_1" value="True"></td>
+                                    <td><input type="radio" name="q13_1" value="False"></td>
+                                </tr>
+                                <tr>
+                                    <td>2. Developing political awareness is a skill that can be learned gradually.</td>
+                                    <td><input type="radio" name="q13_2" value="True"></td>
+                                    <td><input type="radio" name="q13_2" value="False"></td>
+                                </tr>
+                                <tr>
+                                    <td>3. Taking small, practical actions can build confidence and understanding for larger future involvement.</td>
+                                    <td><input type="radio" name="q13_3" value="True"></td>
+                                    <td><input type="radio" name="q13_3" value="False"></td>
+                                </tr>
+                                <tr>
+                                    <td>4. Most teenagers are not interested in politics because it is too complicated.</td>
+                                    <td><input type="radio" name="q13_4" value="True"></td>
+                                    <td><input type="radio" name="q13_4" value="False"></td>
+                                </tr>
+                                <tr>
+                                    <td>5. Arguing about politics on social media is an effective form of political action.</td>
+                                    <td><input type="radio" name="q13_5" value="True"></td>
+                                    <td><input type="radio" name="q13_5" value="False"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="explanation-box" id="exp-q13"></div>
+                </div>
+
+                <!-- Q14 -->
+                <div class="question-card" id="qc-q14">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 14</span>
+                        <span class="badge-type">Audience (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        Who is the target audience of the text?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q14" value="A"><span class="option-label">A. Reporters</span></label>
+                        <label class="option-item"><input type="radio" name="q14" value="B"><span class="option-label">B. Parents</span></label>
+                        <label class="option-item"><input type="radio" name="q14" value="C"><span class="option-label">C. Local government officials</span></label>
+                        <label class="option-item"><input type="radio" name="q14" value="D"><span class="option-label">D. High school students</span></label>
+                        <label class="option-item"><input type="radio" name="q14" value="E"><span class="option-label">E. Teachers</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q14"></div>
+                </div>
+
+                <!-- Q15 -->
+                <div class="question-card" id="qc-q15">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 15</span>
+                        <span class="badge-type">Application (Multiple Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        What would you do if one of your friends said that politics is not important for them? <em>(Select all correct answers)</em>
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="checkbox" name="q15" value="A"><span class="option-label">A. Tell them they are wrong and need to care about politics to be a good citizen.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q15" value="B"><span class="option-label">B. Explain how local politics affects things they care about, like school rules or public parks.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q15" value="C"><span class="option-label">C. Share a complicated news article about national laws to change their mind.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q15" value="D"><span class="option-label">D. Agree with them and stop discussing any news or community issues around them.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q15" value="E"><span class="option-label">E. Suggest they start by watching a short, reliable news summary together for just 10 minutes.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q15"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TEXT 4 -->
+        <div class="section-card">
+            <div class="section-header">
+                <span>TEXT 4: NARRATIVE TEXT</span>
+                <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">Soal 16 - 20</span>
+            </div>
+            <div class="passage-box">
+                <h2>The Legend of Banyuwangi</h2>
+                <p>Long ago, the beautiful eastern tip of Java was ruled by a king named Prabu Sulahkromo. He was assisted by a brave, wise, and handsome Prime Minister named Patih Sidopekso. The Patih’s wife, Sri Tanjung, was so beautiful and kind that the king fell madly in love with her.</p>
+                <p>The king wanted to be alone with Sri Tanjung, so he thought of a clever trick. He sent Patih Sidopekso on an impossible mission. The loyal Patih left immediately, not suspecting anything. As soon as he was gone, the king tried to win Sri Tanjung’s love with sweet words and lies. But she remained faithful, thinking only of her husband. The king was furious at her refusal.</p>
+                <p>When Patih Sidopekso returned, he reported to the king. The king then told a terrible lie. He said that while the Patih was away, Sri Tanjung had tried to seduce him.</p>
+                <p>Blind with anger, Patih Sidopekso rushed home. He shouted terrible accusations at his wife. Her honest explanation only made him angrier. He threatened to kill her. He dragged Sri Tanjung to a muddy river.</p>
+                <p>Before he could strike, Sri Tanjung made one last request. "Kill me," she said, "and throw my body into the river. If my blood makes the water smell foul, I was guilty. But if it smells sweet, you will know I was always faithful."</p>
+                <p>The Patih, lost in rage, stabbed his wife. Her body fell into the dirty river. Then, a miracle happened. The water became clear as glass and filled with a wonderful, sweet fragrance. Patih Sidopekso fell to his knees, heartbroken. Over and over, he cried out in sorrow, "Banyu wangi... Banyu wangi..." which means "fragrant water." And that is how the place got its name: Banyuwangi, born from the proof of a wife’s true love for her husband.</p>
+            </div>
+
+            <div class="questions-container">
+                <!-- Q16 -->
+                <div class="question-card" id="qc-q16">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 16</span>
+                        <span class="badge-type">Outline (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        Look at the following outline of the story.<br>
+                        1. King Prabu Sulahkromo’s Forbidden Desire<br>
+                        2. Sidopekso’s Deceptive Mission Assignment<br>
+                        3. Sri Tanjung’s Rejection of the King<br>
+                        4. <strong>_________</strong><br>
+                        5. Sidopekso’s Tragic Test of Loyalty<br>
+                        6. The Birth of Banyuwangi's Name<br><br>
+                        Which of the following best fills in the blank?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q16" value="A"><span class="option-label">A. The King’s Threat to Kill Sri Tanjung</span></label>
+                        <label class="option-item"><input type="radio" name="q16" value="B"><span class="option-label">B. Sidopekso’s Intention to Fight the King</span></label>
+                        <label class="option-item"><input type="radio" name="q16" value="C"><span class="option-label">C. The King’s False Accusation Against Sri Tanjung</span></label>
+                        <label class="option-item"><input type="radio" name="q16" value="D"><span class="option-label">D. Sidopekso’s Acceptance of Sri Tanjung’s Love</span></label>
+                        <label class="option-item"><input type="radio" name="q16" value="E"><span class="option-label">E. The King’s Second Proposal to Sri Tanjung</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q16"></div>
+                </div>
+
+                <!-- Q17 -->
+                <div class="question-card" id="qc-q17">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 17</span>
+                        <span class="badge-type">Conclusion (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        It can be concluded that.....
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q17" value="A"><span class="option-label">A. Sri Tanjung secretly loved the King but was too afraid to admit it.</span></label>
+                        <label class="option-item"><input type="radio" name="q17" value="B"><span class="option-label">B. The King’s deception was the primary cause of the tragedy.</span></label>
+                        <label class="option-item"><input type="radio" name="q17" value="C"><span class="option-label">C. Patih Sidopekso never truly loved his wife and was looking for a reason to leave her.</span></label>
+                        <label class="option-item"><input type="radio" name="q17" value="D"><span class="option-label">D. The miraculous event at the river was a common occurrence in that land.</span></label>
+                        <label class="option-item"><input type="radio" name="q17" value="E"><span class="option-label">E. The story is meant to teach that one should always obey the king without question.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q17"></div>
+                </div>
+
+                <!-- Q18 -->
+                <div class="question-card" id="qc-q18">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 18</span>
+                        <span class="badge-type">Characterization (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        We know that Sri Tanjung was a ______ person.
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q18" value="A"><span class="option-label">A. rebellious</span></label>
+                        <label class="option-item"><input type="radio" name="q18" value="B"><span class="option-label">B. weak</span></label>
+                        <label class="option-item"><input type="radio" name="q18" value="C"><span class="option-label">C. cunning</span></label>
+                        <label class="option-item"><input type="radio" name="q18" value="D"><span class="option-label">D. faithful</span></label>
+                        <label class="option-item"><input type="radio" name="q18" value="E"><span class="option-label">E. suspicious</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q18"></div>
+                </div>
+
+                <!-- Q19 -->
+                <div class="question-card" id="qc-q19">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 19</span>
+                        <span class="badge-type">Moral Value (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        What can we learn from the story?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q19" value="A"><span class="option-label">A. Betrayal and lies can destroy trust and lead to tragic consequences.</span></label>
+                        <label class="option-item"><input type="radio" name="q19" value="B"><span class="option-label">B. True love is always rewarded with a long and happy life together.</span></label>
+                        <label class="option-item"><input type="radio" name="q19" value="C"><span class="option-label">C. It is wise to immediately believe any accusation made by a person in authority.</span></label>
+                        <label class="option-item"><input type="radio" name="q19" value="D"><span class="option-label">D. Miracles only happen for those who are of royal blood.</span></label>
+                        <label class="option-item"><input type="radio" name="q19" value="E"><span class="option-label">E. The most important duty of a wife is to obey her husband’s every command.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q19"></div>
+                </div>
+
+                <!-- Q20 -->
+                <div class="question-card" id="qc-q20">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 20</span>
+                        <span class="badge-type">Detail Information (Multiple Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        Which of the following sentences supports the idea that Prabu Sulahkromo was a manipulative person? <em>(Select all correct answers)</em>
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="checkbox" name="q20" value="A"><span class="option-label">A. He sent Patih Sidopekso on an impossible mission.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q20" value="B"><span class="option-label">B. The king tried to win Sri Tanjung's love with sweet words and lies.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q20" value="C"><span class="option-label">C. The king was furious at her refusal.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q20" value="D"><span class="option-label">D. The king then told a terrible lie.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q20" value="E"><span class="option-label">E. He shouted terrible accusations at his wife.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q20"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TEXT 5 -->
+        <div class="section-card">
+            <div class="section-header">
+                <span>TEXT 5: ANALYTICAL EXPOSITION</span>
+                <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">Soal 21 - 25</span>
+            </div>
+            <div class="passage-box">
+                <h2>Social Media Detox</h2>
+                <p>In today’s world, social media is a big part of our lives. However, using it too much can cause problems. I believe that regularly doing a "social media detox"—taking a break from apps like Instagram or TikTok—is very important for our mental health and real-life happiness.</p>
+                <p>First, constant social media use can make us feel stressed and inadequate. We often see perfect photos of vacations, bodies, and happy moments from other people. This can make us compare our normal lives to these highlights. This comparison creates pressure and can lower our self-esteem. A detox gives our mind a rest from this unhealthy comparison, allowing us to focus on our own progress.</p>
+                <p>Second, social media consumes a lot of our precious time. We can spend hours scrolling without realizing it. This is time we could use for hobbies, exercise, meeting friends face-to-face, or simply relaxing with a book. A detox helps us break this automatic habit and gives us back control of our time. We rediscover activities that bring us real joy and connection.</p>
+                <p>Finally, a detox improves our real-world relationships. When we are not checking our phones every minute, we can listen better and be more present with the people in front of us. Our conversations become deeper and more meaningful.</p>
+                <p>In conclusion, a social media detox is not about deleting accounts forever. It is a short, intentional break to reset our minds, reclaim our time, and reconnect with the real world. It is a simple but vital practice for a healthier and happier life.</p>
+            </div>
+
+            <div class="questions-container">
+                <!-- Q21 -->
+                <div class="question-card" id="qc-q21">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 21</span>
+                        <span class="badge-type">Text Type (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        We know that the text is non-fiction because...
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q21" value="A"><span class="option-label">A. It tells an imaginative story about a character who goes on a social media detox.</span></label>
+                        <label class="option-item"><input type="radio" name="q21" value="B"><span class="option-label">B. It is written in poetic stanzas with rhyme and convincing arguments.</span></label>
+                        <label class="option-item"><input type="radio" name="q21" value="C"><span class="option-label">C. It introduces magical elements to explain the dangers of technology.</span></label>
+                        <label class="option-item"><input type="radio" name="q21" value="D"><span class="option-label">D. It is published as a chapter in a world with hyper-advanced futuristic technologies.</span></label>
+                        <label class="option-item"><input type="radio" name="q21" value="E"><span class="option-label">E. It presents a personal opinion and real-life arguments meant to persuade the reader.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q21"></div>
+                </div>
+
+                <!-- Q22 -->
+                <div class="question-card" id="qc-q22">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 22</span>
+                        <span class="badge-type">Summary (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        Which one is the best summary of the text?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q22" value="A"><span class="option-label">A. Everyone should delete their accounts immediately to avoid stress and wasted time.</span></label>
+                        <label class="option-item"><input type="radio" name="q22" value="B"><span class="option-label">B. Taking regular breaks from social media is crucial for mental health, as it reduces stress from comparison, frees up time for real-world activities, and improves face-to-face relationships.</span></label>
+                        <label class="option-item"><input type="radio" name="q22" value="C"><span class="option-label">C. Social media is entirely negative and causes nothing but low self-esteem and addiction; therefore, governments should regulate its use more strictly for young people.</span></label>
+                        <label class="option-item"><input type="radio" name="q22" value="D"><span class="option-label">D. School projects could fail due to social media addiction, leading them to take a one-month detox that completely changed their life for the better.</span></label>
+                        <label class="option-item"><input type="radio" name="q22" value="E"><span class="option-label">E. Social media detox is mandatory for all social media users because it heals your mental health diseases and prevents stress.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q22"></div>
+                </div>
+
+                <!-- Q23 -->
+                <div class="question-card" id="qc-q23">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 23</span>
+                        <span class="badge-type">Audience (Multiple Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        Who will benefit the most from reading the text? <em>(Select all correct answers)</em>
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="checkbox" name="q23" value="A"><span class="option-label">A. Someone who feels anxious or inadequate after scrolling through social media.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q23" value="B"><span class="option-label">B. A software engineer who designs algorithms for a new social media platform.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q23" value="C"><span class="option-label">C. A student who finds themselves constantly distracted by their phone while studying.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q23" value="D"><span class="option-label">D. A historian researching the impact of the printing press on 15th-century society.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q23" value="E"><span class="option-label">E. A professional gamer whose career depends on being active on streaming platforms.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q23"></div>
+                </div>
+
+                <!-- Q24 -->
+                <div class="question-card" id="qc-q24">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 24</span>
+                        <span class="badge-type">Detail Info (Categorizing)</span>
+                    </div>
+                    <div class="question-text">
+                        Which of the following are true according to the text?
+                    </div>
+                    <div class="cat-table-wrapper">
+                        <table class="cat-table">
+                            <thead>
+                                <tr>
+                                    <th>Statement</th>
+                                    <th>True</th>
+                                    <th>False</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1. People should permanently delete all their social media accounts.</td>
+                                    <td><input type="radio" name="q24_1" value="True"></td>
+                                    <td><input type="radio" name="q24_1" value="False"></td>
+                                </tr>
+                                <tr>
+                                    <td>2. Social media improves the depth and quality of face-to-face conversations.</td>
+                                    <td><input type="radio" name="q24_2" value="True"></td>
+                                    <td><input type="radio" name="q24_2" value="False"></td>
+                                </tr>
+                                <tr>
+                                    <td>3. A social media detox is defined as taking an intentional break from apps.</td>
+                                    <td><input type="radio" name="q24_3" value="True"></td>
+                                    <td><input type="radio" name="q24_3" value="False"></td>
+                                </tr>
+                                <tr>
+                                    <td>4. Constant comparison to others' highlight reels on social media can lower self-esteem.</td>
+                                    <td><input type="radio" name="q24_4" value="True"></td>
+                                    <td><input type="radio" name="q24_4" value="False"></td>
+                                </tr>
+                                <tr>
+                                    <td>5. A detox can help people break the automatic habit of scrolling and reclaim their time.</td>
+                                    <td><input type="radio" name="q24_5" value="True"></td>
+                                    <td><input type="radio" name="q24_5" value="False"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="explanation-box" id="exp-q24"></div>
+                </div>
+
+                <!-- Q25 -->
+                <div class="question-card" id="qc-q25">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 25</span>
+                        <span class="badge-type">Application (Multiple Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        As an active internet user, what will you most likely do after reading the text? <em>(Select all correct answers)</em>
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="checkbox" name="q25" value="A"><span class="option-label">A. Immediately uninstall all social media apps from my phone permanently.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q25" value="B"><span class="option-label">B. Reflect on my own social media habits and how they affect my mood and time.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q25" value="C"><span class="option-label">C. Dismiss the text as irrelevant because social media is essential for modern life.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q25" value="D"><span class="option-label">D. Consider planning a short, intentional break from social media to see how it feels.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q25" value="E"><span class="option-label">E. Forward the article to a friend who I think uses social media weekly.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q25"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SUBMIT BUTTON -->
+        <div class="submit-container">
+            <button type="button" class="btn-submit" id="submitBtn" onclick="gradeQuiz()">Selesai & Lihat Hasil</button>
+        </div>
+
+    </form>
+</div>
+
+<script>
+    /* =========================================
+       QUIZ GRADING & PROGRESS LOGIC 
+       ========================================= */
+    const answerKey = {
+        q1: { type: 'single', key: 'A', exp: '<b>Kunci Jawaban: A</b><br><b>Pembahasan:</b> Seluruh teks disusun sebagai pengantar Makassar, menyorotinya sebagai destinasi wisata dan berfokus pada tiga tempat ikonik yang wajib dikunjungi: Pantai Losari, Pulau Samalona, dan Benteng Rotterdam. Pilihan lain hanya menyentuh topik sempit daripada menangkap fokus keseluruhan teks.' },
+        q2: { type: 'cat', key: { q2_1: 'No Swimming', q2_2: 'Swimming', q2_3: 'No Swimming' }, exp: '<b>Kunci Jawaban: 1. No Swimming | 2. Swimming | 3. No Swimming</b><br><b>Pembahasan:</b> Tempat di mana turis bisa berenang hanya di Samalona Island. Pengunjung tidak bisa berenang di Pantai Losari ("This is not a beach for swimming"), dan tidak ada informasi mengenai berenang di Fort Rotterdam.' },
+        q3: { type: 'cat', key: { q3_1: 'Fact', q3_2: 'Opinion', q3_3: 'Opinion', q3_4: 'Fact', q3_5: 'Opinion' }, exp: '<b>Kunci Jawaban: 1. Fact | 2. Opinion | 3. Opinion | 4. Fact | 5. Opinion</b><br><b>Pembahasan:</b> Kalimat 1 dan 4 adalah pernyataan objektif dan dapat diverifikasi tentang lokasi/aktivitas fisik, sehingga termasuk fakta. Kalimat 2, 3, dan 5 adalah opini atau perasaan subjektif tentang pengalaman di tempat-tempat tersebut ("perfect place", "feels like", "always remember").' },
+        q4: { type: 'multiple', key: ['A', 'C', 'E'], exp: '<b>Kunci Jawaban: A, C, dan E</b><br><b>Pembahasan:</b> Opsi A, C, dan E secara langsung menggunakan kata-kata seperti "calm" (tenang), "peaceful" (damai), dan "quiet" (sunyi) yang mendukung gagasan tentang ketenangan di Makassar.' },
+        q5: { type: 'multiple', key: ['B', 'D', 'E'], exp: '<b>Kunci Jawaban: B, D, dan E</b><br><b>Pembahasan:</b> Pertanyaan ini meminta informasi yang secara khusus berguna untuk "merencanakan kunjungan". Detail praktis seperti jam operasional (B), pameran (D), dan transportasi (E) berguna secara langsung bagi turis. Opsi A dan C adalah detail sejarah yang tidak membantu pengunjung merencanakan perjalanan praktis.' },
+
+        q6: { type: 'single', key: 'C', exp: '<b>Kunci Jawaban: C</b><br><b>Pembahasan:</b> Metafora "for a season" berarti untuk bab atau fase kehidupan tertentu, bukan secara harfiah musim cuaca. Seluruh paragraf menjelaskan bahwa orang bisa sangat dekat untuk sementara waktu sebelum kehidupan mereka terpisah secara alami.' },
+        q7: { type: 'multiple', key: ['A', 'B', 'C'], exp: '<b>Kunci Jawaban: A, B, dan C</b><br><b>Pembahasan:</b> A benar karena disebutkan di paragraf 2. B benar karena masalah dimulai saat SMA yang berbeda (paragraf 3). C benar sesuai paragraf 4. D salah karena secara eksplisit ditulis "We never had a big fight". E salah karena teks menggambarkan kesedihan, bukan kecemburuan.' },
+        q8: { type: 'single', key: 'E', exp: '<b>Kunci Jawaban: E</b><br><b>Pembahasan:</b> Teks secara langsung menyatakan "no big fight or argument" dan persahabatan itu "faded away quietly". Tema keseluruhannya adalah kehidupan mereka berbeda secara alami karena lingkungan baru.' },
+        q9: { type: 'single', key: 'D', exp: '<b>Kunci Jawaban: D</b><br><b>Pembahasan:</b> Teks menyatakan penulis "made new friends" di band, dan Leo juga memiliki teman-teman baru di tim basket. Keduanya sama-sama masuk ke dalam lingkaran sosial yang baru di sekolah mereka masing-masing.' },
+        q10: { type: 'multiple', key: ['A', 'D'], exp: '<b>Kunci Jawaban: A dan D</b><br><b>Pembahasan:</b> A benar karena menyarankan rencana konkret daripada janji samar "catch up soon". D benar karena mengatasi kurangnya pengalaman bersama dengan berbagi secara aktif. B, C, dan E bukan tindakan yang realistis, sehat, atau sesuai konteks cerita.' },
+
+        q11: { type: 'single', key: 'C', exp: '<b>Kunci Jawaban: C</b><br><b>Pembahasan:</b> Struktur dan tujuan utama teks ini bersifat instruksional (panduan langkah demi langkah seperti "First...", "Next...", "Then...", "Finally...") untuk membantu pembaca khususnya remaja mulai sadar politik dengan langkah praktis.' },
+        q12: { type: 'multiple', key: ['A', 'C', 'D'], exp: '<b>Kunci Jawaban: A, C, dan D</b><br><b>Pembahasan:</b> A benar (di akhir paragraf 2). C benar (di paragraf 3). D benar (di paragraf 5). B salah karena teks menyarankan "just 10 minutes a day". E salah karena teks menyatakan sebaliknya, bahwa politik bukan hanya tentang pemimpin besar.' },
+        q13: { type: 'cat', key: { q13_1: 'False', q13_2: 'True', q13_3: 'True', q13_4: 'False', q13_5: 'False' }, exp: '<b>Kunci Jawaban: 1. False | 2. True | 3. True | 4. False | 5. False</b><br><b>Pembahasan:</b> Pernyataan 2 (True) karena ini merupakan proses yang diajarkan perlahan. Pernyataan 3 (True) karena aksi kecil melatih pemahaman. Pernyataan 1, 4, 5 salah karena tidak didukung oleh teks atau bertentangan dengan isi teks.' },
+        q14: { type: 'single', key: 'D', exp: '<b>Kunci Jawaban: D</b><br><b>Pembahasan:</b> Teks menyapa "As a teenager..." dan menggunakan contoh yang sangat relevan dengan siswa sekolah (peraturan sekolah, pemilihan siswa/OSIS, klub sekolah).' },
+        q15: { type: 'multiple', key: ['B', 'E'], exp: '<b>Kunci Jawaban: B dan E</b><br><b>Pembahasan:</b> B benar sesuai saran teks untuk menghubungkan isu dengan kehidupan nyata. E benar karena teks menyarankan mulai dari hal kecil selama 10 menit dengan sumber terpercaya. Opsi A, C, dan D tidak direkomendasikan dan bertentangan dengan pesan teks.' },
+
+        q16: { type: 'single', key: 'C', exp: '<b>Kunci Jawaban: C</b><br><b>Pembahasan:</b> Sesaat setelah Sri Tanjung menolak cinta Raja, Raja merasa murka dan melakukan fitnah (False Accusation) kepada Sidopekso. Hal ini memicu tes loyalitas yang tragis di sungai pada poin selanjutnya.' },
+        q17: { type: 'single', key: 'B', exp: '<b>Kunci Jawaban: B</b><br><b>Pembahasan:</b> Seluruh rangkaian peristiwa berdarah ini dipicu oleh keinginan imoral dan penipuan licik dari Raja. Tanpa kebohongan tersebut, tragedi pembunuhan tidak akan terjadi.' },
+        q18: { type: 'single', key: 'D', exp: '<b>Kunci Jawaban: D</b><br><b>Pembahasan:</b> Teks secara eksplisit menyatakan bahwa Sri Tanjung "remained faithful" (tetap setia) dan di akhir cerita terbukti bahwa keajaiban air sungai yang harum adalah bukti dari kesetiaannya yang sejati.' },
+        q19: { type: 'single', key: 'A', exp: '<b>Kunci Jawaban: A</b><br><b>Pembahasan:</b> Inti pelajaran moralnya adalah kebohongan dan fitnah (oleh Raja) serta hilangnya rasa percaya (oleh Patih) menyebabkan kehancuran dan penyesalan tragis di akhir cerita.' },
+        q20: { type: 'multiple', key: ['A', 'B', 'D'], exp: '<b>Kunci Jawaban: A, B, dan D</b><br><b>Pembahasan:</b> A menunjukkan niat terselubung menyingkirkan Patih. B menunjukkan tindakan manipulatif lewat rayuan palsu. D menunjukkan pemalsuan fakta. Opsi C adalah emosi (marah), dan opsi E adalah aksi dari sang Patih, bukan Raja.' },
+
+        q21: { type: 'single', key: 'E', exp: '<b>Kunci Jawaban: E</b><br><b>Pembahasan:</b> Nonfiksi mencakup teks opini, fakta, atau argumen mengenai dunia nyata (Analytical Exposition). Teks ini menyajikan opini pribadi dan kehidupan nyata tanpa ada karakter fiksi, sajak, atau elemen magis.' },
+        q22: { type: 'single', key: 'B', exp: '<b>Kunci Jawaban: B</b><br><b>Pembahasan:</b> Pilihan B paling akurat mencakup argumen inti dari penulis (mengurangi stres, menambah waktu, memperbaiki hubungan) dan kesimpulan seimbang bahwa ini merupakan rehat sementara, bukan "menghapus akun".' },
+        q23: { type: 'multiple', key: ['A', 'C'], exp: '<b>Kunci Jawaban: A dan C</b><br><b>Pembahasan:</b> Individu yang mengalami kecemasan akibat rasa kurang percaya diri (A) dan sering terdistraksi membuang waktu (C) adalah mereka yang relevan dengan bahasan efek buruk media sosial dalam teks ini.' },
+        q24: { type: 'cat', key: { q24_1: 'False', q24_2: 'False', q24_3: 'True', q24_4: 'True', q24_5: 'True' }, exp: '<b>Kunci Jawaban: 1. False | 2. False | 3. True | 4. True | 5. True</b><br><b>Pembahasan:</b> Pernyataan 1 salah (teks: not about deleting accounts forever). Pernyataan 2 salah (detox-nya yang memperbaiki kualitas ngobrol, bukan aplikasinya). Pernyataan 3, 4, dan 5 sesuai dengan isi paragraf 1, 2, dan 3.' },
+        q25: { type: 'multiple', key: ['B', 'D'], exp: '<b>Kunci Jawaban: B dan D</b><br><b>Pembahasan:</b> Sesuai dengan intensi penulis, artikel persuasif ini bertujuan mendorong refleksi diri (B) dan menyarankan audiens untuk setidaknya mencoba melakukan jeda sementara (detox) dari sosial media untuk merasakan manfaatnya (D).' }
+    };
+
+    function updateProgress() {
+        let answeredCount = 0;
+        for (let i = 1; i <= 25; i++) {
+            if (i === 2 || i === 3 || i === 13 || i === 24) {
+                let subNames = [];
+                if (i === 2) subNames = ['q2_1','q2_2','q2_3'];
+                else if (i === 3) subNames = ['q3_1','q3_2','q3_3','q3_4','q3_5'];
+                else if (i === 13) subNames = ['q13_1','q13_2','q13_3','q13_4','q13_5'];
+                else if (i === 24) subNames = ['q24_1','q24_2','q24_3','q24_4','q24_5'];
+                
+                let allSubAnswered = subNames.every(name => document.querySelector(`input[name="${name}"]:checked`));
+                if (allSubAnswered) answeredCount++;
+            } else {
+                let checked = document.querySelectorAll(`input[name="q${i}"]:checked`);
+                if (checked.length > 0) answeredCount++;
+            }
+        }
+        let percent = (answeredCount / 25) * 100;
+        document.getElementById('progressBar').style.width = percent + '%';
+        document.getElementById('progressText').innerText = `Terjawab: ${answeredCount} / 25`;
+    }
+
+    document.querySelectorAll('input').forEach(input => {
+        input.addEventListener('change', updateProgress);
+    });
+
+    function gradeQuiz() {
+        let correctCount = 0;
+        let incorrectCount = 0;
+
+        for (let i = 1; i <= 25; i++) {
+            let qKey = 'q' + i;
+            let qData = answerKey[qKey];
+            let expBox = document.getElementById('exp-q' + i);
+            let isCorrect = false;
+            let userAnsText = '';
+
+            if (qData.type === 'single') {
+                let selected = document.querySelector(`input[name="${qKey}"]:checked`);
+                let userVal = selected ? selected.value : null;
+                userAnsText = userVal ? `Jawaban Anda: ${userVal}` : 'Jawaban Anda: (Belum diisi)';
+                if (userVal === qData.key) isCorrect = true;
+            } else if (qData.type === 'multiple') {
+                let selected = Array.from(document.querySelectorAll(`input[name="${qKey}"]:checked`)).map(cb => cb.value);
+                userAnsText = selected.length > 0 ? `Jawaban Anda: ${selected.join(', ')}` : 'Jawaban Anda: (Belum diisi)';
+                if (selected.length === qData.key.length && selected.every(val => qData.key.includes(val))) {
+                    isCorrect = true;
+                }
+            } else if (qData.type === 'cat') {
+                let subKeys = Object.keys(qData.key);
+                let catCorrectCount = 0;
+                let userSubAns = [];
+                subKeys.forEach(sKey => {
+                    let sel = document.querySelector(`input[name="${sKey}"]:checked`);
+                    let val = sel ? sel.value : '-';
+                    userSubAns.push(val);
+                    if (val === qData.key[sKey]) catCorrectCount++;
+                });
+                userAnsText = `Jawaban Anda: [ ${userSubAns.join(', ')} ]`;
+                if (catCorrectCount === subKeys.length) isCorrect = true;
+            }
+
+            let statusBadge = isCorrect 
+                ? `<span class="user-status status-correct">&#10004; BENAR</span>`
+                : `<span class="user-status status-incorrect">&#10008; SALAH</span>`;
+
+            expBox.innerHTML = `
+                <div class="explanation-header">${statusBadge} <span style="font-size:0.85rem; color:var(--text-muted);">${userAnsText}</span></div>
+                <div>${qData.exp}</div>
+            `;
+            expBox.classList.add('show');
+
+            if (isCorrect) correctCount++;
+            else incorrectCount++;
+        }
+
+        let finalScore = Math.round((correctCount / 25) * 100);
+        document.getElementById('finalScoreNum').innerText = finalScore;
+        document.getElementById('statCorrect').innerText = correctCount;
+        document.getElementById('statIncorrect').innerText = incorrectCount;
+        document.getElementById('statAccuracy').innerText = finalScore + '%';
+        
+        let dashboard = document.getElementById('resultDashboard');
+        dashboard.classList.add('show');
+        dashboard.scrollIntoView({ behavior: 'smooth' });
+
+        let submitBtn = document.getElementById('submitBtn');
+        submitBtn.innerText = 'Hasil Telah Ditampilkan';
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = '0.6';
+        submitBtn.style.cursor = 'not-allowed';
+    }
+
+    function resetQuiz() {
+        if (confirm("Apakah Anda yakin ingin mengulang Latihan dari awal? Semua jawaban akan direset.")) {
+            document.getElementById('quizForm').reset();
+            document.querySelectorAll('.explanation-box').forEach(box => {
+                box.classList.remove('show');
+                box.innerHTML = '';
+            });
+            document.getElementById('resultDashboard').classList.remove('show');
+            let submitBtn = document.getElementById('submitBtn');
+            submitBtn.innerText = 'Selesai & Lihat Hasil';
+            submitBtn.disabled = false;
+            submitBtn.style.opacity = '1';
+            submitBtn.style.cursor = 'pointer';
+            updateProgress();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    }
+</script>
+
+</body>
+</html>

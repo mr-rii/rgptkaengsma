@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Test Meeting 4</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #eff6ff;
+            --secondary: #475569;
+            --bg-main: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --success: #16a34a;
+            --success-light: #f0fdf4;
+            --error: #dc2626;
+            --error-light: #fef2f2;
+            --warning: #d97706;
+            --warning-light: #fffbeb;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            color: #ffffff;
+            padding: 24px 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            margin-bottom: 6px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        header p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 24px auto;
+            padding: 0 16px;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .progress-bar-bg {
+            flex: 1;
+            height: 10px;
+            background-color: #e2e8f0;
+            border-radius: 999px;
+            overflow: hidden;
+            min-width: 200px;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #2563eb);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        /* Section & Passage Card */
+        .section-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            margin-bottom: 32px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: #f1f5f9;
+            padding: 14px 24px;
+            border-bottom: 1px solid var(--border);
+            font-weight: 700;
+            color: #1e293b;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .passage-box {
+            padding: 24px;
+            background: #fafafa;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.95rem;
+            color: #334155;
+        }
+
+        .passage-box h2 {
+            font-size: 1.15rem;
+            color: #0f172a;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .passage-box p {
+            margin-bottom: 12px;
+            text-align: justify;
+        }
+
+        .passage-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Question Box */
+        .questions-container {
+            padding: 24px;
+        }
+
+        .question-card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+            transition: border-color 0.2s ease;
+        }
+
+        .question-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .question-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .badge-num {
+            background: var(--primary-light);
+            color: var(--primary);
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+        }
+
+        .badge-type {
+            background: #f1f5f9;
+            color: var(--secondary);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .question-text {
+            font-weight: 600;
+            color: var(--text-main);
+            font-size: 0.975rem;
+            margin-bottom: 16px;
+        }
+
+        /* Options */
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            background: #ffffff;
+            font-size: 0.925rem;
+        }
+
+        .option-item:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+        }
+
+        .option-item input[type="radio"],
+        .option-item input[type="checkbox"] {
+            margin-top: 3px;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        .option-label {
+            flex: 1;
+            cursor: pointer;
+        }
+
+        /* Categorization Table */
+        .cat-table-wrapper {
+            overflow-x: auto;
+            margin-top: 12px;
+        }
+
+        .cat-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+
+        .cat-table th {
+            background: #f1f5f9;
+            padding: 10px;
+            text-align: center;
+            border: 1px solid var(--border);
+            font-weight: 600;
+        }
+
+        .cat-table th:first-child {
+            text-align: left;
+            width: 60%;
+        }
+
+        .cat-table td {
+            padding: 10px;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .cat-table td:first-child {
+            text-align: left;
+        }
+
+        .cat-table input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        /* Explanation Box */
+        .explanation-box {
+            display: none;
+            margin-top: 16px;
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            background: #f8fafc;
+            border-left: 4px solid var(--primary);
+        }
+
+        .explanation-box.show {
+            display: block;
+        }
+
+        .explanation-header {
+            font-weight: 700;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .user-status {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            margin-bottom: 8px;
+        }
+
+        .status-correct {
+            background: var(--success-light);
+            color: var(--success);
+            border: 1px solid #bbf7d0;
+        }
+
+        .status-incorrect {
+            background: var(--error-light);
+            color: var(--error);
+            border: 1px solid #fecaca;
+        }
+
+        /* Submit Button */
+        .submit-container {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 700;
+            padding: 14px 40px;
+            border: none;
+            border-radius: 999px;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+            transition: all 0.2s ease;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.45);
+        }
+
+        /* Result Dashboard */
+        .result-dashboard {
+            display: none;
+            background: white;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            padding: 32px;
+            margin-bottom: 32px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+            text-align: center;
+        }
+
+        .result-dashboard.show {
+            display: block;
+        }
+
+        .score-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            color: var(--primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            border: 4px solid var(--primary);
+        }
+
+        .score-num {
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .score-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--secondary);
+            margin-top: 2px;
+        }
+
+        .result-stats {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            background: #f8fafc;
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            min-width: 140px;
+        }
+
+        .stat-val {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .stat-lbl {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .btn-reset {
+            background: #e2e8f0;
+            color: #334155;
+            font-weight: 600;
+            padding: 10px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.2s;
+        }
+
+        .btn-reset:hover {
+            background: #cbd5e1;
+        }
+
+        @media (max-width: 640px) {
+            .passage-box { padding: 16px; }
+            .questions-container { padding: 16px; }
+            .question-card { padding: 16px; }
+            .stat-card { flex: 1; min-width: 100px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Post Test Meeting 4</h1>
+    <p>_______________</p>
+</header>
+
+<div class="container">
+
+    <!-- Progress Tracker -->
+    <div class="progress-container">
+        <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="progressBar"></div>
+        </div>
+        <div class="progress-text" id="progressText">Terjawab: 0 / 20</div>
+    </div>
+
+    <!-- Result Dashboard (Hidden initially) -->
+    <div class="result-dashboard" id="resultDashboard">
+        <h2>Hasil Post Test Anda</h2>
+        <p style="color: var(--text-muted); margin-bottom: 20px;">Berikut adalah ringkasan performa pengerjaan soal Anda:</p>
+        
+        <div class="score-circle">
+            <div class="score-num" id="finalScoreNum">0</div>
+            <div class="score-label">NILAI AKHIR</div>
+        </div>
+
+        <div class="result-stats">
+            <div class="stat-card">
+                <div class="stat-val" id="statCorrect" style="color: var(--success);">0</div>
+                <div class="stat-lbl">Jawaban Benar</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-val" id="statIncorrect" style="color: var(--error);">0</div>
+                <div class="stat-lbl">Jawaban Salah</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-val" id="statAccuracy">0%</div>
+                <div class="stat-lbl">Akurasi Total</div>
+            </div>
+        </div>
+
+        <button class="btn-reset" onclick="resetQuiz()">Ulangi Latihan</button>
+    </div>
+
+    <!-- FORM QUIZ -->
+    <form id="quizForm">
+
+        <!-- TEXT 1 -->
+        <div class="section-card">
+            <div class="section-header">
+                <span>TEXT 1: DESCRIPTIVE TEXT</span>
+                <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">Soal 1 - 4</span>
+            </div>
+            <div class="passage-box">
+                <h2>The Equator Monument</h2>
+                <p><strong>(1)</strong> The Equator Monument, located in Pontianak, West Kalimantan, is a prominent historical and geographical landmark in Indonesia. Originally constructed from four belian (ironwood) pillars by a Dutch geographer in 1928, the monument marks the exact zero-degree latitude line that divides the Earth into the northern and southern hemispheres. Over the decades, it has become a symbol of pride for the city and a unique destination for global travelers.</p>
+                <p><strong>(2)</strong> The most captivating feature of this monument is the biannual shadowless phenomenon, which occurs during the vernal and autumnal equinoxes in March and September. During these specific periods, the sun reaches its culmination point directly above the equator. For a few minutes at noon, the shadows of the monument and anyone standing near it completely disappear. Hundreds of tourists, scientists, and locals gather around the site to witness and celebrate this rare astronomical event.</p>
+                <p><strong>(3)</strong> To protect the original wooden pillars from severe weathering and decay, a large permanent dome was built over the site in 1990. The original structure remains safely enclosed inside, while a much larger replica of the monument sits on top of the dome. In recent efforts to boost regional tourism, the local government has begun expanding the surrounding area into a vibrant waterfront park.</p>
+            </div>
+
+            <div class="questions-container">
+                <!-- Q1 -->
+                <div class="question-card" id="qc-q1">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 1</span>
+                        <span class="badge-type">Inference (Multiple Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        Which of the following statements can be logically inferred from paragraph 2? <em>(Select all correct answers)</em>
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="checkbox" name="q1" value="A"><span class="option-label">A. The shadowless phenomenon can be observed in Pontianak every single day at noon.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q1" value="B"><span class="option-label">B. The sun's position changes throughout the year, affecting how shadows are cast at the monument.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q1" value="C"><span class="option-label">C. The equinox event significantly boosts temporary visitor attendance at the monument.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q1" value="D"><span class="option-label">D. Scientists gather at the monument to permanently change the zero-degree latitude line.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q1" value="E"><span class="option-label">E. If you visit the monument in December at noon, you will still see your shadow on the ground.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q1"></div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="question-card" id="qc-q2">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 2</span>
+                        <span class="badge-type">Prediction (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        If the local government had not built the large protective dome in 1990, what would most likely have happened to the Equator Monument?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q2" value="A"><span class="option-label">A. The monument would have relocated itself to the southern hemisphere.</span></label>
+                        <label class="option-item"><input type="radio" name="q2" value="B"><span class="option-label">B. The original ironwood pillars would have suffered severe damage from natural weather elements over time.</span></label>
+                        <label class="option-item"><input type="radio" name="q2" value="C"><span class="option-label">C. The shadowless phenomenon would stop occurring during the equinoxes.</span></label>
+                        <label class="option-item"><input type="radio" name="q2" value="D"><span class="option-label">D. Tourists would have lost all interest in visiting the city of Pontianak.</span></label>
+                        <label class="option-item"><input type="radio" name="q2" value="E"><span class="option-label">E. The local government would immediately replace it with a modern skyscraper.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q2"></div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="question-card" id="qc-q3">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 3</span>
+                        <span class="badge-type">Coherence (Categorizing)</span>
+                    </div>
+                    <div class="question-text">
+                        Determine whether the following statements about the relationship between paragraph 1 and paragraph 3 are True or False.
+                    </div>
+                    <div class="cat-table-wrapper">
+                        <table class="cat-table">
+                            <thead>
+                                <tr>
+                                    <th>Statement</th>
+                                    <th>True</th>
+                                    <th>False</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1. Paragraph 3 details the preservation efforts for the original structure introduced in paragraph 1.</td>
+                                    <td><input type="radio" name="q3_1" value="True"></td>
+                                    <td><input type="radio" name="q3_1" value="False"></td>
+                                </tr>
+                                <tr>
+                                    <td>2. Paragraph 3 contradicts the geographical location of the monument stated in paragraph 1.</td>
+                                    <td><input type="radio" name="q3_2" value="True"></td>
+                                    <td><input type="radio" name="q3_2" value="False"></td>
+                                </tr>
+                                <tr>
+                                    <td>3. Paragraph 3 provides a modern update to the historical construction described in paragraph 1.</td>
+                                    <td><input type="radio" name="q3_3" value="True"></td>
+                                    <td><input type="radio" name="q3_3" value="False"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="explanation-box" id="exp-q3"></div>
+                </div>
+
+                <!-- Q4 -->
+                <div class="question-card" id="qc-q4">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 4</span>
+                        <span class="badge-type">Following Paragraph (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        The paragraph following the passage will most likely discuss...
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q4" value="A"><span class="option-label">A. The detailed biography of the Dutch geographer who built the monument.</span></label>
+                        <label class="option-item"><input type="radio" name="q4" value="B"><span class="option-label">B. The specific facilities and attractions planned for the new waterfront park.</span></label>
+                        <label class="option-item"><input type="radio" name="q4" value="C"><span class="option-label">C. A scientific comparison between the equator line in Indonesia and Brazil.</span></label>
+                        <label class="option-item"><input type="radio" name="q4" value="D"><span class="option-label">D. The history of ironwood (belian) trading in West Kalimantan.</span></label>
+                        <label class="option-item"><input type="radio" name="q4" value="E"><span class="option-label">E. How to calculate the exact angle of the sun during the autumnal equinox.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q4"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TEXT 2 -->
+        <div class="section-card">
+            <div class="section-header">
+                <span>TEXT 2: PROCEDURE TEXT</span>
+                <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">Soal 5 - 8</span>
+            </div>
+            <div class="passage-box">
+                <h2>Creating an Effective Study Zone</h2>
+                <p><strong>(1)</strong> Creating a dedicated study space at home is essential for maintaining focus and improving academic productivity. A well-organized environment minimizes daily distractions and mentally prepares your brain for active learning. Here are the step-by-step guidelines to build an effective study zone.</p>
+                <p><strong>(2)</strong> First, choose a quiet area in your home away from high-traffic zones like the living room or kitchen. Ensure that the desk is positioned near a natural light source, such as a window, or has a bright desk lamp to reduce eye strain during evening study sessions. Next, declutter your desk surface by keeping only essential learning materials. Stacking unnecessary items or decorative objects on your desk creates visual noise that easily breaks your concentration.</p>
+                <p><strong>(3)</strong> Finally, manage your digital environment responsibly. Turn off non-essential smartphone notifications while studying to prevent frequent interruptions. It is crucial to set a timer using time-management techniques, such as studying for 25 minutes followed by a short 5-minute break. If you skip taking these scheduled short breaks, your brain will quickly become fatigued, leading to a drastic drop in information retention. Following these steps consistently will help you build sustainable study habits.</p>
+            </div>
+
+            <div class="questions-container">
+                <!-- Q5 -->
+                <div class="question-card" id="qc-q5">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 5</span>
+                        <span class="badge-type">Inference (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        It can be inferred from paragraph 2 that studying in a highly cluttered workspace...
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q5" value="A"><span class="option-label">A. Makes students finish their homework much faster than usual.</span></label>
+                        <label class="option-item"><input type="radio" name="q5" value="B"><span class="option-label">B. Helps the brain store long-term information more efficiently.</span></label>
+                        <label class="option-item"><input type="radio" name="q5" value="C"><span class="option-label">C. Increases the likelihood of a student losing mental focus while learning.</span></label>
+                        <label class="option-item"><input type="radio" name="q5" value="D"><span class="option-label">D. Is highly recommended by educational psychologists for creative writing.</span></label>
+                        <label class="option-item"><input type="radio" name="q5" value="E"><span class="option-label">E. Prevents students from feeling eye strain during evening study sessions.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q5"></div>
+                </div>
+
+                <!-- Q6 -->
+                <div class="question-card" id="qc-q6">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 6</span>
+                        <span class="badge-type">Prediction (Multiple Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        Based on paragraph 3, which of the following would most likely occur if a student ignores the timer technique and studies continuously for four hours? <em>(Select all correct answers)</em>
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="checkbox" name="q6" value="A"><span class="option-label">A. The student's brain will experience severe fatigue.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q6" value="B"><span class="option-label">B. The student will instantly master complex exam topics without revision.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q6" value="C"><span class="option-label">C. The student's ability to retain and remember the information will decrease.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q6" value="D"><span class="option-label">D. The smartphone will automatically turn off its internet connection.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q6" value="E"><span class="option-label">E. The student's learning efficiency will drop drastically.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q6"></div>
+                </div>
+
+                <!-- Q7 -->
+                <div class="question-card" id="qc-q7">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 7</span>
+                        <span class="badge-type">Coherence (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        What is the relationship between paragraph 2 and paragraph 3?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q7" value="A"><span class="option-label">A. Paragraph 3 provides a list of physical desk decorations to complement the room setup in paragraph 2.</span></label>
+                        <label class="option-item"><input type="radio" name="q7" value="B"><span class="option-label">B. Paragraph 3 shifts the focus from managing the physical space to managing the digital environment and study timing.</span></label>
+                        <label class="option-item"><input type="radio" name="q7" value="C"><span class="option-label">C. Paragraph 3 contradicts the importance of natural lighting emphasized in paragraph 2.</span></label>
+                        <label class="option-item"><input type="radio" name="q7" value="D"><span class="option-label">D. Paragraph 3 summarizes all the physical cleaning methods described in paragraph 2.</span></label>
+                        <label class="option-item"><input type="radio" name="q7" value="E"><span class="option-label">E. Paragraph 3 introduces a completely unrelated topic about how smartphones are manufactured.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q7"></div>
+                </div>
+
+                <!-- Q8 -->
+                <div class="question-card" id="qc-q8">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 8</span>
+                        <span class="badge-type">Following Paragraph (Categorizing)</span>
+                    </div>
+                    <div class="question-text">
+                        Determine whether the following topics are "Likely" or "Unlikely" to be discussed in the next paragraph based on the text's conclusion.
+                    </div>
+                    <div class="cat-table-wrapper">
+                        <table class="cat-table">
+                            <thead>
+                                <tr>
+                                    <th>Topic</th>
+                                    <th>Likely</th>
+                                    <th>Unlikely</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1. Examples of daily schedules to apply these study habits consistently.</td>
+                                    <td><input type="radio" name="q8_1" value="Likely"></td>
+                                    <td><input type="radio" name="q8_1" value="Unlikely"></td>
+                                </tr>
+                                <tr>
+                                    <td>2. A detailed guide on how to fix broken electrical wiring in desk lamps.</td>
+                                    <td><input type="radio" name="q8_2" value="Likely"></td>
+                                    <td><input type="radio" name="q8_2" value="Unlikely"></td>
+                                </tr>
+                                <tr>
+                                    <td>3. Recommended apps to help track the 25-minute study intervals.</td>
+                                    <td><input type="radio" name="q8_3" value="Likely"></td>
+                                    <td><input type="radio" name="q8_3" value="Unlikely"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="explanation-box" id="exp-q8"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TEXT 3 -->
+        <div class="section-card">
+            <div class="section-header">
+                <span>TEXT 3: NARRATIVE TEXT</span>
+                <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">Soal 9 - 12</span>
+            </div>
+            <div class="passage-box">
+                <h2>The Wooden Bowl</h2>
+                <p><strong>(1)</strong> Once upon a time, in a quiet mountain village, an old man named Mateo lived with his son, daughter-in-law, and four-year-old grandson, Leo. As Mateo grew older, his hands began to shake uncontrollably, his eyesight dimmed, and his footsteps became unsteady. During dinner, the old man frequently spilled soup on the tablecloth or dropped glasses on the floor. The son and his wife grew increasingly irritated by the mess and decided to move Mateo to a small table in the corner of the kitchen, serving his meals in a cheap wooden bowl so he wouldn't break any more dishes.</p>
+                <p><strong>(2)</strong> From his lonely corner, old Mateo would look at the family with tearful eyes, but he never uttered a single word of complaint. The young boy, Leo, watched this situation in silence every evening. One afternoon before dinner, the parents noticed Leo sitting on the living room floor, carefully carving and smoothing two small pieces of scrap wood with a toy chisel. Curious, the father smiled and gently asked his young son what he was making.</p>
+                <p><strong>(3)</strong> Leo looked up innocently and replied, "I'm making a wooden bowl for you and mama, so you can eat from it when I grow up." The parents stood frozen in shock. Tears began to stream down their faces as they realized the painful truth of their own cruelty and the lesson their little boy had unintentionally taught them. That very evening, the son took his grandfather's arm and gently guided him back to the main family dinner table.</p>
+            </div>
+
+            <div class="questions-container">
+                <!-- Q9 -->
+                <div class="question-card" id="qc-q9">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 9</span>
+                        <span class="badge-type">Inference (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        What can be inferred about Leo's personality from his actions in the story?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q9" value="A"><span class="option-label">A. He was a rebellious child who enjoyed disrespecting his parents' strict rules.</span></label>
+                        <label class="option-item"><input type="radio" name="q9" value="B"><span class="option-label">B. He was highly observant and internalized how his parents treated others.</span></label>
+                        <label class="option-item"><input type="radio" name="q9" value="C"><span class="option-label">C. He was a greedy boy who wanted to sell wooden bowls to the villagers for money.</span></label>
+                        <label class="option-item"><input type="radio" name="q9" value="D"><span class="option-label">D. He strongly disliked his grandfather and wanted him to move out of the house.</span></label>
+                        <label class="option-item"><input type="radio" name="q9" value="E"><span class="option-label">E. He was academically gifted and wanted to become a professional carpenter.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q9"></div>
+                </div>
+
+                <!-- Q10 -->
+                <div class="question-card" id="qc-q10">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 10</span>
+                        <span class="badge-type">Prediction (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        If the father had not noticed Leo carving the wood in the living room, what would most likely have happened?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q10" value="A"><span class="option-label">A. Grandfather Mateo would have immediately bought a new porcelain set for the family.</span></label>
+                        <label class="option-item"><input type="radio" name="q10" value="B"><span class="option-label">B. Leo would have been harshly punished for playing with dangerous sharp tools.</span></label>
+                        <label class="option-item"><input type="radio" name="q10" value="C"><span class="option-label">C. The parents would have remained ignorant of their cruelty and kept isolating Mateo.</span></label>
+                        <label class="option-item"><input type="radio" name="q10" value="D"><span class="option-label">D. The family would have moved to a bigger house in the city to avoid the neighbors.</span></label>
+                        <label class="option-item"><input type="radio" name="q10" value="E"><span class="option-label">E. The wooden bowl would magically transform into a golden plate for the grandfather.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q10"></div>
+                </div>
+
+                <!-- Q11 -->
+                <div class="question-card" id="qc-q11">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 11</span>
+                        <span class="badge-type">Coherence (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        How does paragraph 3 relate to paragraph 2?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q11" value="A"><span class="option-label">A. Paragraph 3 presents the moral resolution triggered by the boy's action introduced in paragraph 2.</span></label>
+                        <label class="option-item"><input type="radio" name="q11" value="B"><span class="option-label">B. Paragraph 3 introduces a new conflict that complicates the events in paragraph 2.</span></label>
+                        <label class="option-item"><input type="radio" name="q11" value="C"><span class="option-label">C. Paragraph 3 provides a scientific explanation for the grandfather's illness described in paragraph 2.</span></label>
+                        <label class="option-item"><input type="radio" name="q11" value="D"><span class="option-label">D. Paragraph 3 contradicts the peaceful village setting established in paragraph 2.</span></label>
+                        <label class="option-item"><input type="radio" name="q11" value="E"><span class="option-label">E. Paragraph 3 summarizes the boy's dialogue without advancing the story from paragraph 2.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q11"></div>
+                </div>
+
+                <!-- Q12 -->
+                <div class="question-card" id="qc-q12">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 12</span>
+                        <span class="badge-type">Following Paragraph (Multiple Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        If the story were to continue in a new paragraph, which of the following topics would be logical continuations? <em>(Select all correct answers)</em>
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="checkbox" name="q12" value="A"><span class="option-label">A. The technical steps required to build a large wooden house in the mountains.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q12" value="B"><span class="option-label">B. How the family's daily atmosphere improved as they cared for Mateo with respect.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q12" value="C"><span class="option-label">C. The grandfather's emotional reaction to rejoining the family at the main table.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q12" value="D"><span class="option-label">D. A historical account of ancient wooden dish manufacturing in Europe.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q12" value="E"><span class="option-label">E. The parents realizing they forgot to cook dinner and going out to a restaurant.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q12"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TEXT 4 -->
+        <div class="section-card">
+            <div class="section-header">
+                <span>TEXT 4: ANALYTICAL EXPOSITION TEXT</span>
+                <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">Soal 13 - 16</span>
+            </div>
+            <div class="passage-box">
+                <h2>Importance of Financial Literacy for Teenagers</h2>
+                <p><strong>(1)</strong> In today's modern consumer-driven society, financial literacy has become a critical life skill that young people must master before entering adulthood. With the rapid growth of e-commerce platforms, digital wallets, and targeted online advertising, high school students are exposed to spending opportunities constantly. Without a fundamental understanding of personal finance, teenagers risk falling into unhealthy spending habits and long-term debt.</p>
+                <p><strong>(2)</strong> First, financial literacy equips teenagers with the ability to distinguish between essential needs and temporary wants. When students learn how to create a monthly budget, track their daily expenses, and set personal saving goals, they build self-discipline. Research shows that young adults who practice budgeting during high school are significantly less likely to overspend on impulse purchases or rely heavily on credit cards in their early twenties.</p>
+                <p><strong>(3)</strong> Furthermore, early financial education introduces students to the concept of compound interest and long-term investments. Understanding how money can grow over time encourages young people to start saving early, providing them with a financial safety net for emergencies or higher education expenses. To ensure that every student gains these essential skills, educational policymakers are currently preparing a comprehensive financial curriculum to be integrated into high schools nationwide next academic year.</p>
+            </div>
+
+            <div class="questions-container">
+                <!-- Q13 -->
+                <div class="question-card" id="qc-q13">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 13</span>
+                        <span class="badge-type">Inference (Categorizing)</span>
+                    </div>
+                    <div class="question-text">
+                        Determine whether the following inferences are True or False based on paragraph 1.
+                    </div>
+                    <div class="cat-table-wrapper">
+                        <table class="cat-table">
+                            <thead>
+                                <tr>
+                                    <th>Inference</th>
+                                    <th>True</th>
+                                    <th>False</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1. Modern digital technology makes it easier for young people to spend money impulsively.</td>
+                                    <td><input type="radio" name="q13_1" value="True"></td>
+                                    <td><input type="radio" name="q13_1" value="False"></td>
+                                </tr>
+                                <tr>
+                                    <td>2. E-commerce platforms are completely banned for high school students.</td>
+                                    <td><input type="radio" name="q13_2" value="True"></td>
+                                    <td><input type="radio" name="q13_2" value="False"></td>
+                                </tr>
+                                <tr>
+                                    <td>3. Teenagers who lack financial knowledge are more vulnerable to future financial problems.</td>
+                                    <td><input type="radio" name="q13_3" value="True"></td>
+                                    <td><input type="radio" name="q13_3" value="False"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="explanation-box" id="exp-q13"></div>
+                </div>
+
+                <!-- Q14 -->
+                <div class="question-card" id="qc-q14">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 14</span>
+                        <span class="badge-type">Prediction (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        If high schools successfully integrate the new financial curriculum into their daily lessons, what will likely happen in the future?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q14" value="A"><span class="option-label">A. E-commerce platforms will be forced to close down permanently due to a lack of buyers.</span></label>
+                        <label class="option-item"><input type="radio" name="q14" value="B"><span class="option-label">B. Future high school graduates will manage their personal finances and debts more responsibly.</span></label>
+                        <label class="option-item"><input type="radio" name="q14" value="C"><span class="option-label">C. All students will completely refuse to buy textbooks or school supplies.</span></label>
+                        <label class="option-item"><input type="radio" name="q14" value="D"><span class="option-label">D. Universities will stop charging tuition fees for business and financial courses.</span></label>
+                        <label class="option-item"><input type="radio" name="q14" value="E"><span class="option-label">E. Teenagers will immediately become professional stock market investors at age fifteen.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q14"></div>
+                </div>
+
+                <!-- Q15 -->
+                <div class="question-card" id="qc-q15">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 15</span>
+                        <span class="badge-type">Coherence (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        What is the relationship between paragraph 2 and paragraph 3?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q15" value="A"><span class="option-label">A. Paragraph 3 refutes the budgeting benefits mentioned in paragraph 2.</span></label>
+                        <label class="option-item"><input type="radio" name="q15" value="B"><span class="option-label">B. Paragraph 3 provides a historical timeline of ancient currency systems.</span></label>
+                        <label class="option-item"><input type="radio" name="q15" value="C"><span class="option-label">C. Paragraph 3 offers an additional argument supporting the main thesis about financial education.</span></label>
+                        <label class="option-item"><input type="radio" name="q15" value="D"><span class="option-label">D. Paragraph 3 summarizes paragraph 2 without adding any new points.</span></label>
+                        <label class="option-item"><input type="radio" name="q15" value="E"><span class="option-label">E. Paragraph 3 presents the negative impacts of the self-discipline described in paragraph 2.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q15"></div>
+                </div>
+
+                <!-- Q16 -->
+                <div class="question-card" id="qc-q16">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 16</span>
+                        <span class="badge-type">Following Paragraph (Multiple Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        The paragraph following the passage will most likely discuss... <em>(Select all correct answers)</em>
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="checkbox" name="q16" value="A"><span class="option-label">A. The specific subjects and modules included in the new financial curriculum.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q16" value="B"><span class="option-label">B. A list of famous technology billionaires and their personal net worth.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q16" value="C"><span class="option-label">C. How teachers will be trained to deliver the new financial education materials.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q16" value="D"><span class="option-label">D. The history of traditional banking institutions in the 19th century.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q16" value="E"><span class="option-label">E. How to apply for commercial loans to buy luxury sports cars.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q16"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TEXT 5 -->
+        <div class="section-card">
+            <div class="section-header">
+                <span>TEXT 5: RECOUNT TEXT</span>
+                <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">Soal 17 - 20</span>
+            </div>
+            <div class="passage-box">
+                <h2>Voluntary Beach Cleanup at Mangrove Reserve</h2>
+                <p><strong>(1)</strong> Last Saturday, my classmates and I participated in a voluntary beach cleanup organized by a local environmental foundation at Mangrove Coastal Reserve. We gathered at the school yard at 6:30 AM, fully equipped with heavy-duty rubber gloves, reusable trash bags, and wooden tongs. The primary goal of this weekend activity was to restore the natural mangrove habitat, which had been heavily polluted by plastic debris washed ashore during recent monsoon storms.</p>
+                <p><strong>(2)</strong> When we arrived at the reserve, the foundation coordinator divided us into small groups and assigned specific zones along the shoreline. My group was responsible for clearing the muddy roots of the mangrove trees. The work was physically demanding; we had to wade through knee-deep mud to untangle abandoned fishing nets, plastic bottles, and food containers caught in the root systems. Despite the scorching heat and muddy conditions, everyone worked with great enthusiasm and teamwork.</p>
+                <p><strong>(3)</strong> By noon, our volunteer group had successfully collected over forty large bags of recyclable waste and non-biodegradable trash. We weighed the collected garbage and transported it to the local municipal recycling facility. Feeling exhausted yet immensely proud of our accomplishment, we gathered under a large shade tree to share a communal lunch. Before heading home, the foundation leader announced that they would organize a follow-up mangrove replanting session next month to further restore the coastal defense line.</p>
+            </div>
+
+            <div class="questions-container">
+                <!-- Q17 -->
+                <div class="question-card" id="qc-q17">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 17</span>
+                        <span class="badge-type">Inference (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        What can be inferred about the state of Mangrove Coastal Reserve before the cleanup event?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q17" value="A"><span class="option-label">A. The reserve was completely clean and maintained daily by commercial hotel staff.</span></label>
+                        <label class="option-item"><input type="radio" name="q17" value="B"><span class="option-label">B. Plastic waste trapped in the mangroves posed a significant threat to the coastal ecosystem.</span></label>
+                        <label class="option-item"><input type="radio" name="q17" value="C"><span class="option-label">C. The area was highly dangerous because of poisonous wild animals living in the roots.</span></label>
+                        <label class="option-item"><input type="radio" name="q17" value="D"><span class="option-label">D. Visitors were required to pay an expensive entrance fee to enter the polluted beach.</span></label>
+                        <label class="option-item"><input type="radio" name="q17" value="E"><span class="option-label">E. The mangrove trees had already been cut down by illegal loggers.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q17"></div>
+                </div>
+
+                <!-- Q18 -->
+                <div class="question-card" id="qc-q18">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 18</span>
+                        <span class="badge-type">Prediction (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        What would most likely have happened if the volunteers had left the abandoned fishing nets tangled around the mangrove roots?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q18" value="A"><span class="option-label">A. The fishing nets would have dissolved naturally into clean water within a few hours.</span></label>
+                        <label class="option-item"><input type="radio" name="q18" value="B"><span class="option-label">B. The growth of the mangrove roots would be restricted, potentially harming the trees and trapping small marine animals.</span></label>
+                        <label class="option-item"><input type="radio" name="q18" value="C"><span class="option-label">C. The local foundation would have received an international award for marine conservation.</span></label>
+                        <label class="option-item"><input type="radio" name="q18" value="D"><span class="option-label">D. The beach would automatically clean itself during the next high tide cycle.</span></label>
+                        <label class="option-item"><input type="radio" name="q18" value="E"><span class="option-label">E. The municipal recycling facility would send their own staff to clean it up the next day.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q18"></div>
+                </div>
+
+                <!-- Q19 -->
+                <div class="question-card" id="qc-q19">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 19</span>
+                        <span class="badge-type">Coherence (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        What is the relationship between paragraph 2 and paragraph 3?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q19" value="A"><span class="option-label">A. Paragraph 3 contradicts the hard work and enthusiasm described by the volunteers in paragraph 2.</span></label>
+                        <label class="option-item"><input type="radio" name="q19" value="B"><span class="option-label">B. Paragraph 3 explains the scientific formula of non-biodegradable plastics mentioned in paragraph 2.</span></label>
+                        <label class="option-item"><input type="radio" name="q19" value="C"><span class="option-label">C. Paragraph 3 introduces a major conflict between the students and the foundation coordinator.</span></label>
+                        <label class="option-item"><input type="radio" name="q19" value="D"><span class="option-label">D. Paragraph 3 presents the quantitative results and the closing events of the cleanup activities described in paragraph 2.</span></label>
+                        <label class="option-item"><input type="radio" name="q19" value="E"><span class="option-label">E. Paragraph 3 offers a contrasting viewpoint from locals who opposed the cleanup in paragraph 2.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q19"></div>
+                </div>
+
+                <!-- Q20 -->
+                <div class="question-card" id="qc-q20">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 20</span>
+                        <span class="badge-type">Following Paragraph (Categorizing)</span>
+                    </div>
+                    <div class="question-text">
+                        Determine whether the following topics are "Likely" or "Unlikely" to be discussed in the next paragraph based on the text's conclusion.
+                    </div>
+                    <div class="cat-table-wrapper">
+                        <table class="cat-table">
+                            <thead>
+                                <tr>
+                                    <th>Topic</th>
+                                    <th>Likely</th>
+                                    <th>Unlikely</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1. The step-by-step preparation and registration process for the upcoming mangrove replanting session.</td>
+                                    <td><input type="radio" name="q20_1" value="Likely"></td>
+                                    <td><input type="radio" name="q20_1" value="Unlikely"></td>
+                                </tr>
+                                <tr>
+                                    <td>2. A detailed history of monsoon weather patterns in the Pacific Ocean.</td>
+                                    <td><input type="radio" name="q20_2" value="Likely"></td>
+                                    <td><input type="radio" name="q20_2" value="Unlikely"></td>
+                                </tr>
+                                <tr>
+                                    <td>3. Why planting new mangroves is crucial for restoring the coastal defense line.</td>
+                                    <td><input type="radio" name="q20_3" value="Likely"></td>
+                                    <td><input type="radio" name="q20_3" value="Unlikely"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="explanation-box" id="exp-q20"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SUBMIT BUTTON -->
+        <div class="submit-container">
+            <button type="button" class="btn-submit" id="submitBtn" onclick="gradeQuiz()">Selesai & Lihat Hasil</button>
+        </div>
+
+    </form>
+</div>
+
+<script>
+    /* =========================================
+       QUIZ GRADING & PROGRESS LOGIC 
+       ========================================= */
+    const answerKey = {
+        q1: { type: 'multiple', key: ['B', 'C', 'E'], exp: '<b>Kunci Jawaban: B, C, dan E</b><br><b>Pembahasan:</b> Peristiwa tanpa bayangan hanya terjadi saat ekuinoks (Maret & September) karena posisi matahari berubah-ubah (B). Ini mengundang ratusan orang untuk berkumpul (C). Artinya, di luar bulan itu (misal Desember), bayangan akan tetap terlihat (E).' },
+        q2: { type: 'single', key: 'B', exp: '<b>Kunci Jawaban: B</b><br><b>Pembahasan:</b> Teks secara eksplisit menyatakan kubah dibangun <i>"To protect the original wooden pillars from severe weathering and decay"</i>. Secara sebab-akibat, jika tidak dibangun, kayu aslinya akan rusak karena cuaca.' },
+        q3: { type: 'cat', key: { q3_1: 'True', q3_2: 'False', q3_3: 'True' }, exp: '<b>Kunci Jawaban: 1. True | 2. False | 3. True</b><br><b>Pembahasan:</b> Paragraf 1 menceritakan asal-usul bangunan kayu tahun 1928. Paragraf 3 menceritakan kelanjutannya (pembaruan/pelestarian) di tahun 1990 dengan membangun kubah. Keduanya memiliki kohesi tanpa kontradiksi.' },
+        q4: { type: 'single', key: 'B', exp: '<b>Kunci Jawaban: B</b><br><b>Pembahasan:</b> Kalimat terakhir paragraf 3 menyebutkan pemerintah mulai memperluas area sekitar menjadi <i>"a vibrant waterfront park"</i>. Paragraf selanjutnya paling logis membahas rincian fasilitas taman tersebut.' },
+
+        q5: { type: 'single', key: 'C', exp: '<b>Kunci Jawaban: C</b><br><b>Pembahasan:</b> Paragraf 2 menyatakan bahwa barang tidak penting menciptakan <i>"visual noise"</i> yang merusak konsentrasi. Artinya (tersirat), meja yang berantakan meningkatkan potensi hilangnya fokus.' },
+        q6: { type: 'multiple', key: ['A', 'C', 'E'], exp: '<b>Kunci Jawaban: A, C, dan E</b><br><b>Pembahasan:</b> Teks secara eksplisit memperingatkan bahwa mengabaikan istirahat singkat akan menyebabkan otak cepat lelah (fatigued) dan memicu penurunan daya ingat secara drastis (drop in information retention).' },
+        q7: { type: 'single', key: 'B', exp: '<b>Kunci Jawaban: B</b><br><b>Pembahasan:</b> Paragraf 2 berfokus pada ruang fisik (lampu, meja, barang). Paragraf 3 memberikan instruksi lanjutan dengan beralih fokus (shifts focus) ke ruang digital (HP) dan manajemen waktu.' },
+        q8: { type: 'cat', key: { q8_1: 'Likely', q8_2: 'Unlikely', q8_3: 'Likely' }, exp: '<b>Kunci Jawaban: 1. Likely | 2. Unlikely | 3. Likely</b><br><b>Pembahasan:</b> Kalimat terakhir menyatakan <i>"Following these steps consistently will help you build sustainable study habits."</i> Topik lanjutan yang logis adalah contoh jadwal harian atau aplikasi timer untuk mendukung kebiasaan tersebut. Memperbaiki kabel lampu tidak relevan.' },
+
+        q9: { type: 'single', key: 'B', exp: '<b>Kunci Jawaban: B</b><br><b>Pembahasan:</b> Leo mengamati perlakuan orang tuanya pada kakeknya dan menirunya untuk masa depan. Ini menunjukkan ia sangat jeli (observant) dan menyerap pelajaran hidup dari tindakan orang tuanya secara langsung.' },
+        q10: { type: 'single', key: 'C', exp: '<b>Kunci Jawaban: C</b><br><b>Pembahasan:</b> Kejadian saat ayah melihat Leo membuat mangkok adalah titik balik pencerahan (moral awakening). Jika tidak terjadi, orang tua tersebut tidak akan sadar, dan kakek Mateo akan terus diisolasi.' },
+        q11: { type: 'single', key: 'A', exp: '<b>Kunci Jawaban: A</b><br><b>Pembahasan:</b> Paragraf 2 menampilkan konflik (Leo mengukir kayu). Paragraf 3 memberikan jawaban Leo yang menyadarkan orang tuanya, sehingga menyelesaikan konflik (resolution).' },
+        q12: { type: 'multiple', key: ['B', 'C'], exp: '<b>Kunci Jawaban: B dan C</b><br><b>Pembahasan:</b> Kalimat terakhir mengisahkan kakek dibawa kembali ke meja utama. Paragraf selanjutnya paling logis membahas reaksi emosional kakek (C) atau perubahan positif pada keluarga tersebut (B).' },
+
+        q13: { type: 'cat', key: { q13_1: 'True', q13_2: 'False', q13_3: 'True' }, exp: '<b>Kunci Jawaban: 1. True | 2. False | 3. True</b><br><b>Pembahasan:</b> Pertumbuhan dompet digital memudahkan peluang belanja (1). Teks tidak pernah melarang e-commerce (2). Remaja tanpa edukasi berisiko jatuh ke hutang jangka panjang (3).' },
+        q14: { type: 'single', key: 'B', exp: '<b>Kunci Jawaban: B</b><br><b>Pembahasan:</b> Teks berargumen bahwa edukasi mencegah pengeluaran impulsif dan utang. Jika kurikulum sukses diterapkan, lulusan SMA akan mampu mengelola keuangannya dengan lebih bertanggung jawab di masa depan.' },
+        q15: { type: 'single', key: 'C', exp: '<b>Kunci Jawaban: C</b><br><b>Pembahasan:</b> Paragraf 2 memberikan argumen pertama (membedakan kebutuhan vs keinginan). Paragraf 3 dibuka dengan <i>"Furthermore"</i> (selain itu) dan menyajikan argumen pendukung tambahan (investasi & compound interest).' },
+        q16: { type: 'multiple', key: ['A', 'C'], exp: '<b>Kunci Jawaban: A dan C</b><br><b>Pembahasan:</b> Kalimat penutup membahas persiapan penyusunan kurikulum keuangan terpadu. Paragraf berikutnya logisnya akan menguraikan isi modul tersebut (A) atau kesiapan implementasi gurunya (C).' },
+
+        q17: { type: 'single', key: 'B', exp: '<b>Kunci Jawaban: B</b><br><b>Pembahasan:</b> Teks menyebut mangrove tercemar berat oleh sampah plastik dan jaring yang membelit akar. Ini menyiratkan bahwa tumpukan sampah tersebut mengancam atau membahayakan ekosistem mangrove di sana.' },
+        q18: { type: 'single', key: 'B', exp: '<b>Kunci Jawaban: B</b><br><b>Pembahasan:</b> Jaring ikan yang membelit (tangled) di akar mangrove secara fisik akan mengganggu pertumbuhan akar dan bisa menjebak hewan kecil. Jika dibiarkan, ini berdampak buruk bagi habitat pantai.' },
+        q19: { type: 'single', key: 'D', exp: '<b>Kunci Jawaban: D</b><br><b>Pembahasan:</b> Paragraf 2 menggambarkan proses kerja keras memungut sampah di lumpur. Paragraf 3 memberikan hasil terukurnya (mengumpulkan 40 kantong) dan kegiatan penutup (makan siang, pengumuman).' },
+        q20: { type: 'cat', key: { q20_1: 'Likely', q20_2: 'Unlikely', q20_3: 'Likely' }, exp: '<b>Kunci Jawaban: 1. Likely | 2. Unlikely | 3. Likely</b><br><b>Pembahasan:</b> Kalimat terakhir mengumumkan sesi <i>"mangrove replanting session next month to further restore the coastal defense line"</i>. Paragraf lanjutan akan logis jika membahas persiapan kegiatan tersebut (1) atau urgensi fungsinya (3).' }
+    };
+
+    function updateProgress() {
+        let answeredCount = 0;
+        for (let i = 1; i <= 20; i++) {
+            let qKey = 'q' + i;
+            let qData = answerKey[qKey];
+            if (qData.type === 'cat') {
+                let subKeys = Object.keys(qData.key);
+                let allSubAnswered = subKeys.every(sKey => document.querySelector(`input[name="${sKey}"]:checked`));
+                if (allSubAnswered) answeredCount++;
+            } else {
+                let checked = document.querySelectorAll(`input[name="${qKey}"]:checked`);
+                if (checked.length > 0) answeredCount++;
+            }
+        }
+        let percent = (answeredCount / 20) * 100;
+        document.getElementById('progressBar').style.width = percent + '%';
+        document.getElementById('progressText').innerText = `Terjawab: ${answeredCount} / 20`;
+    }
+
+    document.querySelectorAll('input').forEach(input => {
+        input.addEventListener('change', updateProgress);
+    });
+
+    function gradeQuiz() {
+        let correctCount = 0;
+        let incorrectCount = 0;
+
+        for (let i = 1; i <= 20; i++) {
+            let qKey = 'q' + i;
+            let qData = answerKey[qKey];
+            let expBox = document.getElementById('exp-q' + i);
+            let isCorrect = false;
+            let userAnsText = '';
+
+            if (qData.type === 'single') {
+                let selected = document.querySelector(`input[name="${qKey}"]:checked`);
+                let userVal = selected ? selected.value : null;
+                userAnsText = userVal ? `Jawaban Anda: ${userVal}` : 'Jawaban Anda: (Belum diisi)';
+                if (userVal === qData.key) isCorrect = true;
+            } else if (qData.type === 'multiple') {
+                let selected = Array.from(document.querySelectorAll(`input[name="${qKey}"]:checked`)).map(cb => cb.value);
+                userAnsText = selected.length > 0 ? `Jawaban Anda: ${selected.join(', ')}` : 'Jawaban Anda: (Belum diisi)';
+                if (selected.length === qData.key.length && selected.every(val => qData.key.includes(val))) {
+                    isCorrect = true;
+                }
+            } else if (qData.type === 'cat') {
+                let subKeys = Object.keys(qData.key);
+                let catCorrectCount = 0;
+                let userSubAns = [];
+                subKeys.forEach(sKey => {
+                    let sel = document.querySelector(`input[name="${sKey}"]:checked`);
+                    let val = sel ? sel.value : '-';
+                    userSubAns.push(val);
+                    if (val === qData.key[sKey]) catCorrectCount++;
+                });
+                userAnsText = `Jawaban Anda: [ ${userSubAns.join(', ')} ]`;
+                if (catCorrectCount === subKeys.length) isCorrect = true;
+            }
+
+            let statusBadge = isCorrect 
+                ? `<span class="user-status status-correct">&#10004; BENAR</span>`
+                : `<span class="user-status status-incorrect">&#10008; SALAH</span>`;
+
+            expBox.innerHTML = `
+                <div class="explanation-header">${statusBadge} <span style="font-size:0.85rem; color:var(--text-muted);">${userAnsText}</span></div>
+                <div>${qData.exp}</div>
+            `;
+            expBox.classList.add('show');
+
+            if (isCorrect) correctCount++;
+            else incorrectCount++;
+        }
+
+        let finalScore = Math.round((correctCount / 20) * 100);
+        document.getElementById('finalScoreNum').innerText = finalScore;
+        document.getElementById('statCorrect').innerText = correctCount;
+        document.getElementById('statIncorrect').innerText = incorrectCount;
+        document.getElementById('statAccuracy').innerText = finalScore + '%';
+        
+        let dashboard = document.getElementById('resultDashboard');
+        dashboard.classList.add('show');
+        dashboard.scrollIntoView({ behavior: 'smooth' });
+
+        let submitBtn = document.getElementById('submitBtn');
+        submitBtn.innerText = 'Hasil Telah Ditampilkan';
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = '0.6';
+        submitBtn.style.cursor = 'not-allowed';
+    }
+
+    function resetQuiz() {
+        if (confirm("Apakah Anda yakin ingin mengulang Latihan dari awal? Semua jawaban akan direset.")) {
+            document.getElementById('quizForm').reset();
+            document.querySelectorAll('.explanation-box').forEach(box => {
+                box.classList.remove('show');
+                box.innerHTML = '';
+            });
+            document.getElementById('resultDashboard').classList.remove('show');
+            let submitBtn = document.getElementById('submitBtn');
+            submitBtn.innerText = 'Selesai & Lihat Hasil';
+            submitBtn.disabled = false;
+            submitBtn.style.opacity = '1';
+            submitBtn.style.cursor = 'pointer';
+            updateProgress();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    }
+</script>
+
+</body>
+</html>

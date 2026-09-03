@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Test of Meeting 2</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #eff6ff;
+            --secondary: #475569;
+            --bg-main: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --success: #16a34a;
+            --success-light: #f0fdf4;
+            --error: #dc2626;
+            --error-light: #fef2f2;
+            --warning: #d97706;
+            --warning-light: #fffbeb;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            color: #ffffff;
+            padding: 24px 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            margin-bottom: 6px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        header p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 24px auto;
+            padding: 0 16px;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .progress-bar-bg {
+            flex: 1;
+            height: 10px;
+            background-color: #e2e8f0;
+            border-radius: 999px;
+            overflow: hidden;
+            min-width: 200px;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #2563eb);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        /* Section & Passage Card */
+        .section-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            margin-bottom: 32px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: #f1f5f9;
+            padding: 14px 24px;
+            border-bottom: 1px solid var(--border);
+            font-weight: 700;
+            color: #1e293b;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .passage-box {
+            padding: 24px;
+            background: #fafafa;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.95rem;
+            color: #334155;
+        }
+
+        .passage-box h2 {
+            font-size: 1.15rem;
+            color: #0f172a;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .passage-box p {
+            margin-bottom: 12px;
+            text-align: justify;
+        }
+
+        .passage-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Question Box */
+        .questions-container {
+            padding: 24px;
+        }
+
+        .question-card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+            transition: border-color 0.2s ease;
+        }
+
+        .question-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .question-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .badge-num {
+            background: var(--primary-light);
+            color: var(--primary);
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+        }
+
+        .badge-type {
+            background: #f1f5f9;
+            color: var(--secondary);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .question-text {
+            font-weight: 600;
+            color: var(--text-main);
+            font-size: 0.975rem;
+            margin-bottom: 16px;
+        }
+
+        .outline-box {
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 14px 18px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #334155;
+            margin-bottom: 16px;
+            white-space: pre-wrap;
+        }
+
+        /* Options */
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            background: #ffffff;
+            font-size: 0.925rem;
+        }
+
+        .option-item:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+        }
+
+        .option-item input[type="radio"],
+        .option-item input[type="checkbox"] {
+            margin-top: 3px;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        .option-label {
+            flex: 1;
+            cursor: pointer;
+        }
+
+        /* Categorization Table */
+        .cat-table-wrapper {
+            overflow-x: auto;
+            margin-top: 12px;
+        }
+
+        .cat-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+
+        .cat-table th {
+            background: #f1f5f9;
+            padding: 10px;
+            text-align: center;
+            border: 1px solid var(--border);
+            font-weight: 600;
+        }
+
+        .cat-table th:first-child {
+            text-align: left;
+            width: 60%;
+        }
+
+        .cat-table td {
+            padding: 10px;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .cat-table td:first-child {
+            text-align: left;
+        }
+
+        .cat-table input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        /* Explanation Box */
+        .explanation-box {
+            display: none;
+            margin-top: 16px;
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            background: #f8fafc;
+            border-left: 4px solid var(--primary);
+        }
+
+        .explanation-box.show {
+            display: block;
+        }
+
+        .explanation-header {
+            font-weight: 700;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .user-status {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            margin-bottom: 8px;
+        }
+
+        .status-correct {
+            background: var(--success-light);
+            color: var(--success);
+            border: 1px solid #bbf7d0;
+        }
+
+        .status-incorrect {
+            background: var(--error-light);
+            color: var(--error);
+            border: 1px solid #fecaca;
+        }
+
+        /* Submit Button */
+        .submit-container {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 700;
+            padding: 14px 40px;
+            border: none;
+            border-radius: 999px;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+            transition: all 0.2s ease;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.45);
+        }
+
+        /* Result Dashboard */
+        .result-dashboard {
+            display: none;
+            background: white;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            padding: 32px;
+            margin-bottom: 32px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+            text-align: center;
+        }
+
+        .result-dashboard.show {
+            display: block;
+        }
+
+        .score-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            color: var(--primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            border: 4px solid var(--primary);
+        }
+
+        .score-num {
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .score-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--secondary);
+            margin-top: 2px;
+        }
+
+        .result-stats {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            background: #f8fafc;
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            min-width: 140px;
+        }
+
+        .stat-val {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .stat-lbl {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .btn-reset {
+            background: #e2e8f0;
+            color: #334155;
+            font-weight: 600;
+            padding: 10px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.2s;
+        }
+
+        .btn-reset:hover {
+            background: #cbd5e1;
+        }
+
+        @media (max-width: 640px) {
+            .passage-box { padding: 16px; }
+            .questions-container { padding: 16px; }
+            .question-card { padding: 16px; }
+            .stat-card { flex: 1; min-width: 100px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Post Test of Meeting 2</h1>
+    <p>_______________</p>
+</header>
+
+<div class="container">
+
+    <!-- Progress Tracker -->
+    <div class="progress-container">
+        <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="progressBar"></div>
+        </div>
+        <div class="progress-text" id="progressText">Terjawab: 0 / 9</div>
+    </div>
+
+    <!-- Result Dashboard (Hidden initially) -->
+    <div class="result-dashboard" id="resultDashboard">
+        <h2>Hasil Post Test Anda</h2>
+        <p style="color: var(--text-muted); margin-bottom: 20px;">Berikut adalah ringkasan performa pengerjaan soal Anda:</p>
+        
+        <div class="score-circle">
+            <div class="score-num" id="finalScoreNum">0</div>
+            <div class="score-label">NILAI AKHIR</div>
+        </div>
+
+        <div class="result-stats">
+            <div class="stat-card">
+                <div class="stat-val" id="statCorrect" style="color: var(--success);">0</div>
+                <div class="stat-lbl">Jawaban Benar</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-val" id="statIncorrect" style="color: var(--error);">0</div>
+                <div class="stat-lbl">Jawaban Salah</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-val" id="statAccuracy">0%</div>
+                <div class="stat-lbl">Akurasi Total</div>
+            </div>
+        </div>
+
+        <button class="btn-reset" onclick="resetQuiz()">Ulangi Latihan</button>
+    </div>
+
+    <!-- FORM QUIZ -->
+    <form id="quizForm">
+
+        <!-- TEXT 1 -->
+        <div class="section-card">
+            <div class="section-header">
+                <span>TEXT 1: ACADEMIC CONTEXT</span>
+                <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">Soal 1 - 3</span>
+            </div>
+            <div class="passage-box">
+                <h2>The Impact of Microplastics on Marine Ecosystems</h2>
+                <p>Microplastics—tiny plastic particles smaller than five millimeters—have become a severe threat to global marine environments. These particles originate from two primary sources: primary microplastics, which are intentionally manufactured for commercial use like cosmetics, and secondary microplastics, which break down from larger plastic waste like bottles and fishing nets.</p>
+                <p>When microplastics enter ocean waters, marine organisms such as zooplankton, small fish, and shellfish frequently mistake them for natural food. Ingesting these synthetic particles creates a false sense of fullness, leading to malnutrition and reduced energy levels in marine life. Furthermore, microplastics act as sponges for toxic chemical pollutants present in seawater, accumulating harmful substances that move up the aquatic food chain to larger predators, including human consumers.</p>
+                <p>Addressing this environmental challenge requires a multi-tiered approach. Scientists emphasize the urgent need for stricter manufacturing regulations to phase out primary microplastics. Additionally, expanding municipal recycling infrastructure and promoting biodegradable material alternatives are critical steps toward preventing secondary plastic debris from reaching aquatic habitats.</p>
+            </div>
+
+            <div class="questions-container">
+                <!-- Q1 -->
+                <div class="question-card" id="qc-q1">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 1</span>
+                        <span class="badge-type">Specific Information (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        According to paragraph 2, why do small marine animals suffer from malnutrition after ingesting microplastics?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q1" value="A"><span class="option-label">A. Microplastics block sunlight from reaching their natural underwater food sources.</span></label>
+                        <label class="option-item"><input type="radio" name="q1" value="B"><span class="option-label">B. Toxic chemicals in the plastic immediately paralyze their digestive organs.</span></label>
+                        <label class="option-item"><input type="radio" name="q1" value="C"><span class="option-label">C. Consuming the synthetic particles creates a false sense of fullness without providing nutrition.</span></label>
+                        <label class="option-item"><input type="radio" name="q1" value="D"><span class="option-label">D. Microplastics cause marine animals to swim slower and fail to catch their natural prey.</span></label>
+                        <label class="option-item"><input type="radio" name="q1" value="E"><span class="option-label">E. Synthetic particles prevent marine animals from absorbing oxygen efficiently from ocean water.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q1"></div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="question-card" id="qc-q2">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 2</span>
+                        <span class="badge-type">Classify (Categorizing)</span>
+                    </div>
+                    <div class="question-text">
+                        Based on the text, classify whether each statement or item belongs to Primary Microplastics or Secondary Microplastics.
+                    </div>
+                    <div class="cat-table-wrapper">
+                        <table class="cat-table">
+                            <thead>
+                                <tr>
+                                    <th>Item / Description</th>
+                                    <th>Primary</th>
+                                    <th>Secondary</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1. Microscopic plastic beads intentionally manufactured for facial cleansers and cosmetics</td>
+                                    <td><input type="radio" name="q2_1" value="Primary"></td>
+                                    <td><input type="radio" name="q2_1" value="Secondary"></td>
+                                </tr>
+                                <tr>
+                                    <td>2. Tiny plastic fragments originating from the slow degradation of abandoned fishing nets</td>
+                                    <td><input type="radio" name="q2_2" value="Primary"></td>
+                                    <td><input type="radio" name="q2_2" value="Secondary"></td>
+                                </tr>
+                                <tr>
+                                    <td>3. Plastic debris resulting from the physical breakdown of discarded single-use water bottles</td>
+                                    <td><input type="radio" name="q2_3" value="Primary"></td>
+                                    <td><input type="radio" name="q2_3" value="Secondary"></td>
+                                </tr>
+                                <tr>
+                                    <td>4. Manufactured synthetic particles that scientists urge governments to strictly regulate and phase out</td>
+                                    <td><input type="radio" name="q2_4" value="Primary"></td>
+                                    <td><input type="radio" name="q2_4" value="Secondary"></td>
+                                </tr>
+                                <tr>
+                                    <td>5. Plastic waste that requires expanded municipal recycling infrastructure to prevent marine entrance</td>
+                                    <td><input type="radio" name="q2_5" value="Primary"></td>
+                                    <td><input type="radio" name="q2_5" value="Secondary"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="explanation-box" id="exp-q2"></div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="question-card" id="qc-q3">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 3</span>
+                        <span class="badge-type">Outline (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        Look at the following outline showing how microplastics affect the ocean food chain:
+                    </div>
+                    <div class="outline-box">1. Microplastics enter ocean waters from primary and secondary sources.
+2. Marine organisms mistake the tiny particles for natural food.
+3. ____________________________________________________________________
+4. Toxic chemicals move up the aquatic food chain to larger predators and humans.</div>
+                    <div class="question-text" style="font-weight: normal; margin-bottom: 12px;">
+                        Which of the following best fills in the blank for step 3?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q3" value="A"><span class="option-label">A. Governments enact strict regulations to ban all commercial plastic cosmetic products.</span></label>
+                        <label class="option-item"><input type="radio" name="q3" value="B"><span class="option-label">B. Ingested synthetic particles create a false sense of fullness and absorb chemical pollutants.</span></label>
+                        <label class="option-item"><input type="radio" name="q3" value="C"><span class="option-label">C. Municipal recycling plants process marine debris to convert it into biodegradable materials.</span></label>
+                        <label class="option-item"><input type="radio" name="q3" value="D"><span class="option-label">D. Large predators stop hunting small fish and shellfish to avoid chemical contamination.</span></label>
+                        <label class="option-item"><input type="radio" name="q3" value="E"><span class="option-label">E. Environmental scientists develop underwater filtering devices to extract toxic particles.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q3"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TEXT 2 -->
+        <div class="section-card">
+            <div class="section-header">
+                <span>TEXT 2: WORKPLACE CONTEXT</span>
+                <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">Soal 4 - 6</span>
+            </div>
+            <div class="passage-box">
+                <h2>Adapting to Hybrid Work Protocols</h2>
+                <p>Following the shift in modern employment trends, many corporate companies have adopted a hybrid work protocol. This model combines remote work from home with mandatory days spent in the physical office. To ensure smooth operations and maintain team cohesion, management teams have established clear guidelines for all personnel.</p>
+                <p>Employees working remotely are required to maintain core availability hours between 09:00 AM and 03:00 PM. During this window, staff members must be accessible via company communication software for urgent meetings and collaborative project updates. However, asynchronous tasks—such as report drafting, code reviewing, and administrative filing—can be completed flexibly outside these hours, provided daily deadlines are met.</p>
+                <p>On designated in-office days, staff focus on activities that benefit directly from face-to-face interaction. Departmental strategy sessions, client presentations, and team-building workshops are strictly prioritized for in-person attendance. Management noted that reserving physical office days for collaborative events significantly improves employee engagement compared to using office time for individual, solitary computer work.</p>
+            </div>
+
+            <div class="questions-container">
+                <!-- Q4 -->
+                <div class="question-card" id="qc-q4">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 4</span>
+                        <span class="badge-type">Specific Information (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        Based on paragraph 2, what condition must remote employees fulfill if they choose to do asynchronous tasks outside core availability hours?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q4" value="A"><span class="option-label">A. They must submit a formal written request to department managers two days in advance.</span></label>
+                        <label class="option-item"><input type="radio" name="q4" value="B"><span class="option-label">B. They must remain connected to live video conference channels while completing the work.</span></label>
+                        <label class="option-item"><input type="radio" name="q4" value="C"><span class="option-label">C. They must ensure that their scheduled daily project deadlines are completely met.</span></label>
+                        <label class="option-item"><input type="radio" name="q4" value="D"><span class="option-label">D. They must complete those asynchronous tasks exclusively inside the physical office building.</span></label>
+                        <label class="option-item"><input type="radio" name="q4" value="E"><span class="option-label">E. They must log their working hours in the company's automated attendance software.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q4"></div>
+                </div>
+
+                <!-- Q5 -->
+                <div class="question-card" id="qc-q5">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 5</span>
+                        <span class="badge-type">Classify (Categorizing)</span>
+                    </div>
+                    <div class="question-text">
+                        Based on the text, classify whether each work activity or requirement is designated for Remote Work Hours or In-Office Days.
+                    </div>
+                    <div class="cat-table-wrapper">
+                        <table class="cat-table">
+                            <thead>
+                                <tr>
+                                    <th>Work Activity / Requirement</th>
+                                    <th>Remote Work</th>
+                                    <th>In-Office Days</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1. Conducting high-level departmental strategy sessions and long-term planning</td>
+                                    <td><input type="radio" name="q5_1" value="Remote"></td>
+                                    <td><input type="radio" name="q5_1" value="Office"></td>
+                                </tr>
+                                <tr>
+                                    <td>2. Individual drafting of routine business reports and administrative filing</td>
+                                    <td><input type="radio" name="q5_2" value="Remote"></td>
+                                    <td><input type="radio" name="q5_2" value="Office"></td>
+                                </tr>
+                                <tr>
+                                    <td>3. Participating in interactive, face-to-face team-building workshops</td>
+                                    <td><input type="radio" name="q5_3" value="Remote"></td>
+                                    <td><input type="radio" name="q5_3" value="Office"></td>
+                                </tr>
+                                <tr>
+                                    <td>4. Reviewing software code and completing solitary computer-based tasks</td>
+                                    <td><input type="radio" name="q5_4" value="Remote"></td>
+                                    <td><input type="radio" name="q5_4" value="Office"></td>
+                                </tr>
+                                <tr>
+                                    <td>5. Delivering formal presentations and project proposals directly to clients</td>
+                                    <td><input type="radio" name="q5_5" value="Remote"></td>
+                                    <td><input type="radio" name="q5_5" value="Office"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="explanation-box" id="exp-q5"></div>
+                </div>
+
+                <!-- Q6 -->
+                <div class="question-card" id="qc-q6">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 6</span>
+                        <span class="badge-type">Outline (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        Look at the structural outline of the hybrid work protocol passage below:
+                    </div>
+                    <div class="outline-box">• Paragraph 1: Introduction of the hybrid work model and its overall operational purpose
+• Paragraph 2: _______________________________________________________________________
+• Paragraph 3: Guidelines and priority activities for designated in-office days</div>
+                    <div class="question-text" style="font-weight: normal; margin-bottom: 12px;">
+                        Which option best summarizes the missing main point of Paragraph 2?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q6" value="A"><span class="option-label">A. Guidelines for core availability hours and flexible execution of asynchronous tasks</span></label>
+                        <label class="option-item"><input type="radio" name="q6" value="B"><span class="option-label">B. Detailed financial strategies for reducing office rental costs through remote employment</span></label>
+                        <label class="option-item"><input type="radio" name="q6" value="C"><span class="option-label">C. Technical methods for evaluating individual employee performance during video calls</span></label>
+                        <label class="option-item"><input type="radio" name="q6" value="D"><span class="option-label">D. Security protocols for installing company communication software on personal laptops</span></label>
+                        <label class="option-item"><input type="radio" name="q6" value="E"><span class="option-label">E. Company policies regarding compensation and overtime pay for remote workers</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q6"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TEXT 3 -->
+        <div class="section-card">
+            <div class="section-header">
+                <span>TEXT 3: DAILY COMMUNICATION CONTEXT</span>
+                <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">Soal 7 - 9</span>
+            </div>
+            <div class="passage-box">
+                <h2>The Reusable Coffee Cup Initiative</h2>
+                <p>Many local coffee shops in the city have started a new environmental project called the "Green Cup Scheme." The goal of this program is to reduce paper waste caused by single-use disposable cups that end up in city landfills every day.</p>
+                <p>Under this scheme, customers pay a small deposit of $2 when they order a drink in a durable, reusable cup. After finishing their beverage, customers can return the dirty cup to any participating cafe in the city. The cafe staff will immediately refund the $2 deposit or provide a clean, sanitized reusable cup for their next drink at no extra cost.</p>
+                <p>However, some customers who prefer to take their drinks on long trips find the program inconvenient. Because the heavy cups must be returned to a participating store, travelers who leave the city area often choose to pay an extra fee for traditional single-use paper cups instead.</p>
+            </div>
+
+            <div class="questions-container">
+                <!-- Q7 -->
+                <div class="question-card" id="qc-q7">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 7</span>
+                        <span class="badge-type">Specific Information (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        According to paragraph 2, what happens immediately after a customer returns a dirty reusable cup to a participating cafe?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q7" value="A"><span class="option-label">A. The cafe offers them a discount coupon for their next bakery purchase.</span></label>
+                        <label class="option-item"><input type="radio" name="q7" value="B"><span class="option-label">B. The cafe staff returns their $2 deposit or gives them a clean replacement cup.</span></label>
+                        <label class="option-item"><input type="radio" name="q7" value="C"><span class="option-label">C. The customer is asked to sanitize the cup themselves at a designated washing station.</span></label>
+                        <label class="option-item"><input type="radio" name="q7" value="D"><span class="option-label">D. The cafe charges a small cleaning fee before accepting the returned cup.</span></label>
+                        <label class="option-item"><input type="radio" name="q7" value="E"><span class="option-label">E. The staff stamps the customer's loyalty card to earn a free drink in the future.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q7"></div>
+                </div>
+
+                <!-- Q8 -->
+                <div class="question-card" id="qc-q8">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 8</span>
+                        <span class="badge-type">Classify (Categorizing)</span>
+                    </div>
+                    <div class="question-text">
+                        Based on the text, classify whether each customer action aligns with Participating in the Green Cup Scheme or Using Traditional Paper Cups.
+                    </div>
+                    <div class="cat-table-wrapper">
+                        <table class="cat-table">
+                            <thead>
+                                <tr>
+                                    <th>Customer Action / Scenario</th>
+                                    <th>Green Cup Scheme</th>
+                                    <th>Paper Cups</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1. Paying a refundable $2 deposit to receive a durable coffee cup</td>
+                                    <td><input type="radio" name="q8_1" value="Green"></td>
+                                    <td><input type="radio" name="q8_1" value="Paper"></td>
+                                </tr>
+                                <tr>
+                                    <td>2. Returning a dirty cup to any participating city cafe after finishing a drink</td>
+                                    <td><input type="radio" name="q8_2" value="Green"></td>
+                                    <td><input type="radio" name="q8_2" value="Paper"></td>
+                                </tr>
+                                <tr>
+                                    <td>3. Paying an extra fee when buying coffee for a long trip outside the city</td>
+                                    <td><input type="radio" name="q8_3" value="Green"></td>
+                                    <td><input type="radio" name="q8_3" value="Paper"></td>
+                                </tr>
+                                <tr>
+                                    <td>4. Receiving a freshly sanitized replacement cup for a new drink at no extra cost</td>
+                                    <td><input type="radio" name="q8_4" value="Green"></td>
+                                    <td><input type="radio" name="q8_4" value="Paper"></td>
+                                </tr>
+                                <tr>
+                                    <td>5. Choosing disposable containers that contribute to paper waste in city landfills</td>
+                                    <td><input type="radio" name="q8_5" value="Green"></td>
+                                    <td><input type="radio" name="q8_5" value="Paper"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="explanation-box" id="exp-q8"></div>
+                </div>
+
+                <!-- Q9 -->
+                <div class="question-card" id="qc-q9">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 9</span>
+                        <span class="badge-type">Outline (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        Look at the flowchart outline describing how the Green Cup Scheme works:
+                    </div>
+                    <div class="outline-box">[ Customer orders a drink and pays a $2 deposit for a reusable cup ]
+                               ↓
+[ Customer enjoys the beverage in the durable cup ]
+                               ↓
+[ ______________________________________________________________ ]
+                               ↓
+[ Customer receives a $2 deposit refund OR a clean replacement cup ]</div>
+                    <div class="question-text" style="font-weight: normal; margin-bottom: 12px;">
+                        Which option best completes the missing step in the flowchart?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q9" value="A"><span class="option-label">A. Customer disposes of the single-use cup into a city landfill recycling bin.</span></label>
+                        <label class="option-item"><input type="radio" name="q9" value="B"><span class="option-label">B. Customer returns the dirty reusable cup to any participating cafe in the city.</span></label>
+                        <label class="option-item"><input type="radio" name="q9" value="C"><span class="option-label">C. Customer purchases a second paper cup to avoid carrying the heavy container.</span></label>
+                        <label class="option-item"><input type="radio" name="q9" value="D"><span class="option-label">D. Customer writes an online review about the coffee shop's customer service.</span></label>
+                        <label class="option-item"><input type="radio" name="q9" value="E"><span class="option-label">E. Customer pays an additional maintenance fee to keep the reusable cup permanently.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q9"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SUBMIT BUTTON -->
+        <div class="submit-container">
+            <button type="button" class="btn-submit" id="submitBtn" onclick="gradeQuiz()">Selesai & Lihat Hasil</button>
+        </div>
+
+    </form>
+</div>
+
+<script>
+    /* =========================================
+       QUIZ GRADING & PROGRESS LOGIC 
+       ========================================= */
+    const answerKey = {
+        q1: { type: 'single', key: 'C', exp: '<b>Kunci Jawaban: C</b><br><b>Pembahasan:</b> Paragraf 2 menyatakan secara eksplisit: <i>"Ingesting these synthetic particles creates a false sense of fullness, leading to malnutrition..."</i>' },
+        q2: { type: 'cat', key: { q2_1: 'Primary', q2_2: 'Secondary', q2_3: 'Secondary', q2_4: 'Primary', q2_5: 'Secondary' }, exp: '<b>Kunci Jawaban: 1. Primary | 2. Secondary | 3. Secondary | 4. Primary | 5. Secondary</b><br><b>Pembahasan:</b><br>1. Primary (dibuat sengaja untuk kosmetik)<br>2. Secondary (hasil pelapukan/pemecahan jaring ikan)<br>3. Secondary (pelapukan botol bekas)<br>4. Primary (paragraf 3: "phase out primary microplastics")<br>5. Secondary (paragraf 3: "preventing secondary plastic debris")' },
+        q3: { type: 'single', key: 'B', exp: '<b>Kunci Jawaban: B</b><br><b>Pembahasan:</b> Urutan logis pada paragraf 2: Setelah organisme memakan plastik (Step 2), partikel tersebut memberikan rasa kenyang palsu dan menyerap polutan kimia (Step 3), yang selanjutnya akan naik ke pemangsa yang lebih besar (Step 4).' },
+
+        q4: { type: 'single', key: 'C', exp: '<b>Kunci Jawaban: C</b><br><b>Pembahasan:</b> Paragraf 2 mencantumkan syarat fleksibilitas ini secara spesifik: <i>"...can be completed flexibly outside these hours, provided daily deadlines are met."</i>' },
+        q5: { type: 'cat', key: { q5_1: 'Office', q5_2: 'Remote', q5_3: 'Office', q5_4: 'Remote', q5_5: 'Office' }, exp: '<b>Kunci Jawaban: 1. In-Office | 2. Remote Work | 3. In-Office | 4. Remote Work | 5. In-Office</b><br><b>Pembahasan:</b><br>1. In-Office Days (paragraf 3: strategy sessions)<br>2. Remote Work (paragraf 2: drafting reports & filing = asynchronous tasks)<br>3. In-Office Days (paragraf 3: team-building workshops)<br>4. Remote Work (paragraf 2 & 3: code reviewing = solitary tasks)<br>5. In-Office Days (paragraf 3: client presentations)' },
+        q6: { type: 'single', key: 'A', exp: '<b>Kunci Jawaban: A</b><br><b>Pembahasan:</b> Paragraf 2 fokus menguraikan dua aturan operasional: menjaga waktu ketersediaan wajib (core availability) dan izin fleksibilitas pengerjaan tugas mandiri (asynchronous).' },
+
+        q7: { type: 'single', key: 'B', exp: '<b>Kunci Jawaban: B</b><br><b>Pembahasan:</b> Paragraf 2 menjelaskan dengan tegas: <i>"The cafe staff will immediately refund the $2 deposit or provide a clean, sanitized reusable cup..."</i>' },
+        q8: { type: 'cat', key: { q8_1: 'Green', q8_2: 'Green', q8_3: 'Paper', q8_4: 'Green', q8_5: 'Paper' }, exp: '<b>Kunci Jawaban: 1. Green Cup | 2. Green Cup | 3. Paper Cups | 4. Green Cup | 5. Paper Cups</b><br><b>Pembahasan:</b><br>1. Green Cup (paragraf 2: membayar deposit)<br>2. Green Cup (paragraf 2: mengembalikan cangkir)<br>3. Paper Cups (paragraf 3: biaya tambahan untuk cangkir kertas biasa)<br>4. Green Cup (paragraf 2: mendapat cangkir ganti bersih)<br>5. Paper Cups (paragraf 1: limbah kertas cangkir sekali pakai)' },
+        q9: { type: 'single', key: 'B', exp: '<b>Kunci Jawaban: B</b><br><b>Pembahasan:</b> Langkah yang rumpang berada tepat di antara menikmati minuman dan mendapatkan pengembalian uang/cangkir baru. Menurut paragraf 2, aksi pelanggan di tahap ini adalah mengembalikan cangkir kotor ke kafe.' }
+    };
+
+    function updateProgress() {
+        let answeredCount = 0;
+        for (let i = 1; i <= 9; i++) {
+            if (i === 2 || i === 5 || i === 8) {
+                let subNames = [];
+                if (i === 2) subNames = ['q2_1','q2_2','q2_3','q2_4','q2_5'];
+                else if (i === 5) subNames = ['q5_1','q5_2','q5_3','q5_4','q5_5'];
+                else if (i === 8) subNames = ['q8_1','q8_2','q8_3','q8_4','q8_5'];
+                
+                let allSubAnswered = subNames.every(name => document.querySelector(`input[name="${name}"]:checked`));
+                if (allSubAnswered) answeredCount++;
+            } else {
+                let checked = document.querySelectorAll(`input[name="q${i}"]:checked`);
+                if (checked.length > 0) answeredCount++;
+            }
+        }
+        let percent = (answeredCount / 9) * 100;
+        document.getElementById('progressBar').style.width = percent + '%';
+        document.getElementById('progressText').innerText = `Terjawab: ${answeredCount} / 9`;
+    }
+
+    document.querySelectorAll('input').forEach(input => {
+        input.addEventListener('change', updateProgress);
+    });
+
+    function gradeQuiz() {
+        let correctCount = 0;
+        let incorrectCount = 0;
+
+        for (let i = 1; i <= 9; i++) {
+            let qKey = 'q' + i;
+            let qData = answerKey[qKey];
+            let expBox = document.getElementById('exp-q' + i);
+            let isCorrect = false;
+            let userAnsText = '';
+
+            if (qData.type === 'single') {
+                let selected = document.querySelector(`input[name="${qKey}"]:checked`);
+                let userVal = selected ? selected.value : null;
+                userAnsText = userVal ? `Jawaban Anda: ${userVal}` : 'Jawaban Anda: (Belum diisi)';
+                if (userVal === qData.key) isCorrect = true;
+            } else if (qData.type === 'cat') {
+                let subKeys = Object.keys(qData.key);
+                let catCorrectCount = 0;
+                let userSubAns = [];
+                subKeys.forEach(sKey => {
+                    let sel = document.querySelector(`input[name="${sKey}"]:checked`);
+                    let val = sel ? sel.value : '-';
+                    userSubAns.push(val);
+                    if (val === qData.key[sKey]) catCorrectCount++;
+                });
+                userAnsText = `Jawaban Anda: [ ${userSubAns.join(', ')} ]`;
+                if (catCorrectCount === subKeys.length) isCorrect = true;
+            }
+
+            let statusBadge = isCorrect 
+                ? `<span class="user-status status-correct">&#10004; BENAR</span>`
+                : `<span class="user-status status-incorrect">&#10008; SALAH</span>`;
+
+            expBox.innerHTML = `
+                <div class="explanation-header">${statusBadge} <span style="font-size:0.85rem; color:var(--text-muted);">${userAnsText}</span></div>
+                <div>${qData.exp}</div>
+            `;
+            expBox.classList.add('show');
+
+            if (isCorrect) correctCount++;
+            else incorrectCount++;
+        }
+
+        let finalScore = Math.round((correctCount / 9) * 100);
+        document.getElementById('finalScoreNum').innerText = finalScore;
+        document.getElementById('statCorrect').innerText = correctCount;
+        document.getElementById('statIncorrect').innerText = incorrectCount;
+        document.getElementById('statAccuracy').innerText = finalScore + '%';
+        
+        let dashboard = document.getElementById('resultDashboard');
+        dashboard.classList.add('show');
+        dashboard.scrollIntoView({ behavior: 'smooth' });
+
+        let submitBtn = document.getElementById('submitBtn');
+        submitBtn.innerText = 'Hasil Telah Ditampilkan';
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = '0.6';
+        submitBtn.style.cursor = 'not-allowed';
+    }
+
+    function resetQuiz() {
+        if (confirm("Apakah Anda yakin ingin mengulang Latihan dari awal? Semua jawaban akan direset.")) {
+            document.getElementById('quizForm').reset();
+            document.querySelectorAll('.explanation-box').forEach(box => {
+                box.classList.remove('show');
+                box.innerHTML = '';
+            });
+            document.getElementById('resultDashboard').classList.remove('show');
+            let submitBtn = document.getElementById('submitBtn');
+            submitBtn.innerText = 'Selesai & Lihat Hasil';
+            submitBtn.disabled = false;
+            submitBtn.style.opacity = '1';
+            submitBtn.style.cursor = 'pointer';
+            updateProgress();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    }
+</script>
+
+</body>
+</html>
