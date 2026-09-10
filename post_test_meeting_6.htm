@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Test Meeting 6</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #eff6ff;
+            --secondary: #475569;
+            --bg-main: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --success: #16a34a;
+            --success-light: #f0fdf4;
+            --error: #dc2626;
+            --error-light: #fef2f2;
+            --warning: #d97706;
+            --warning-light: #fffbeb;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            color: #ffffff;
+            padding: 24px 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            margin-bottom: 6px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        header p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 24px auto;
+            padding: 0 16px;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .progress-bar-bg {
+            flex: 1;
+            height: 10px;
+            background-color: #e2e8f0;
+            border-radius: 999px;
+            overflow: hidden;
+            min-width: 200px;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #2563eb);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        /* Section & Passage Card */
+        .section-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            margin-bottom: 32px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: #f1f5f9;
+            padding: 14px 24px;
+            border-bottom: 1px solid var(--border);
+            font-weight: 700;
+            color: #1e293b;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .passage-box {
+            padding: 24px;
+            background: #fafafa;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.95rem;
+            color: #334155;
+        }
+
+        .passage-box h2 {
+            font-size: 1.15rem;
+            color: #0f172a;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .passage-box p {
+            margin-bottom: 12px;
+            text-align: justify;
+        }
+
+        .passage-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Question Box */
+        .questions-container {
+            padding: 24px;
+        }
+
+        .question-card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+            transition: border-color 0.2s ease;
+        }
+
+        .question-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .question-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .badge-num {
+            background: var(--primary-light);
+            color: var(--primary);
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+        }
+
+        .badge-type {
+            background: #f1f5f9;
+            color: var(--secondary);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .question-text {
+            font-weight: 600;
+            color: var(--text-main);
+            font-size: 0.975rem;
+            margin-bottom: 16px;
+        }
+
+        /* Options */
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            background: #ffffff;
+            font-size: 0.925rem;
+        }
+
+        .option-item:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+        }
+
+        .option-item input[type="radio"],
+        .option-item input[type="checkbox"] {
+            margin-top: 3px;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        .option-label {
+            flex: 1;
+            cursor: pointer;
+        }
+
+        /* Categorization Table */
+        .cat-table-wrapper {
+            overflow-x: auto;
+            margin-top: 12px;
+        }
+
+        .cat-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+
+        .cat-table th {
+            background: #f1f5f9;
+            padding: 10px;
+            text-align: center;
+            border: 1px solid var(--border);
+            font-weight: 600;
+        }
+
+        .cat-table th:first-child {
+            text-align: left;
+            width: 55%;
+        }
+
+        .cat-table td {
+            padding: 10px;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .cat-table td:first-child {
+            text-align: left;
+        }
+
+        .cat-table input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        /* Explanation Box */
+        .explanation-box {
+            display: none;
+            margin-top: 16px;
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            background: #f8fafc;
+            border-left: 4px solid var(--primary);
+        }
+
+        .explanation-box.show {
+            display: block;
+        }
+
+        .explanation-header {
+            font-weight: 700;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .user-status {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            margin-bottom: 8px;
+        }
+
+        .status-correct {
+            background: var(--success-light);
+            color: var(--success);
+            border: 1px solid #bbf7d0;
+        }
+
+        .status-incorrect {
+            background: var(--error-light);
+            color: var(--error);
+            border: 1px solid #fecaca;
+        }
+
+        /* Submit Button */
+        .submit-container {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 700;
+            padding: 14px 40px;
+            border: none;
+            border-radius: 999px;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+            transition: all 0.2s ease;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.45);
+        }
+
+        /* Result Dashboard */
+        .result-dashboard {
+            display: none;
+            background: white;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            padding: 32px;
+            margin-bottom: 32px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+            text-align: center;
+        }
+
+        .result-dashboard.show {
+            display: block;
+        }
+
+        .score-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            color: var(--primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            border: 4px solid var(--primary);
+        }
+
+        .score-num {
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .score-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--secondary);
+            margin-top: 2px;
+        }
+
+        .result-stats {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            background: #f8fafc;
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            min-width: 140px;
+        }
+
+        .stat-val {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .stat-lbl {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .btn-reset {
+            background: #e2e8f0;
+            color: #334155;
+            font-weight: 600;
+            padding: 10px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.2s;
+        }
+
+        .btn-reset:hover {
+            background: #cbd5e1;
+        }
+
+        @media (max-width: 640px) {
+            .passage-box { padding: 16px; }
+            .questions-container { padding: 16px; }
+            .question-card { padding: 16px; }
+            .stat-card { flex: 1; min-width: 100px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Post Test Meeting 6</h1>
+    <p>__________</p>
+</header>
+
+<div class="container">
+
+    <!-- Progress Tracker -->
+    <div class="progress-container">
+        <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="progressBar"></div>
+        </div>
+        <div class="progress-text" id="progressText">Terjawab: 0 / 15</div>
+    </div>
+
+    <!-- Result Dashboard (Hidden initially) -->
+    <div class="result-dashboard" id="resultDashboard">
+        <h2>Hasil Post Test Anda</h2>
+        <p style="color: var(--text-muted); margin-bottom: 20px;">Berikut adalah ringkasan performa pengerjaan soal Anda:</p>
+        
+        <div class="score-circle">
+            <div class="score-num" id="finalScoreNum">0</div>
+            <div class="score-label">NILAI AKHIR</div>
+        </div>
+
+        <div class="result-stats">
+            <div class="stat-card">
+                <div class="stat-val" id="statCorrect" style="color: var(--success);">0</div>
+                <div class="stat-lbl">Jawaban Benar</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-val" id="statIncorrect" style="color: var(--error);">0</div>
+                <div class="stat-lbl">Jawaban Salah</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-val" id="statAccuracy">0%</div>
+                <div class="stat-lbl">Akurasi Total</div>
+            </div>
+        </div>
+
+        <button class="btn-reset" onclick="resetQuiz()">Ulangi Latihan</button>
+    </div>
+
+    <!-- FORM QUIZ -->
+    <form id="quizForm">
+
+        <!-- TEXT 1 -->
+        <div class="section-card">
+            <div class="section-header">
+                <span>TEXT 1: DESCRIPTIVE TEXT</span>
+                <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">Soal 1 - 4</span>
+            </div>
+            <div class="passage-box">
+                <h2>The Kota Tua Heritage Preservation Center</h2>
+                <p>The Kota Tua Heritage Preservation Center in Jakarta stands as an important urban cultural landmark. Built within a restored seventeenth-century Dutch colonial building, this center serves as a vibrant space for historic preservation, artistic performance, and public education. The ground floor features an extensive museum display showcasing antique pottery, historical maps, and traditional crafts collected from various districts across the archipelago. Visitors can observe local artisans actively demonstrating centuries-old batik dyeing and wooden puppet carving techniques.</p>
+                <p>On the upper floor, a public library houses over five thousand historical documents, rare manuscripts, and archival photographs accessible to students and researchers free of charge. Beyond static exhibits, the center hosts weekly acoustic music performances, traditional dance workshops, and community forums discussing urban conservation. According to the center’s 2025 annual report, over 120,000 people visited the facility last year, making it one of the most frequented cultural hubs in the province.</p>
+                <p>Many local historians believe that this center represents the most inspiring model of urban heritage conservation in the country. They argue that preserving such historical spaces is crucial for maintaining cultural identity amidst rapid modernization. Overall, the center successfully bridges historic preservation with modern community engagement.</p>
+            </div>
+
+            <div class="questions-container">
+                <!-- Q1 -->
+                <div class="question-card" id="qc-q1">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 1</span>
+                        <span class="badge-type">Fact vs. Opinion (Categorizing)</span>
+                    </div>
+                    <div class="question-text">
+                        Based on Text 1, classify whether each of the following statements is a <strong>Fact</strong> or an <strong>Opinion</strong>.
+                    </div>
+                    <div class="cat-table-wrapper">
+                        <table class="cat-table">
+                            <thead>
+                                <tr>
+                                    <th>Statement</th>
+                                    <th>Fact</th>
+                                    <th>Opinion</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1. The ground floor of the center displays antique pottery, historical maps, and traditional crafts.</td>
+                                    <td><input type="radio" name="q1_1" value="fact"></td>
+                                    <td><input type="radio" name="q1_1" value="opinion"></td>
+                                </tr>
+                                <tr>
+                                    <td>2. Over 120,000 people visited the facility last year according to the 2025 annual report.</td>
+                                    <td><input type="radio" name="q1_2" value="fact"></td>
+                                    <td><input type="radio" name="q1_2" value="opinion"></td>
+                                </tr>
+                                <tr>
+                                    <td>3. The center represents the most inspiring model of urban heritage conservation in the country.</td>
+                                    <td><input type="radio" name="q1_3" value="fact"></td>
+                                    <td><input type="radio" name="q1_3" value="opinion"></td>
+                                </tr>
+                                <tr>
+                                    <td>4. Preserving historical spaces is crucial for maintaining cultural identity amidst modernization.</td>
+                                    <td><input type="radio" name="q1_4" value="fact"></td>
+                                    <td><input type="radio" name="q1_4" value="opinion"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="explanation-box" id="exp-q1"></div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="question-card" id="qc-q2">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 2</span>
+                        <span class="badge-type">Adequacy & Validity (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        Which additional information would most likely make the text’s claim about the center’s impact on urban conservation more <strong>valid</strong> and reliable?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q2" value="A"><span class="option-label">A. A detailed price list of food and beverages sold at the center’s cafeteria.</span></label>
+                        <label class="option-item"><input type="radio" name="q2" value="B"><span class="option-label">B. Published comparative research from urban planning experts measuring public heritage awareness before and after visiting the center.</span></label>
+                        <label class="option-item"><input type="radio" name="q2" value="C"><span class="option-label">C. A complete list of the names and architectural backgrounds of the original Dutch builders from the seventeenth century.</span></label>
+                        <label class="option-item"><input type="radio" name="q2" value="D"><span class="option-label">D. Personal blog posts written by international tourists describing their holiday photos at Kota Tua.</span></label>
+                        <label class="option-item"><input type="radio" name="q2" value="E"><span class="option-label">E. A decorative map showing the walking distances between Kota Tua and nearby shopping malls.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q2"></div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="question-card" id="qc-q3">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 3</span>
+                        <span class="badge-type">Relevance (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        Which sentence from the text best supports the description of the center as an <strong>active hub for interactive learning</strong> rather than just a passive display room?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q3" value="A"><span class="option-label">A. “The Kota Tua Heritage Preservation Center in Jakarta stands as an important urban cultural landmark.”</span></label>
+                        <label class="option-item"><input type="radio" name="q3" value="B"><span class="option-label">B. “Built within a restored seventeenth-century Dutch colonial building, this center serves as a vibrant space for historic preservation…”</span></label>
+                        <label class="option-item"><input type="radio" name="q3" value="C"><span class="option-label">C. “Visitors can observe local artisans actively demonstrating centuries-old batik dyeing and wooden puppet carving techniques.”</span></label>
+                        <label class="option-item"><input type="radio" name="q3" value="D"><span class="option-label">D. “On the upper floor, a public library houses over five thousand historical documents, rare manuscripts, and archival photographs…”</span></label>
+                        <label class="option-item"><input type="radio" name="q3" value="E"><span class="option-label">E. “According to the center’s 2025 annual report, over 120,000 people visited the facility last year…”</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q3"></div>
+                </div>
+
+                <!-- Q4 -->
+                <div class="question-card" id="qc-q4">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 4</span>
+                        <span class="badge-type">Responding to a Text (Multiple Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        As a student interested in local history and culture, which of the following actions would be most reasonable and practical to take after reading the text? <em>(Select all correct answers)</em>
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="checkbox" name="q4" value="A"><span class="option-label">A. Visiting the center’s upper floor library to access archival documents for a school history project.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q4" value="B"><span class="option-label">B. Demolishing old buildings in one’s hometown to make space for modern commercial centers.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q4" value="C"><span class="option-label">C. Participating in the weekly traditional dance workshops or community conservation forums held at the center.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q4" value="D"><span class="option-label">D. Demanding that the center stop allowing researchers to read historical manuscripts free of charge.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q4" value="E"><span class="option-label">E. Sharing information about the center’s cultural activities with peers to promote heritage awareness.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q4"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TEXT 2 -->
+        <div class="section-card">
+            <div class="section-header">
+                <span>TEXT 2: NARRATIVE TEXT</span>
+                <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">Soal 5 - 7</span>
+            </div>
+            <div class="passage-box">
+                <h2>The Traditional Weaver</h2>
+                <p>Long ago in a small highland village, a young weaver named Alistair worked tirelessly at his wooden loom. Unlike other craftsmen who dyed their threads using quick chemical powders, Alistair traveled deep into the mountain forest every dawn to gather wild berries, bark, and roots to create natural dyes. His elderly grandmother had taught him that true craftsmanship required patience and respect for nature.</p>
+                <p>One afternoon, a wealthy merchant arrived from the capital city, offering Alistair a bag of gold coins to produce fifty silk scarves in just three days. The merchant warned that if Alistair used his slow, traditional methods, he would lose the contract. Feeling pressured by his family’s modest living conditions, Alistair considered using artificial dyes to speed up his work. However, as he held the synthetic dye powder, he recalled his grandmother’s advice: “A shortcut taken out of greed will unravel the fabric of your character.” Choosing integrity over quick riches, Alistair politely declined the merchant’s tight deadline and continued crafting his scarves with natural dyes.</p>
+                <p>Disappointed, the merchant left. Two weeks later, the merchant returned accompanied by an envoy from the royal court. The envoy inspected Alistair’s naturally dyed scarves and praised their vibrant, everlasting colors. Seeing the exquisite quality, the royal court appointed Alistair as the kingdom’s chief artisan, rewarding his steadfast honesty and dedication to traditional craft.</p>
+            </div>
+
+            <div class="questions-container">
+                <!-- Q5 -->
+                <div class="question-card" id="qc-q5">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 5</span>
+                        <span class="badge-type">Reality vs. Fantasy (Categorizing)</span>
+                    </div>
+                    <div class="question-text">
+                        Based on Text 2, classify whether each of the following events is a <strong>Reality</strong> (could happen in real life) or a <strong>Fantasy</strong> (imaginary/impossible in real life).
+                    </div>
+                    <div class="cat-table-wrapper">
+                        <table class="cat-table">
+                            <thead>
+                                <tr>
+                                    <th>Event</th>
+                                    <th>Reality</th>
+                                    <th>Fantasy</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1. Gathering wild berries, bark, and roots in the forest to make natural fabric dyes.</td>
+                                    <td><input type="radio" name="q5_1" value="reality"></td>
+                                    <td><input type="radio" name="q5_1" value="fantasy"></td>
+                                </tr>
+                                <tr>
+                                    <td>2. Declining a lucrative business contract to maintain traditional crafting standards.</td>
+                                    <td><input type="radio" name="q5_2" value="reality"></td>
+                                    <td><input type="radio" name="q5_2" value="fantasy"></td>
+                                </tr>
+                                <tr>
+                                    <td>3. Transforming synthetic dye powder into solid gold coins by chanting a secret magic spell.</td>
+                                    <td><input type="radio" name="q5_3" value="reality"></td>
+                                    <td><input type="radio" name="q5_3" value="fantasy"></td>
+                                </tr>
+                                <tr>
+                                    <td>4. Weaving an enchanted scarf that grants the wearer the ability to fly across mountains.</td>
+                                    <td><input type="radio" name="q5_4" value="reality"></td>
+                                    <td><input type="radio" name="q5_4" value="fantasy"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="explanation-box" id="exp-q5"></div>
+                </div>
+
+                <!-- Q6 -->
+                <div class="question-card" id="qc-q6">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 6</span>
+                        <span class="badge-type">Relevance (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        Which part of the story best supports the description of Alistair as a person of <strong>unwavering moral integrity</strong>?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q6" value="A"><span class="option-label">A. "Long ago in a small highland village, a young weaver named Alistair worked tirelessly at his wooden loom."</span></label>
+                        <label class="option-item"><input type="radio" name="q6" value="B"><span class="option-label">B. "One afternoon, a wealthy merchant arrived from the capital city, offering Alistair a bag of gold coins..."</span></label>
+                        <label class="option-item"><input type="radio" name="q6" value="C"><span class="option-label">C. "Choosing integrity over quick riches, Alistair politely declined the merchant’s tight deadline and continued crafting his scarves with natural dyes."</span></label>
+                        <label class="option-item"><input type="radio" name="q6" value="D"><span class="option-label">D. "Two weeks later, the merchant returned accompanied by an envoy from the royal court."</span></label>
+                        <label class="option-item"><input type="radio" name="q6" value="E"><span class="option-label">E. "The envoy inspected Alistair’s naturally dyed scarves and praised their vibrant, everlasting colors."</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q6"></div>
+                </div>
+
+                <!-- Q7 -->
+                <div class="question-card" id="qc-q7">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 7</span>
+                        <span class="badge-type">Responding to a Text (Multiple Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        What valuable life lessons can readers adopt in their professional or academic lives based on Alistair’s choices in the story? <em>(Select all correct answers)</em>
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="checkbox" name="q7" value="A"><span class="option-label">A. Prioritizing long-term quality and honesty over short-term financial shortcuts.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q7" value="B"><span class="option-label">B. Accepting every impossible deadline even if it requires deceiving customers.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q7" value="C"><span class="option-label">C. Remaining true to ethical principles despite facing economic or social pressure.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q7" value="D"><span class="option-label">D. Abandoning traditional methods immediately whenever a wealthy client demands it.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q7" value="E"><span class="option-label">E. Understanding that genuine dedication to one’s craft often leads to meaningful recognition.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q7"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TEXT 3 -->
+        <div class="section-card">
+            <div class="section-header">
+                <span>TEXT 3: ANALYTICAL EXPOSITION TEXT</span>
+                <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">Soal 8 - 11</span>
+            </div>
+            <div class="passage-box">
+                <h2>The Importance of Critical Digital Literacy</h2>
+                <p>In the modern digital era, digital literacy has become an essential life skill for young citizens participating in civic life. While social media platforms offer unprecedented opportunities for public discussion, they also expose users to misinformation, echo chambers, and manipulative online content. Therefore, teaching critical digital literacy in high schools is imperative for fostering an informed democratic society.</p>
+                <p>First, digital literacy equips students with the cognitive tools to evaluate the credibility of online information. Without proper training, young readers often mistake sensationalized headlines and opinion blogs for verified facts. By learning how to cross-check sources, identify logical fallacies, and spot biased reporting, teenagers can protect themselves from falling prey to fake news.</p>
+                <p>Second, developing digital literacy encourages civil and constructive online discourse. Social media comment sections are frequently filled with hostile arguments and cyberbullying. When students are taught digital etiquette and empathetic communication, they learn how to express their political opinions respectfully and listen to diverse perspectives without resorting to personal attacks.</p>
+                <p>According to a 2024 national educational survey, schools with dedicated digital literacy programs reported a 40 percent reduction in online conflicts among students. Furthermore, prominent sociologists argue that digital literacy is the single most important factor in preparing teenagers to become responsible digital citizens. In conclusion, educational authorities must integrate digital literacy into national curricula to ensure young people can navigate the digital world responsibly.</p>
+            </div>
+
+            <div class="questions-container">
+                <!-- Q8 -->
+                <div class="question-card" id="qc-q8">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 8</span>
+                        <span class="badge-type">Fact vs. Opinion (Categorizing)</span>
+                    </div>
+                    <div class="question-text">
+                        Based on Text 3, classify whether each statement reflects a <strong>Fact</strong> or an <strong>Opinion</strong>.
+                    </div>
+                    <div class="cat-table-wrapper">
+                        <table class="cat-table">
+                            <thead>
+                                <tr>
+                                    <th>Statement</th>
+                                    <th>Fact</th>
+                                    <th>Opinion</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1. A 2024 national educational survey reported a 40 percent reduction in online conflicts in schools with digital literacy programs.</td>
+                                    <td><input type="radio" name="q8_1" value="fact"></td>
+                                    <td><input type="radio" name="q8_1" value="opinion"></td>
+                                </tr>
+                                <tr>
+                                    <td>2. Teaching critical digital literacy in high schools is imperative for fostering an informed democratic society.</td>
+                                    <td><input type="radio" name="q8_2" value="fact"></td>
+                                    <td><input type="radio" name="q8_2" value="opinion"></td>
+                                </tr>
+                                <tr>
+                                    <td>3. Digital literacy is the single most important factor in preparing teenagers to become responsible digital citizens.</td>
+                                    <td><input type="radio" name="q8_3" value="fact"></td>
+                                    <td><input type="radio" name="q8_3" value="opinion"></td>
+                                </tr>
+                                <tr>
+                                    <td>4. Social media comment sections are frequently filled with hostile arguments and cyberbullying.</td>
+                                    <td><input type="radio" name="q8_4" value="fact"></td>
+                                    <td><input type="radio" name="q8_4" value="opinion"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="explanation-box" id="exp-q8"></div>
+                </div>
+
+                <!-- Q9 -->
+                <div class="question-card" id="qc-q9">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 9</span>
+                        <span class="badge-type">Adequacy & Validity (Multiple Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        Which of the following additional evidence would most effectively strengthen the <strong>validity and adequacy</strong> of the author’s argument regarding digital literacy? <em>(Select all correct answers)</em>
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="checkbox" name="q9" value="A"><span class="option-label">A. Peer-reviewed research data comparing civic engagement levels between digitally literate and illiterate youth.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q9" value="B"><span class="option-label">B. An advertisement for the latest smartphone model released by a major technology company.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q9" value="C"><span class="option-label">C. Official statistics showing the prevalence and spread rate of false information on youth-dominated social platforms.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q9" value="D"><span class="option-label">D. A personal blog post written by a teenager describing their favorite online video game.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q9" value="E"><span class="option-label">E. A comparative curriculum study showing how other democratic nations successfully reduced online fake news through school programs.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q9"></div>
+                </div>
+
+                <!-- Q10 -->
+                <div class="question-card" id="qc-q10">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 10</span>
+                        <span class="badge-type">Relevance (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        Which sentence from paragraph 2 best supports the claim that digital literacy <strong>prevents students from being deceived by unverified information</strong>?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q10" value="A"><span class="option-label">A. “First, digital literacy equips students with the cognitive tools to evaluate the credibility of online information.”</span></label>
+                        <label class="option-item"><input type="radio" name="q10" value="B"><span class="option-label">B. “Without proper training, young readers often mistake sensationalized headlines and opinion blogs for verified facts.”</span></label>
+                        <label class="option-item"><input type="radio" name="q10" value="C"><span class="option-label">C. “By learning how to cross-check sources, identify logical fallacies, and spot biased reporting, teenagers can protect themselves from falling prey to fake news.”</span></label>
+                        <label class="option-item"><input type="radio" name="q10" value="D"><span class="option-label">D. “Second, developing digital literacy encourages civil and constructive online discourse.”</span></label>
+                        <label class="option-item"><input type="radio" name="q10" value="E"><span class="option-label">E. “Social media comment sections are frequently filled with hostile arguments and cyberbullying.”</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q10"></div>
+                </div>
+
+                <!-- Q11 -->
+                <div class="question-card" id="qc-q11">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 11</span>
+                        <span class="badge-type">Responding to a Text (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        As a high school student who frequently uses social media, what would be the most responsible action to take after reading this text?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q11" value="A"><span class="option-label">A. Deleting all social media accounts permanently and avoiding any online communication.</span></label>
+                        <label class="option-item"><input type="radio" name="q11" value="B"><span class="option-label">B. Fact-checking news headlines and verifying sources before sharing posts or commenting online.</span></label>
+                        <label class="option-item"><input type="radio" name="q11" value="C"><span class="option-label">C. Believing every viral article posted on social media as long as it has many likes.</span></label>
+                        <label class="option-item"><input type="radio" name="q11" value="D"><span class="option-label">D. Engaging in aggressive arguments in comment sections to defend one's personal political opinions.</span></label>
+                        <label class="option-item"><input type="radio" name="q11" value="E"><span class="option-label">E. Ignoring school assignments related to critical thinking and digital safety.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q11"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TEXT 4 -->
+        <div class="section-card">
+            <div class="section-header">
+                <span>TEXT 4: ANALYTICAL EXPOSITION TEXT + TABLE</span>
+                <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">Soal 12 - 15</span>
+            </div>
+            <div class="passage-box">
+                <h2>Urbanization and Public Transportation</h2>
+                <p>Rapid urbanization in developing cities has led to severe traffic congestion, air pollution, and increased carbon emissions. To address these environmental and social challenges, municipal governments must prioritize investments in public transportation over private vehicle infrastructure. Shifting commuters from private cars to buses and trains is essential for building sustainable and equitable cities.</p>
+                <p>First, expanding public transit significantly reduces greenhouse gas emissions. A single fully occupied commuter train can remove hundreds of private cars from the road, dramatically decreasing fuel consumption. Second, public transit improves economic mobility for low-income residents who cannot afford private car ownership, granting them reliable access to employment and education.</p>
+                <p>To evaluate the impact of recent urban transit upgrades, municipal authorities conducted a six-month survey across three major city districts in 2025. The survey recorded changes in commuter habits, travel times, and air quality index (AQI) improvements.</p>
+                
+                <h4 style="margin: 16px 0 8px 0; color: #0f172a;">Table 1: District Transit Upgrade Survey Results (2025)</h4>
+                <div class="cat-table-wrapper">
+                    <table class="cat-table" style="background: #fff;">
+                        <thead>
+                            <tr>
+                                <th>District</th>
+                                <th>Transit Upgrade Implemented</th>
+                                <th>Commuter Shift (%)</th>
+                                <th>Travel Time Reduction</th>
+                                <th>AQI Improvement (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>District A</strong></td>
+                                <td>Dedicated Bus Rapid Transit (BRT) lanes</td>
+                                <td>35%</td>
+                                <td>18 mins</td>
+                                <td>22%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>District B</strong></td>
+                                <td>Light Rail Transit (LRT) expansion</td>
+                                <td>48%</td>
+                                <td>25 mins</td>
+                                <td>30%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>District C</strong></td>
+                                <td>Bike lane addition & sidewalk expansion</td>
+                                <td>15%</td>
+                                <td>8 mins</td>
+                                <td>10%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p style="margin-top: 12px;">In conclusion, the data clearly demonstrates that dedicated public transit infrastructure yields substantial environmental and efficiency benefits. City planners should continue allocating public funds toward expanding light rail and rapid bus networks.</p>
+            </div>
+
+            <div class="questions-container">
+                <!-- Q12 -->
+                <div class="question-card" id="qc-q12">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 12</span>
+                        <span class="badge-type">Adequacy & Validity (Multiple Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        Based on both the text and Table 1, which of the following statements provide <strong>valid and adequate support</strong> for expanding rail and rapid bus networks? <em>(Select all correct answers)</em>
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="checkbox" name="q12" value="A"><span class="option-label">A. District B’s LRT expansion resulted in the highest shift to public transit (48%) and the greatest reduction in travel time (25 mins).</span></label>
+                        <label class="option-item"><input type="checkbox" name="q12" value="B"><span class="option-label">B. District C’s bike lanes were more effective at reducing travel times than District B’s LRT expansion.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q12" value="C"><span class="option-label">C. Dedicated BRT lanes in District A led to a notable 22% improvement in the local Air Quality Index.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q12" value="D"><span class="option-label">D. Public transit upgrades consistently contributed to both travel time reductions and air quality improvements across all surveyed districts.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q12" value="E"><span class="option-label">E. Adding bike lanes in District C completely eliminated the need for public buses and trains.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q12"></div>
+                </div>
+
+                <!-- Q13 -->
+                <div class="question-card" id="qc-q13">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 13</span>
+                        <span class="badge-type">Adequacy & Validity (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        What additional data, if added to Table 1, would make the study’s findings regarding public transit benefits even more <strong>complete and adequate</strong> for city budget planners?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q13" value="A"><span class="option-label">A. The average ticket price of movie theaters located near the transit stations.</span></label>
+                        <label class="option-item"><input type="radio" name="q13" value="B"><span class="option-label">B. The total financial expenditure and maintenance costs required for constructing each transit type.</span></label>
+                        <label class="option-item"><input type="radio" name="q13" value="C"><span class="option-label">C. A list of popular clothing brands advertised inside the LRT trains.</span></label>
+                        <label class="option-item"><input type="radio" name="q13" value="D"><span class="option-label">D. The names and personal hobbies of the survey bus drivers.</span></label>
+                        <label class="option-item"><input type="radio" name="q13" value="E"><span class="option-label">E. The weather forecast for the city during the upcoming winter season.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q13"></div>
+                </div>
+
+                <!-- Q14 -->
+                <div class="question-card" id="qc-q14">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 14</span>
+                        <span class="badge-type">Relevance (Categorizing)</span>
+                    </div>
+                    <div class="question-text">
+                        Based on the survey data in Table 1, classify whether each result is relevant to <strong>Traffic Efficiency</strong> or <strong>Environmental Improvement</strong>.
+                    </div>
+                    <div class="cat-table-wrapper">
+                        <table class="cat-table">
+                            <thead>
+                                <tr>
+                                    <th>Survey Result</th>
+                                    <th>Traffic Efficiency</th>
+                                    <th>Environmental Improvement</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1. A 30% improvement in the Air Quality Index (AQI) in District B.</td>
+                                    <td><input type="radio" name="q14_1" value="traffic"></td>
+                                    <td><input type="radio" name="q14_1" value="environment"></td>
+                                </tr>
+                                <tr>
+                                    <td>2. An 18-minute reduction in average travel time in District A.</td>
+                                    <td><input type="radio" name="q14_2" value="traffic"></td>
+                                    <td><input type="radio" name="q14_2" value="environment"></td>
+                                </tr>
+                                <tr>
+                                    <td>3. A 22% decrease in air pollutants following BRT lane implementation.</td>
+                                    <td><input type="radio" name="q14_3" value="traffic"></td>
+                                    <td><input type="radio" name="q14_3" value="environment"></td>
+                                </tr>
+                                <tr>
+                                    <td>4. A 25-minute travel time reduction following LRT expansion.</td>
+                                    <td><input type="radio" name="q14_4" value="traffic"></td>
+                                    <td><input type="radio" name="q14_4" value="environment"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="explanation-box" id="exp-q14"></div>
+                </div>
+
+                <!-- Q15 -->
+                <div class="question-card" id="qc-q15">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 15</span>
+                        <span class="badge-type">Responding to a Text (Single Answer)</span>
+                    </div>
+                    <div class="question-text">
+                        If you were a resident in a city experiencing severe traffic congestion and air pollution, what would be the most logical action to support the author’s recommendations?
+                    </div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q15" value="A"><span class="option-label">A. Purchasing an additional private sports car to drive to work every day.</span></label>
+                        <label class="option-item"><input type="radio" name="q15" value="B"><span class="option-label">B. Petitioning the local government to destroy existing sidewalks and public bus lanes.</span></label>
+                        <label class="option-item"><input type="radio" name="q15" value="C"><span class="option-label">C. Using public transportation like BRT or LRT for daily commutes and advocating for transit infrastructure funding.</span></label>
+                        <label class="option-item"><input type="radio" name="q15" value="D"><span class="option-label">D. Demanding that the city government stop spending money on public transit projects.</span></label>
+                        <label class="option-item"><input type="radio" name="q15" value="E"><span class="option-label">E. Refusing to walk or cycle even for short distances within the neighborhood.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q15"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SUBMIT BUTTON -->
+        <div class="submit-container">
+            <button type="button" class="btn-submit" id="submitBtn" onclick="gradeQuiz()">Selesai & Lihat Hasil</button>
+        </div>
+
+    </form>
+</div>
+
+<script>
+    /* =========================================
+       QUIZ GRADING & PROGRESS LOGIC 
+       ========================================= */
+    const answerKey = {
+        q1: { type: 'cat', key: { q1_1: 'fact', q1_2: 'fact', q1_3: 'opinion', q1_4: 'opinion' }, exp: '<b>Kunci Jawaban: 1. Fact | 2. Fact | 3. Opinion | 4. Opinion</b><br><b>Pembahasan:</b><br>• Statement 1 & 2 (Fact): Menyajikan informasi objektif dan data statistik yang dapat diverifikasi dalam teks.<br>• Statement 3 & 4 (Opinion): Menggunakan kata sifat subjektif ("the most inspiring model") dan penilaian berbasis nilai ("crucial for maintaining...").' },
+        q2: { type: 'single', key: 'B', exp: '<b>Kunci Jawaban: B</b><br><b>Pembahasan:</b> Untuk memperkuat validitas klaim tentang konservasi perkotaan, dibutuhkan bukti empiris yang objektif berupa riset komparatif dari ahli perencanaan kota (Opsi B). Opsi lainnya bersifat dekoratif atau personal.' },
+        q3: { type: 'single', key: 'C', exp: '<b>Kunci Jawaban: C</b><br><b>Pembahasan:</b> Opsi C secara langsung menggambarkan aktivitas interaktif di mana pengunjung melihat pengrajin mendemonstrasikan teknik secara aktif, membuktikan bahwa tempat ini adalah pusat pembelajaran interaktif.' },
+        q4: { type: 'multiple', key: ['A', 'C', 'E'], exp: '<b>Kunci Jawaban: A, C, dan E</b><br><b>Pembahasan:</b> Tindakan yang logis dan positif meliputi memanfaatkan perpustakaan (A), mengikuti lokakarya (C), dan menyebarkan informasi positif tentang kegiatan budaya (E). Opsi B dan D bertentangan dengan isi teks.' },
+
+        q5: { type: 'cat', key: { q5_1: 'reality', q5_2: 'reality', q5_3: 'fantasy', q5_4: 'fantasy' }, exp: '<b>Kunci Jawaban: 1. Reality | 2. Reality | 3. Fantasy | 4. Fantasy</b><br><b>Pembahasan:</b><br>• Statement 1 & 2: Aktivitas manusia yang realistis di dunia nyata.<br>• Statement 3 & 4: Melibatkan unsur magis (mantra, sihir, syal terbang) yang tidak dapat terjadi di kehidupan nyata (Fantasy).' },
+        q6: { type: 'single', key: 'C', exp: '<b>Kunci Jawaban: C</b><br><b>Pembahasan:</b> Sifat integritas moral yang teguh paling kuat didukung oleh tindakan Alistair di Opsi C, di mana ia menolak godaan uang cepat untuk mempertahankan kejujurannya.' },
+        q7: { type: 'multiple', key: ['A', 'C', 'E'], exp: '<b>Kunci Jawaban: A, C, dan E</b><br><b>Pembahasan:</b> Opsi A, C, dan E merepresentasikan nilai moral positif dari cerita. Opsi B dan D mengajarkan ketidakjujuran dan tunduk pada tekanan negatif.' },
+
+        q8: { type: 'cat', key: { q8_1: 'fact', q8_2: 'opinion', q8_3: 'opinion', q8_4: 'fact' }, exp: '<b>Kunci Jawaban: 1. Fact | 2. Opinion | 3. Opinion | 4. Fact</b><br><b>Pembahasan:</b><br>• Statement 1 & 4 (Fact): Menampilkan data survei resmi dan fenomena sosial yang dapat diverifikasi.<br>• Statement 2 & 3 (Opinion): Menggunakan rekomendasi persuasif ("is imperative") dan klaim mutlak subjektif ("the single most important factor").' },
+        q9: { type: 'multiple', key: ['A', 'C', 'E'], exp: '<b>Kunci Jawaban: A, C, dan E</b><br><b>Pembahasan:</b> Penambahan data riset kualitatif (A), statistik resmi tentang hoaks (C), dan studi perbandingan kurikulum (E) memperkuat validitas argumen. Opsi B dan D tidak relevan.' },
+        q10: { type: 'single', key: 'C', exp: '<b>Kunci Jawaban: C</b><br><b>Pembahasan:</b> Klaim tersebut paling spesifik didukung oleh Opsi C, karena menyebutkan metode konkret (cross-checking sources, identifying fallacies) yang secara aktif melindungi siswa dari berita palsu.' },
+        q11: { type: 'single', key: 'B', exp: '<b>Kunci Jawaban: B</b><br><b>Pembahasan:</b> Tindakan paling bertanggung jawab yang selaras dengan pesan utama teks adalah memverifikasi informasi dan sumber berita sebelum membagikannya (Opsi B).' },
+
+        q12: { type: 'multiple', key: ['A', 'C', 'D'], exp: '<b>Kunci Jawaban: A, C, dan D</b><br><b>Pembahasan:</b> Opsi A, C, dan D selaras secara akurat dengan fakta-fakta dalam tabel survei. Opsi B dan E bertentangan dengan data tabel.' },
+        q13: { type: 'single', key: 'B', exp: '<b>Kunci Jawaban: B</b><br><b>Pembahasan:</b> Bagi perencana anggaran kota, data dampak lingkungan/efisiensi harus dilengkapi dengan biaya pengeluaran finansial dan pemeliharaan konstruksi agar studi menjadi sepenuhnya memadai.' },
+        q14: { type: 'cat', key: { q14_1: 'environment', q14_2: 'traffic', q14_3: 'environment', q14_4: 'traffic' }, exp: '<b>Kunci Jawaban: 1. Environmental | 2. Traffic Efficiency | 3. Environmental | 4. Traffic Efficiency</b><br><b>Pembahasan:</b><br>• Hasil 1 & 3 berkaitan langsung dengan kualitas udara dan penurunan polusi (Environmental Improvement).<br>• Hasil 2 & 4 berkaitan dengan durasi perjalanan dan kecepatan komuter (Traffic Efficiency).' },
+        q15: { type: 'single', key: 'C', exp: '<b>Kunci Jawaban: C</b><br><b>Pembahasan:</b> Respon pembaca yang paling logis dan mendukung rekomendasi penulis adalah beralih menggunakan transportasi publik untuk mobilitas harian serta mendukung pendanaan infrastruktur transit (Opsi C).' }
+    };
+
+    function updateProgress() {
+        let answeredCount = 0;
+        for (let i = 1; i <= 15; i++) {
+            let qKey = 'q' + i;
+            let qData = answerKey[qKey];
+            if (qData.type === 'cat') {
+                let subKeys = Object.keys(qData.key);
+                let allSubAnswered = subKeys.every(sKey => document.querySelector(`input[name="${sKey}"]:checked`));
+                if (allSubAnswered) answeredCount++;
+            } else {
+                let checked = document.querySelectorAll(`input[name="${qKey}"]:checked`);
+                if (checked.length > 0) answeredCount++;
+            }
+        }
+        let percent = (answeredCount / 15) * 100;
+        document.getElementById('progressBar').style.width = percent + '%';
+        document.getElementById('progressText').innerText = `Terjawab: ${answeredCount} / 15`;
+    }
+
+    document.querySelectorAll('input').forEach(input => {
+        input.addEventListener('change', updateProgress);
+    });
+
+    function gradeQuiz() {
+        let correctCount = 0;
+        let incorrectCount = 0;
+
+        for (let i = 1; i <= 15; i++) {
+            let qKey = 'q' + i;
+            let qData = answerKey[qKey];
+            let expBox = document.getElementById('exp-q' + i);
+            let isCorrect = false;
+            let userAnsText = '';
+
+            if (qData.type === 'single') {
+                let selected = document.querySelector(`input[name="${qKey}"]:checked`);
+                let userVal = selected ? selected.value : null;
+                userAnsText = userVal ? `Jawaban Anda: ${userVal}` : 'Jawaban Anda: (Belum diisi)';
+                if (userVal === qData.key) isCorrect = true;
+            } else if (qData.type === 'multiple') {
+                let selected = Array.from(document.querySelectorAll(`input[name="${qKey}"]:checked`)).map(cb => cb.value);
+                userAnsText = selected.length > 0 ? `Jawaban Anda: ${selected.join(', ')}` : 'Jawaban Anda: (Belum diisi)';
+                if (selected.length === qData.key.length && selected.every(val => qData.key.includes(val))) {
+                    isCorrect = true;
+                }
+            } else if (qData.type === 'cat') {
+                let subKeys = Object.keys(qData.key);
+                let catCorrectCount = 0;
+                let userSubAns = [];
+                subKeys.forEach(sKey => {
+                    let sel = document.querySelector(`input[name="${sKey}"]:checked`);
+                    let val = sel ? sel.value : '-';
+                    userSubAns.push(val);
+                    if (val === qData.key[sKey]) catCorrectCount++;
+                });
+                userAnsText = `Jawaban Anda: [ ${userSubAns.join(', ')} ]`;
+                if (catCorrectCount === subKeys.length) isCorrect = true;
+            }
+
+            let statusBadge = isCorrect 
+                ? `<span class="user-status status-correct">&#10004; BENAR</span>`
+                : `<span class="user-status status-incorrect">&#10008; SALAH</span>`;
+
+            expBox.innerHTML = `
+                <div class="explanation-header">${statusBadge} <span style="font-size:0.85rem; color:var(--text-muted);">${userAnsText}</span></div>
+                <div>${qData.exp}</div>
+            `;
+            expBox.classList.add('show');
+
+            if (isCorrect) correctCount++;
+            else incorrectCount++;
+        }
+
+        let finalScore = Math.round((correctCount / 15) * 100);
+        document.getElementById('finalScoreNum').innerText = finalScore;
+        document.getElementById('statCorrect').innerText = correctCount;
+        document.getElementById('statIncorrect').innerText = incorrectCount;
+        document.getElementById('statAccuracy').innerText = finalScore + '%';
+        
+        let dashboard = document.getElementById('resultDashboard');
+        dashboard.classList.add('show');
+        dashboard.scrollIntoView({ behavior: 'smooth' });
+
+        let submitBtn = document.getElementById('submitBtn');
+        submitBtn.innerText = 'Hasil Telah Ditampilkan';
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = '0.6';
+        submitBtn.style.cursor = 'not-allowed';
+    }
+
+    function resetQuiz() {
+        if (confirm("Apakah Anda yakin ingin mengulang Latihan dari awal? Semua jawaban akan direset.")) {
+            document.getElementById('quizForm').reset();
+            document.querySelectorAll('.explanation-box').forEach(box => {
+                box.classList.remove('show');
+                box.innerHTML = '';
+            });
+            document.getElementById('resultDashboard').classList.remove('show');
+            let submitBtn = document.getElementById('submitBtn');
+            submitBtn.innerText = 'Selesai & Lihat Hasil';
+            submitBtn.disabled = false;
+            submitBtn.style.opacity = '1';
+            submitBtn.style.cursor = 'pointer';
+            updateProgress();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    }
+</script>
+
+</body>
+</html>
