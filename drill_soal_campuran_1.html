@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drill Soal Campuran 1 - UTBK LBE</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --primary-light: #eff6ff;
+            --secondary: #475569;
+            --bg-main: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --success: #16a34a;
+            --success-light: #f0fdf4;
+            --error: #dc2626;
+            --error-light: #fef2f2;
+            --warning: #d97706;
+            --warning-light: #fffbeb;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            color: #ffffff;
+            padding: 24px 20px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            margin-bottom: 6px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        header p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 24px auto;
+            padding: 0 16px;
+        }
+
+        /* Tooltip Styles for Difficult Words */
+        .tooltip-word {
+            border-bottom: 1px dashed var(--primary);
+            cursor: help;
+            position: relative;
+            color: var(--primary-dark);
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .tooltip-word:hover {
+            color: var(--primary);
+        }
+
+        .tooltip-word:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e293b;
+            color: #ffffff;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            z-index: 10;
+            margin-bottom: 6px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+            font-weight: 500;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .progress-bar-bg {
+            flex: 1;
+            height: 10px;
+            background-color: #e2e8f0;
+            border-radius: 999px;
+            overflow: hidden;
+            min-width: 200px;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #2563eb);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        /* Section & Passage Card */
+        .section-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            margin-bottom: 32px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: #f1f5f9;
+            padding: 14px 24px;
+            border-bottom: 1px solid var(--border);
+            font-weight: 700;
+            color: #1e293b;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .passage-box {
+            padding: 24px;
+            background: #fafafa;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.95rem;
+            color: #334155;
+        }
+
+        .passage-box h2 {
+            font-size: 1.15rem;
+            color: #0f172a;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .passage-box p {
+            margin-bottom: 12px;
+            text-align: justify;
+        }
+
+        .passage-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Question Box */
+        .questions-container {
+            padding: 24px;
+        }
+
+        .question-card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+            transition: border-color 0.2s ease;
+        }
+
+        .question-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .question-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .badge-num {
+            background: var(--primary-light);
+            color: var(--primary);
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+        }
+
+        .badge-type {
+            background: #f1f5f9;
+            color: var(--secondary);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .badge-info {
+            background: #fffbeb;
+            color: #d97706;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 6px;
+            border: 1px solid #fde68a;
+        }
+
+        .question-text {
+            font-weight: 600;
+            color: var(--text-main);
+            font-size: 0.975rem;
+            margin-bottom: 16px;
+        }
+
+        /* Options */
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 16px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            background: #ffffff;
+            font-size: 0.925rem;
+        }
+
+        .option-item:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+        }
+
+        .option-item input[type="radio"],
+        .option-item input[type="checkbox"] {
+            margin-top: 3px;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        .option-label {
+            flex: 1;
+            cursor: pointer;
+        }
+
+        /* Explanation Box */
+        .explanation-box {
+            display: none;
+            margin-top: 16px;
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            background: #f8fafc;
+            border-left: 4px solid var(--primary);
+        }
+
+        .explanation-box.show {
+            display: block;
+        }
+
+        .explanation-header {
+            font-weight: 700;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .user-status {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            margin-bottom: 8px;
+        }
+
+        .status-correct {
+            background: var(--success-light);
+            color: var(--success);
+            border: 1px solid #bbf7d0;
+        }
+
+        .status-incorrect {
+            background: var(--error-light);
+            color: var(--error);
+            border: 1px solid #fecaca;
+        }
+
+        /* Submit Button */
+        .submit-container {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 700;
+            padding: 14px 40px;
+            border: none;
+            border-radius: 999px;
+            cursor: pointer;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+            transition: all 0.2s ease;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.45);
+        }
+
+        /* Result Dashboard */
+        .result-dashboard {
+            display: none;
+            background: white;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            padding: 32px;
+            margin-bottom: 32px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+            text-align: center;
+        }
+
+        .result-dashboard.show {
+            display: block;
+        }
+
+        .score-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            color: var(--primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            border: 4px solid var(--primary);
+        }
+
+        .score-num {
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .score-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--secondary);
+            margin-top: 2px;
+        }
+
+        .result-stats {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            background: #f8fafc;
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            min-width: 140px;
+        }
+
+        .stat-val {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .stat-lbl {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .btn-reset {
+            background: #e2e8f0;
+            color: #334155;
+            font-weight: 600;
+            padding: 10px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.2s;
+        }
+
+        .btn-reset:hover {
+            background: #cbd5e1;
+        }
+
+        /* Table styles for Categorize Questions */
+        .table-categorize {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+        
+        .table-categorize th {
+            background: #f1f5f9;
+            padding: 10px;
+            border: 1px solid var(--border);
+            font-weight: 600;
+            color: var(--text-main);
+        }
+        
+        .table-categorize td {
+            padding: 10px;
+            border: 1px solid var(--border);
+        }
+        
+        .table-categorize tbody tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        @media (max-width: 640px) {
+            .passage-box { padding: 16px; }
+            .questions-container { padding: 16px; }
+            .question-card { padding: 16px; }
+            .stat-card { flex: 1; min-width: 100px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Drill Soal Campuran 1</h1>
+    <p>Literacy in English: Mixed Topics & Question Types</p>
+</header>
+
+<div class="container">
+
+    <!-- Progress Tracker -->
+    <div class="progress-container">
+        <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="progressBar"></div>
+        </div>
+        <div class="progress-text" id="progressText">Terjawab: 0 / 28</div>
+    </div>
+
+    <!-- Result Dashboard -->
+    <div class="result-dashboard" id="resultDashboard">
+        <h2>Hasil Drill Soal Anda</h2>
+        <p style="color: var(--text-muted); margin-bottom: 20px;">Berikut adalah ringkasan performa pengerjaan soal Anda:</p>
+        
+        <div class="score-circle">
+            <div class="score-num" id="finalScoreNum">0</div>
+            <div class="score-label">NILAI AKHIR</div>
+        </div>
+
+        <div class="result-stats">
+            <div class="stat-card">
+                <div class="stat-val" id="statCorrect" style="color: var(--success);">0</div>
+                <div class="stat-lbl">Poin Benar</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-val" id="statIncorrect" style="color: var(--error);">0</div>
+                <div class="stat-lbl">Poin Salah</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-val" id="statAccuracy">0%</div>
+                <div class="stat-lbl">Akurasi Total</div>
+            </div>
+        </div>
+
+        <button class="btn-reset" onclick="resetQuiz()">Ulangi Latihan</button>
+    </div>
+
+    <!-- FORM QUIZ -->
+    <form id="quizForm">
+
+        <!-- TEXT 1 -->
+        <div class="section-card">
+            <div class="section-header">
+                <span>TEXT 1: Descriptive Text (Geography)</span>
+                <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">Soal 1 - 4</span>
+            </div>
+            <div class="passage-box">
+                <p>The Sahara Desert is one of the most <span class="tooltip-word" data-tooltip="ekstrem">extreme</span> environments on Earth, yet it features a fascinating geography filled with <span class="tooltip-word" data-tooltip="beragam">diverse</span> physical landforms. Covering a massive area across North Africa, the desert is not merely an endless ocean of flat sand dunes, known locally as <em>erg</em>, which account for only a small portion of the region. A significant part of the Sahara actually consists of rocky <span class="tooltip-word" data-tooltip="dataran tinggi">plateaus</span> called <em>hamadas</em>, gravel plains known as <em>regs</em>, and dry valleys called <em>wadis</em> that only experience water flow during rare <span class="tooltip-word" data-tooltip="banjir bandang">flash floods</span>.</p>
+                <p>Climate conditions in the Sahara are exceptionally harsh. Daytime temperatures frequently exceed 40 degrees Celsius during the summer months due to direct sunlight and very low humidity. Conversely, because the dry air cannot trap heat effectively, nighttime temperatures can drop drastically, sometimes falling close to freezing point in the winter. Rainfall is extremely <span class="tooltip-word" data-tooltip="langka / jarang">scarce</span> across the entire region, with some areas going years without seeing a single drop of <span class="tooltip-word" data-tooltip="curah hujan">precipitation</span>.</p>
+                <p>Despite these punishing conditions, various plants and animals have adapted remarkably well to survive. Vegetation is largely restricted to desert oases, dry riverbeds, and mountainous high-altitude areas where moisture collects. Native fauna includes dromedary camels, fennec foxes, and various species of reptiles that can endure extreme heat and survive for long periods without drinking water.</p>
+                
+                <table style="width:100%; border-collapse:collapse; margin-top:16px; font-size:0.9rem;">
+                    <thead>
+                        <tr style="background:#f1f5f9; color:var(--text-main);">
+                            <th style="padding:10px; border:1px solid var(--border); text-align:left;">Region / Landform</th>
+                            <th style="padding:10px; border:1px solid var(--border); text-align:left;">Primary Surface Type</th>
+                            <th style="padding:10px; border:1px solid var(--border); text-align:center;">Avg Summer Temp</th>
+                            <th style="padding:10px; border:1px solid var(--border); text-align:center;">Annual Rainfall</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding:10px; border:1px solid var(--border); font-weight:600;">Western Erg</td>
+                            <td style="padding:10px; border:1px solid var(--border);">Sand dunes</td>
+                            <td style="padding:10px; border:1px solid var(--border); text-align:center;">42°C</td>
+                            <td style="padding:10px; border:1px solid var(--border); text-align:center;">Less than 20 mm</td>
+                        </tr>
+                        <tr style="background:#f8fafc;">
+                            <td style="padding:10px; border:1px solid var(--border); font-weight:600;">Central Hamada</td>
+                            <td style="padding:10px; border:1px solid var(--border);">Rocky plateaus</td>
+                            <td style="padding:10px; border:1px solid var(--border); text-align:center;">45°C</td>
+                            <td style="padding:10px; border:1px solid var(--border); text-align:center;">Almost 0 mm</td>
+                        </tr>
+                        <tr>
+                            <td style="padding:10px; border:1px solid var(--border); font-weight:600;">Southern Sahel Border</td>
+                            <td style="padding:10px; border:1px solid var(--border);">Grass and shrubs</td>
+                            <td style="padding:10px; border:1px solid var(--border); text-align:center;">38°C</td>
+                            <td style="padding:10px; border:1px solid var(--border); text-align:center;">100 - 200 mm</td>
+                        </tr>
+                        <tr style="background:#f8fafc;">
+                            <td style="padding:10px; border:1px solid var(--border); font-weight:600;">Mountainous Areas (Ahaggar)</td>
+                            <td style="padding:10px; border:1px solid var(--border);">High rocks & gravel</td>
+                            <td style="padding:10px; border:1px solid var(--border); text-align:center;">30°C</td>
+                            <td style="padding:10px; border:1px solid var(--border); text-align:center;">50 - 100 mm</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="questions-container">
+                <!-- Q1 -->
+                <div class="question-card" id="qc-q1">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 1</span><span class="badge-type">Main Idea</span><span class="badge-info">Single Answer</span>
+                    </div>
+                    <div class="question-text">What is the main idea of the text?</div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q1" value="A"><span class="option-label">A. The Sahara Desert is a diverse and extreme geographical region with unique landforms, harsh climates, and resilient life forms.</span></label>
+                        <label class="option-item"><input type="radio" name="q1" value="B"><span class="option-label">B. The Western Erg is completely covered in deep sand dunes that experience very little rainfall throughout the year.</span></label>
+                        <label class="option-item"><input type="radio" name="q1" value="C"><span class="option-label">C. Daytime temperatures in the Sahara always exceed 40 degrees Celsius while nighttime temperatures drop below freezing.</span></label>
+                        <label class="option-item"><input type="radio" name="q1" value="D"><span class="option-label">D. Desert oases and mountainous areas provide the only water sources required for plant survival in North Africa.</span></label>
+                        <label class="option-item"><input type="radio" name="q1" value="E"><span class="option-label">E. Dromedary camels and fennec foxes are the only animals capable of surviving the extreme desert heat.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q1"></div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="question-card" id="qc-q2">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 2</span><span class="badge-type">Synthesis</span><span class="badge-info">Multiple Answer (Checkbox)</span>
+                    </div>
+                    <div class="question-text">According to both the text and the table, which of the following statements are correct? <em>(Select all correct answers)</em></div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="checkbox" name="q2" value="A"><span class="option-label">A. The Western Erg is characterized primarily by sand dunes and receives less than 20 mm of rain annually.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q2" value="B"><span class="option-label">B. The Central Hamada features rocky plateaus with average summer temperatures reaching around 45°C.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q2" value="C"><span class="option-label">C. The Southern Sahel border region has higher rainfall and vegetation compared to the core desert zones.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q2" value="D"><span class="option-label">D. The Mountainous Areas maintain the highest summer temperatures among all listed Saharan zones.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q2" value="E"><span class="option-label">E. Annual rainfall across all listed Saharan regions constantly exceeds 500 millimeters per year.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q2"></div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="question-card" id="qc-q3">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 3</span><span class="badge-type">Specific Information</span><span class="badge-info">Single Answer</span>
+                    </div>
+                    <div class="question-text">According to the text, why do nighttime temperatures drop drastically in the Sahara?</div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q3" value="A"><span class="option-label">A. Because cold winds blow directly from northern oceans every evening.</span></label>
+                        <label class="option-item"><input type="radio" name="q3" value="B"><span class="option-label">B. Because dry air cannot trap heat effectively after sunset.</span></label>
+                        <label class="option-item"><input type="radio" name="q3" value="C"><span class="option-label">C. Because clouds block sunlight completely during the night hours.</span></label>
+                        <label class="option-item"><input type="radio" name="q3" value="D"><span class="option-label">D. Because underground water sources cool down the surface sand.</span></label>
+                        <label class="option-item"><input type="radio" name="q3" value="E"><span class="option-label">E. Because plants absorb all the remaining ground heat at night.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q3"></div>
+                </div>
+
+                <!-- Q4 -->
+                <div class="question-card" id="qc-q4">
+                    <div class="question-meta">
+                        <span class="badge-num">Soal 4</span><span class="badge-type">Target Reader</span><span class="badge-info">Multiple Answer (Checkbox)</span>
+                    </div>
+                    <div class="question-text">Who would benefit the most from reading this text? <em>(Select all correct answers)</em></div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="checkbox" name="q4" value="A"><span class="option-label">A. High school students studying physical geography and earth science.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q4" value="B"><span class="option-label">B. Travelers planning an unguided hiking expedition across the deep desert.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q4" value="C"><span class="option-label">C. Geography teachers looking for regional climate data and landform examples.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q4" value="D"><span class="option-label">D. Software engineers designing corporate video games about outer space.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q4" value="E"><span class="option-label">E. Researchers exploring extreme environments and desert climate adaptations.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q4"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TEXT 2 -->
+        <div class="section-card">
+            <div class="section-header">
+                <span>TEXT 2: Procedure Text (Geography)</span>
+                <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">Soal 5 - 8</span>
+            </div>
+            <div class="passage-box">
+                <p>Measuring the flow rate of a local river is an essential <span class="tooltip-word" data-tooltip="ilmu tentang air">hydrological</span> field technique used by geographers to understand <span class="tooltip-word" data-tooltip="daerah aliran sungai">watershed</span> dynamics. Conducting this procedure accurately requires careful preparation, specific safety measures, and reliable measuring tools. By following a structured step-by-step method, students can calculate the volume of water passing through a specific channel per second.</p>
+                <p>To begin the process, select a safe, straight section of the river where the water flows evenly without <span class="tooltip-word" data-tooltip="bergolak / bergejolak">turbulent</span> rapids or deep pools. First, measure a standard distance along the riverbank, typically ten meters, and mark the starting and ending points clearly using flags or wooden stakes. Second, measure the cross-sectional area of the channel by taking depth readings at regular <span class="tooltip-word" data-tooltip="jarak / jeda">intervals</span> across the width of the river, then multiplying the average depth by the total width.</p>
+                <p>Third, calculate the surface velocity of the water. Drop a floating object, such as a small wooden stick or an orange, into the water at the starting marker and record the exact number of seconds it takes to travel the ten-meter distance. Repeat this float test at least three times across different parts of the channel to find the average travel time, then divide the distance by the average time to determine water velocity.</p>
+                <p>Finally, multiply the cross-sectional area by the average velocity and apply a correction factor of 0.85, because water near the riverbed and banks moves slower than surface water due to <span class="tooltip-word" data-tooltip="gesekan">friction</span>. Recording these calculations carefully allows researchers to determine the total <span class="tooltip-word" data-tooltip="debit air">discharge</span> volume accurately. Always ensure a partner is present on the riverbank to maintain safety throughout the entire procedure.</p>
+            </div>
+            
+            <div class="questions-container">
+                <!-- Q5 -->
+                <div class="question-card" id="qc-q5">
+                    <div class="question-meta"><span class="badge-num">Soal 5</span><span class="badge-type">Main Idea</span><span class="badge-info">Single Answer</span></div>
+                    <div class="question-text">What is the main idea of the text?</div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q5" value="A"><span class="option-label">A. A river's flow rate can be calculated accurately through a structured field procedure involving channel measurements and velocity tests.</span></label>
+                        <label class="option-item"><input type="radio" name="q5" value="B"><span class="option-label">B. Floating objects like oranges are the only accurate tools used by hydrologists to measure deep river currents.</span></label>
+                        <label class="option-item"><input type="radio" name="q5" value="C"><span class="option-label">C. Safety partners are required on riverbanks only when rivers experience dangerous and turbulent rapids.</span></label>
+                        <label class="option-item"><input type="radio" name="q5" value="D"><span class="option-label">D. Water near the riverbed always flows at the exact same speed as surface water across the entire channel width.</span></label>
+                        <label class="option-item"><input type="radio" name="q5" value="E"><span class="option-label">E. Measuring a ten-meter distance along a riverbank is the most important step in geography research.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q5"></div>
+                </div>
+
+                <!-- Q6 -->
+                <div class="question-card" id="qc-q6">
+                    <div class="question-meta"><span class="badge-num">Soal 6</span><span class="badge-type">Specific Information</span><span class="badge-info">Single Answer</span></div>
+                    <div class="question-text">According to the text, why must researchers apply a correction factor of 0.85 to their final calculations?</div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q6" value="A"><span class="option-label">A. Because surface water travels much slower than water near the deep riverbed.</span></label>
+                        <label class="option-item"><input type="radio" name="q6" value="B"><span class="option-label">B. Because friction causes water near the riverbed and banks to move slower than surface water.</span></label>
+                        <label class="option-item"><input type="radio" name="q6" value="C"><span class="option-label">C. Because floating wooden sticks create artificial resistance in the middle of the channel.</span></label>
+                        <label class="option-item"><input type="radio" name="q6" value="D"><span class="option-label">D. Because measuring tape inaccuracies usually add fifteen percent to the total distance.</span></label>
+                        <label class="option-item"><input type="radio" name="q6" value="E"><span class="option-label">E. Because water temperature changes alter the overall volume during the float test.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q6"></div>
+                </div>
+
+                <!-- Q7 -->
+                <div class="question-card" id="qc-q7">
+                    <div class="question-meta"><span class="badge-num">Soal 7</span><span class="badge-type">Prediction</span><span class="badge-info">Single Answer</span></div>
+                    <div class="question-text">Based on the text, what will most likely happen if a researcher skips the step of calculating depth readings at regular intervals across the river width?</div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q7" value="A"><span class="option-label">A. The water velocity calculation will become negative due to friction loss.</span></label>
+                        <label class="option-item"><input type="radio" name="q7" value="B"><span class="option-label">B. The floating orange will dissolve completely before reaching the finish line.</span></label>
+                        <label class="option-item"><input type="radio" name="q7" value="C"><span class="option-label">C. It will be impossible to accurately determine the cross-sectional area of the channel.</span></label>
+                        <label class="option-item"><input type="radio" name="q7" value="D"><span class="option-label">D. The river channel will automatically flood over the marked wooden stakes.</span></label>
+                        <label class="option-item"><input type="radio" name="q7" value="E"><span class="option-label">E. The final discharge volume will be multiplied by a correction factor of 0.85 instead.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q7"></div>
+                </div>
+
+                <!-- Q8 -->
+                <div class="question-card" id="qc-q8">
+                    <div class="question-meta"><span class="badge-num">Soal 8</span><span class="badge-type">Responding</span><span class="badge-info">Single Answer</span></div>
+                    <div class="question-text">As a geography student reading this text, what is the most logical practical action to take?</div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q8" value="A"><span class="option-label">A. Avoid going near any natural rivers to prevent all potential drowning risks.</span></label>
+                        <label class="option-item"><input type="radio" name="q8" value="B"><span class="option-label">B. Prepare the necessary measuring tools, safety equipment, and select a safe river section to practice the procedure.</span></label>
+                        <label class="option-item"><input type="radio" name="q8" value="C"><span class="option-label">C. Change the correction factor value to 1.50 to speed up hydrological calculations.</span></label>
+                        <label class="option-item"><input type="radio" name="q8" value="D"><span class="option-label">D. Drop heavy stones instead of floating objects into the water to measure speed.</span></label>
+                        <label class="option-item"><input type="radio" name="q8" value="E"><span class="option-label">E. Ignore marking the riverbank distance and estimate the ten-meter interval visually.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q8"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TEXT 3 -->
+        <div class="section-card">
+            <div class="section-header">
+                <span>TEXT 3: Biography Recount Text (Sociology)</span>
+                <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">Soal 9 - 12</span>
+            </div>
+            <div class="passage-box">
+                <p>Dr. Elena Vance was a <span class="tooltip-word" data-tooltip="terkenal / ternama">renowned</span> contemporary sociologist whose groundbreaking research transformed our understanding of urban poverty and social inequality in modern metropolitan cities. Born in a small industrial town in 1975, Elena developed an early fascination with how physical neighborhood structures influence human behavior and community relationships. She pursued her academic passion at university, earning a doctorate in sociology from a prestigious institute before beginning her lifelong career in academic research and social advocacy.</p>
+                <p>During her early professional years, Dr. Vance spent five <span class="tooltip-word" data-tooltip="mendalam">immersive</span> years living inside low-income housing communities across three major cities. Rather than relying solely on traditional statistical surveys, she utilized <span class="tooltip-word" data-tooltip="berdasarkan mutu/kualitas">qualitative</span> field research methods, including deep participant observation and open-ended interviews. Her meticulous findings revealed how <span class="tooltip-word" data-tooltip="menyeluruh / terkait sistem">systemic</span> economic barriers trapped vulnerable families in cycles of generational poverty, while simultaneously highlighting the remarkable resilience and informal mutual aid networks forged by local residents.</p>
+                <p>In 2010, Dr. Vance published her seminal book, <em>Shadows of the City</em>, which quickly became required reading in university sociology departments worldwide. The publication challenged prevailing political narratives that blamed individuals for their economic struggles, shifting public attention toward structural policy failures instead. Following the book's massive success, she established an urban research foundation dedicated to advising local governments on fair housing policies and equitable community development initiatives.</p>
+                <p>Dr. Vance continued teaching, writing, and advocating for <span class="tooltip-word" data-tooltip="terpinggirkan">marginalized</span> populations until her retirement in 2022. Although she passed away peacefully last year, her visionary scholarship and compassionate approach to sociological inquiry continue to inspire new generations of social scientists striving to build fairer, more inclusive urban societies.</p>
+            </div>
+            
+            <div class="questions-container">
+                <!-- Q9 -->
+                <div class="question-card" id="qc-q9">
+                    <div class="question-meta"><span class="badge-num">Soal 9</span><span class="badge-type">Main Idea</span><span class="badge-info">Single Answer</span></div>
+                    <div class="question-text">What is the main idea of the text?</div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q9" value="A"><span class="option-label">A. Dr. Elena Vance was a pioneering sociologist whose immersive urban research exposed systemic poverty and transformed modern housing policies.</span></label>
+                        <label class="option-item"><input type="radio" name="q9" value="B"><span class="option-label">B. University textbooks on sociology rely exclusively on statistical surveys rather than participant observation methods.</span></label>
+                        <label class="option-item"><input type="radio" name="q9" value="C"><span class="option-label">C. Industrial towns in the 1970s suffered from severe economic barriers and generational poverty cycles.</span></label>
+                        <label class="option-item"><input type="radio" name="q9" value="D"><span class="option-label">D. Local governments across metropolitan cities completely solved urban housing problems after 2010.</span></label>
+                        <label class="option-item"><input type="radio" name="q9" value="E"><span class="option-label">E. Academic research foundations are established solely to publish books on community development.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q9"></div>
+                </div>
+
+                <!-- Q10 -->
+                <div class="question-card" id="qc-q10">
+                    <div class="question-meta"><span class="badge-num">Soal 10</span><span class="badge-type">Outline</span><span class="badge-info">Single Answer</span></div>
+                    <div class="question-text">Which of the following best outlines the chronological structure of the biography?</div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q10" value="A"><span class="option-label">A. <br>1. Early life and academic inspiration in sociology<br>2. Immersive field research on urban poverty<br>3. Publication of <em>Shadows of the City</em> and policy advocacy<br>4. Retirement, legacy, and lasting impact on social science</span></label>
+                        <label class="option-item"><input type="radio" name="q10" value="B"><span class="option-label">B. <br>1. Establishment of an urban research foundation in 2010<br>2. Early childhood in an industrial town<br>3. Writing university sociology textbooks worldwide<br>4. Passing away peacefully after retirement</span></label>
+                        <label class="option-item"><input type="radio" name="q10" value="C"><span class="option-label">C. <br>1. Living inside low-income housing communities<br>2. Earning a doctorate degree in 1975<br>3. Advising local governments on fair housing policies<br>4. Studying physics and human behavior in metropolitan cities</span></label>
+                        <label class="option-item"><input type="radio" name="q10" value="D"><span class="option-label">D. <br>1. Shifting public attention toward political narratives<br>2. University studies and graduation<br>3. Retiring from academic research in 2022<br>4. Writing her first book in primary school</span></label>
+                        <label class="option-item"><input type="radio" name="q10" value="E"><span class="option-label">E. <br>1. Founding modern metropolitan cities<br>2. Conducting statistical surveys instead of field interviews<br>3. Blaming individuals for their economic struggles<br>4. Closing down the urban research foundation</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q10"></div>
+                </div>
+
+                <!-- Q11 -->
+                <div class="question-card" id="qc-q11">
+                    <div class="question-meta"><span class="badge-num">Soal 11</span><span class="badge-type">Prediction</span><span class="badge-info">Single Answer</span></div>
+                    <div class="question-text">Which topic would most likely be discussed in the paragraph immediately following the text?</div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q11" value="A"><span class="option-label">A. The specific curriculum and tuition fees of the university where Dr. Vance earned her doctorate degree in sociology.</span></label>
+                        <label class="option-item"><input type="radio" name="q11" value="B"><span class="option-label">B. A detailed analysis of how contemporary urban researchers are currently utilizing Dr. Vance's methodology in new global cities.</span></label>
+                        <label class="option-item"><input type="radio" name="q11" value="C"><span class="option-label">C. The historical evolution of industrial manufacturing towns in the early nineteenth century across Europe.</span></label>
+                        <label class="option-item"><input type="radio" name="q11" value="D"><span class="option-label">D. A step-by-step procedure on how to construct low-income housing units using sustainable building materials.</span></label>
+                        <label class="option-item"><input type="radio" name="q11" value="E"><span class="option-label">E. The financial market statistics and stock exchange prices of housing development corporations in 2022.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q11"></div>
+                </div>
+
+                <!-- Q12 -->
+                <div class="question-card" id="qc-q12">
+                    <div class="question-meta"><span class="badge-num">Soal 12</span><span class="badge-type">Relevance</span><span class="badge-info">Single Answer</span></div>
+                    <div class="question-text">Which part of the text best supports the description of Dr. Vance as a researcher who relied on immersive, qualitative methods rather than just numbers?</div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q12" value="A"><span class="option-label">A. Born in a small industrial town in 1975, Elena developed an early fascination with community relationships.</span></label>
+                        <label class="option-item"><input type="radio" name="q12" value="B"><span class="option-label">B. She pursued her academic passion at university, earning a doctorate in sociology from a prestigious institute.</span></label>
+                        <label class="option-item"><input type="radio" name="q12" value="C"><span class="option-label">C. Rather than relying solely on traditional statistical surveys, she utilized qualitative field research methods, including deep participant observation and open-ended interviews.</span></label>
+                        <label class="option-item"><input type="radio" name="q12" value="D"><span class="option-label">D. In 2010, Dr. Vance published her seminal book, <em>Shadows of the City</em>, which quickly became required reading worldwide.</span></label>
+                        <label class="option-item"><input type="radio" name="q12" value="E"><span class="option-label">E. Following the book's massive success, she established an urban research foundation dedicated to advising local governments.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q12"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TEXT 4 -->
+        <div class="section-card">
+            <div class="section-header">
+                <span>TEXT 4: Narrative Text (Pinocchio)</span>
+                <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">Soal 13 - 16</span>
+            </div>
+            <div class="passage-box">
+                <p>Once upon a time, in a <span class="tooltip-word" data-tooltip="nyaman">cozy</span> Italian workshop, an old woodcarver named Geppetto carved a wonderful wooden puppet and named him Pinocchio. That very night, a kind blue fairy visited the workshop and magically brought the wooden puppet to life, promising that if he proved to be brave, truthful, and <span class="tooltip-word" data-tooltip="tidak egois">unselfish</span>, he would one day become a real flesh-and-blood boy. Geppetto was overjoyed when he woke up and discovered his creation could walk and talk.</p>
+                <p>Eager to learn about the world, Pinocchio was sent off to school with a spelling book. However, along the way, he was easily distracted by mischief and <span class="tooltip-word" data-tooltip="godaan">temptation</span>. He allowed cunning characters like a deceitful fox and a lazy cat to lead him astray into the Land of Toys, a magical playground where children played games all day without studying or working. Ignoring the wise warnings of his conscience, a small talking cricket, Pinocchio wasted precious days playing foolish games.</p>
+                <p>Consequences soon followed his disobedience. As punishment for his poor choices and lies, Pinocchio suddenly sprouted a pair of long donkey ears and grew a long wooden nose that stretched further every time he told a falsehood. Filled with deep <span class="tooltip-word" data-tooltip="penyesalan">remorse</span> for breaking his father's heart, Pinocchio finally realized his severe mistakes. He resolved to change his ways, escaped from the trap, and set out across the dangerous stormy sea to rescue Geppetto, who had been swallowed by a giant whale while searching for him.</p>
+                <p>Inside the dark belly of the whale, Pinocchio bravely rescued his aging father by building a smoky fire that forced the creature to sneeze them out. Washing ashore safely, Pinocchio collapsed from exhaustion after shielding his father from harm. Touched by his ultimate sacrifice, selfless courage, and honesty, the blue fairy transformed the wooden puppet into a real, living boy. Geppetto wept tears of <span class="tooltip-word" data-tooltip="mutlak / sepenuhnya">absolute</span> joy, and they lived happily together ever after.</p>
+            </div>
+            
+            <div class="questions-container">
+                <!-- Q13 -->
+                <div class="question-card" id="qc-q13">
+                    <div class="question-meta"><span class="badge-num">Soal 13</span><span class="badge-type">Outline</span><span class="badge-info">Single Answer</span></div>
+                    <div class="question-text">Which of the following best fills in the blank for the story's structural outline?<br><br>
+                    1. Geppetto carves Pinocchio and the fairy brings him to life.<br>
+                    2. Pinocchio gets distracted and travels to the Land of Toys.<br>
+                    3. __________________________________________________<br>
+                    4. Pinocchio rescues Geppetto inside the whale and becomes a real boy.</div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q13" value="A"><span class="option-label">A. Pinocchio becomes an expert school teacher and studies his spelling book daily.</span></label>
+                        <label class="option-item"><input type="radio" name="q13" value="B"><span class="option-label">B. Pinocchio gets punished with donkey ears and a growing nose, then regrets his actions.</span></label>
+                        <label class="option-item"><input type="radio" name="q13" value="C"><span class="option-label">C. Geppetto builds a smoky fire inside his cozy Italian woodcarving workshop.</span></label>
+                        <label class="option-item"><input type="radio" name="q13" value="D"><span class="option-label">D. The deceitful fox and the lazy cat join Pinocchio in rescuing the giant whale.</span></label>
+                        <label class="option-item"><input type="radio" name="q13" value="E"><span class="option-label">E. The talking cricket opens a magical playground for children in Italy.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q13"></div>
+                </div>
+
+                <!-- Q14 -->
+                <div class="question-card" id="qc-q14">
+                    <div class="question-meta"><span class="badge-num">Soal 14</span><span class="badge-type">Classification</span><span class="badge-info">Categorize (5 Poin)</span></div>
+                    <div class="question-text">Classify whether each event or trait below belongs to <strong>Pinocchio</strong> or <strong>Geppetto</strong>.</div>
+                    
+                    <div style="overflow-x:auto;">
+                        <table class="table-categorize">
+                            <thead>
+                                <tr>
+                                    <th>Item / Action</th>
+                                    <th style="text-align:center;">Pinocchio</th>
+                                    <th style="text-align:center;">Geppetto</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1. Was magically brought to life by a fairy</td>
+                                    <td style="text-align:center;"><input type="radio" name="q14_1" value="Pinocchio"></td>
+                                    <td style="text-align:center;"><input type="radio" name="q14_1" value="Geppetto"></td>
+                                </tr>
+                                <tr>
+                                    <td>2. Carved a wooden puppet in a cozy workshop</td>
+                                    <td style="text-align:center;"><input type="radio" name="q14_2" value="Pinocchio"></td>
+                                    <td style="text-align:center;"><input type="radio" name="q14_2" value="Geppetto"></td>
+                                </tr>
+                                <tr>
+                                    <td>3. Sprouted donkey ears after making poor choices</td>
+                                    <td style="text-align:center;"><input type="radio" name="q14_3" value="Pinocchio"></td>
+                                    <td style="text-align:center;"><input type="radio" name="q14_3" value="Geppetto"></td>
+                                </tr>
+                                <tr>
+                                    <td>4. Was swallowed by a giant whale while searching</td>
+                                    <td style="text-align:center;"><input type="radio" name="q14_4" value="Pinocchio"></td>
+                                    <td style="text-align:center;"><input type="radio" name="q14_4" value="Geppetto"></td>
+                                </tr>
+                                <tr>
+                                    <td>5. Built a smoky fire inside the whale to escape</td>
+                                    <td style="text-align:center;"><input type="radio" name="q14_5" value="Pinocchio"></td>
+                                    <td style="text-align:center;"><input type="radio" name="q14_5" value="Geppetto"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="explanation-box" id="exp-q14"></div>
+                </div>
+
+                <!-- Q15 -->
+                <div class="question-card" id="qc-q15">
+                    <div class="question-meta"><span class="badge-num">Soal 15</span><span class="badge-type">Moral Value</span><span class="badge-info">Multiple Answer (Checkbox)</span></div>
+                    <div class="question-text">What moral lessons can be learned from the story? <em>(Select all correct answers)</em></div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="checkbox" name="q15" value="A"><span class="option-label">A. Honesty, bravery, and selflessness lead to personal growth and rewarding outcomes.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q15" value="B"><span class="option-label">B. Giving in to bad temptations and disobedience ultimately brings negative consequences.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q15" value="C"><span class="option-label">C. Children should always ignore the advice of their parents and trusted friends.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q15" value="D"><span class="option-label">D. True love and dedication to family can inspire acts of great courage.</span></label>
+                        <label class="option-item"><input type="checkbox" name="q15" value="E"><span class="option-label">E. Telling lies and deceiving others will permanently reward you with magic powers.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q15"></div>
+                </div>
+
+                <!-- Q16 -->
+                <div class="question-card" id="qc-q16">
+                    <div class="question-meta"><span class="badge-num">Soal 16</span><span class="badge-type">Character Analysis</span><span class="badge-info">Single Answer</span></div>
+                    <div class="question-text">Based on the story, what can we conclude about Pinocchio's character trajectory?</div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q16" value="A"><span class="option-label">A. He remains completely stubborn and selfish from the beginning to the very end of the tale.</span></label>
+                        <label class="option-item"><input type="radio" name="q16" value="B"><span class="option-label">B. He transforms from an easily distracted and misguided puppet into a brave, honest, and selfless son.</span></label>
+                        <label class="option-item"><input type="radio" name="q16" value="C"><span class="option-label">C. He is inherently evil and deliberately plots to trick his aging father throughout the narrative.</span></label>
+                        <label class="option-item"><input type="radio" name="q16" value="D"><span class="option-label">D. He cares only about winning academic awards and studying spelling books at school.</span></label>
+                        <label class="option-item"><input type="radio" name="q16" value="E"><span class="option-label">E. He shows no remorse whatsoever when facing consequences like his growing wooden nose.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q16"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TEXT 5 -->
+        <div class="section-card">
+            <div class="section-header">
+                <span>TEXT 5: Analytical Exposition (Economics)</span>
+                <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">Soal 17 - 20</span>
+            </div>
+            <div class="passage-box">
+                <p>Inflation is one of the most critical macroeconomic <span class="tooltip-word" data-tooltip="penunjuk">indicators</span> affecting modern national economies. Defined as the general increase in prices and the subsequent fall in the purchasing value of money over time, inflation directly impacts household stability, business investments, and government fiscal policies. While moderate inflation is often considered a normal sign of a growing economy, <span class="tooltip-word" data-tooltip="tak terkendali">runaway</span> or hyperinflation can severely destabilize financial systems and <span class="tooltip-word" data-tooltip="memiskinkan">impoverish</span> working-class citizens.</p>
+                <p>There are two primary drivers of inflation: demand-pull inflation and cost-push inflation. Demand-pull inflation occurs when aggregate demand for goods and services outpaces aggregate supply, causing sellers to raise prices due to high consumer appetite. Conversely, cost-push inflation happens when the costs of production—such as raw materials, energy, and labor wages—increase significantly, forcing businesses to pass those extra expenses onto consumers. Both mechanisms reduce the real value of savings, making it harder for fixed-income families to afford basic daily necessities.</p>
+                <p>Governments and central banks utilize monetary and fiscal policies to control excessive price increases. Central banks frequently adjust benchmark interest rates; raising interest rates cools down consumer spending and borrowing, which successfully curbs demand-pull pressures. Additionally, governments can improve supply chain efficiencies and <span class="tooltip-word" data-tooltip="menyubsidi">subsidize</span> essential production sectors to counteract cost-push inflation.</p>
+                <p>In conclusion, understanding inflation is vital for maintaining economic health. Without active intervention and balanced monetary policies, unchecked inflation can destroy market confidence, <span class="tooltip-word" data-tooltip="mengikis">erode</span> citizen wealth, and trigger severe economic recessions.</p>
+            </div>
+            
+            <div class="questions-container">
+                <!-- Q17 -->
+                <div class="question-card" id="qc-q17">
+                    <div class="question-meta"><span class="badge-num">Soal 17</span><span class="badge-type">Purpose</span><span class="badge-info">Single Answer</span></div>
+                    <div class="question-text">What is the primary purpose of the text?</div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q17" value="A"><span class="option-label">A. To explain the causes of inflation and how central banks and governments attempt to control it.</span></label>
+                        <label class="option-item"><input type="radio" name="q17" value="B"><span class="option-label">B. To persuade consumers to stop buying basic daily necessities during economic recessions.</span></label>
+                        <label class="option-item"><input type="radio" name="q17" value="C"><span class="option-label">C. To provide a step-by-step procedure on how to calculate personal monthly budgets.</span></label>
+                        <label class="option-item"><input type="radio" name="q17" value="D"><span class="option-label">D. To narrate the historical biography of famous macroeconomic theorists in the nineteenth century.</span></label>
+                        <label class="option-item"><input type="radio" name="q17" value="E"><span class="option-label">E. To describe the physical appearance and geographical layout of modern central banks.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q17"></div>
+                </div>
+
+                <!-- Q18 -->
+                <div class="question-card" id="qc-q18">
+                    <div class="question-meta"><span class="badge-num">Soal 18</span><span class="badge-type">Summary</span><span class="badge-info">Single Answer</span></div>
+                    <div class="question-text">Which option is the best summary of the text?</div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q18" value="A"><span class="option-label">A. Inflation is a general price increase driven by supply and demand factors that harms purchasing power, requiring central banks and governments to apply monetary controls.</span></label>
+                        <label class="option-item"><input type="radio" name="q18" value="B"><span class="option-label">B. Central banks should raise interest rates permanently so that consumer borrowing stops completely across national markets.</span></label>
+                        <label class="option-item"><input type="radio" name="q18" value="C"><span class="option-label">C. Cost-push inflation happens exclusively when labor wages decrease and raw materials become completely free of charge.</span></label>
+                        <label class="option-item"><input type="radio" name="q18" value="D"><span class="option-label">D. Moderate inflation is an abnormal phenomenon that destroys all financial systems instantly without warning.</span></label>
+                        <label class="option-item"><input type="radio" name="q18" value="E"><span class="option-label">E. Households with fixed incomes never experience any negative financial impacts during periods of high inflation.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q18"></div>
+                </div>
+
+                <!-- Q19 -->
+                <div class="question-card" id="qc-q19">
+                    <div class="question-meta"><span class="badge-num">Soal 19</span><span class="badge-type">Inference</span><span class="badge-info">Single Answer</span></div>
+                    <div class="question-text">What can be inferred from paragraph 3 regarding central bank interest rates?</div>
+                    <div class="options-list">
+                        <label class="option-item"><input type="radio" name="q19" value="A"><span class="option-label">A. Raising interest rates encourages consumers to borrow more money for luxury shopping.</span></label>
+                        <label class="option-item"><input type="radio" name="q19" value="B"><span class="option-label">B. Lowering interest rates is the primary method used by central banks to stop runaway inflation.</span></label>
+                        <label class="option-item"><input type="radio" name="q19" value="C"><span class="option-label">C. Adjusting interest rates serves as a policy tool to influence consumer spending and manage demand-pull pressures.</span></label>
+                        <label class="option-item"><input type="radio" name="q19" value="D"><span class="option-label">D. Central banks raise interest rates only when production costs of raw materials increase.</span></label>
+                        <label class="option-item"><input type="radio" name="q19" value="E"><span class="option-label">E. Interest rates have no measurable effect on aggregate consumer demand within national markets.</span></label>
+                    </div>
+                    <div class="explanation-box" id="exp-q19"></div>
+                </div>
+
+                <!-- Q20 -->
+                <div class="question-card" id="qc-q20">
+                    <div class="question-meta"><span class="badge-num">Soal 20</span><span class="badge-type">Classification</span><span class="badge-info">Categorize (5 Poin)</span></div>
+                    <div class="question-text">Classify whether each sentence from or about the text represents a <strong>Fact</strong> or an <strong>Opinion</strong>.</div>
+                    
+                    <div style="overflow-x:auto;">
+                        <table class="table-categorize">
+                            <thead>
+                                <tr>
+                                    <th>Sentence / Statement</th>
+                                    <th style="text-align:center;">Fact</th>
+                                    <th style="text-align:center;">Opinion</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1. Inflation is defined as the general increase in prices and fall in purchasing value.</td>
+                                    <td style="text-align:center;"><input type="radio" name="q20_1" value="Fact"></td>
+                                    <td style="text-align:center;"><input type="radio" name="q20_1" value="Opinion"></td>
+                                </tr>
+                                <tr>
+                                    <td>2. Central banks frequently adjust benchmark interest rates to manage demand pressures.</td>
+                                    <td style="text-align:center;"><input type="radio" name="q20_2" value="Fact"></td>
+                                    <td style="text-align:center;"><input type="radio" name="q20_2" value="Opinion"></td>
+                                </tr>
+                                <tr>
+                                    <td>3. Without active intervention, unchecked inflation can destroy market confidence.</td>
+                                    <td style="text-align:center;"><input type="radio" name="q20_3" value="Fact"></td>
+                                    <td style="text-align:center;"><input type="radio" name="q20_3" value="Opinion"></td>
+                                </tr>
+                                <tr>
+                                    <td>4. Raising interest rates cools down consumer spending and borrowing.</td>
+                                    <td style="text-align:center;"><input type="radio" name="q20_4" value="Fact"></td>
+                                    <td style="text-align:center;"><input type="radio" name="q20_4" value="Opinion"></td>
+                                </tr>
+                                <tr>
+                                    <td>5. Inflation is undoubtedly the most terrifying financial crisis any nation will ever face.</td>
+                                    <td style="text-align:center;"><input type="radio" name="q20_5" value="Fact"></td>
+                                    <td style="text-align:center;"><input type="radio" name="q20_5" value="Opinion"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="explanation-box" id="exp-q20"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SUBMIT BUTTON -->
+        <div class="submit-container">
+            <button type="button" class="btn-submit" id="submitBtn" onclick="gradeQuiz()">Selesai & Lihat Hasil</button>
+        </div>
+
+    </form>
+</div>
+
+<script>
+    /* =========================================
+       QUIZ GRADING & PROGRESS LOGIC 
+       ========================================= */
+    const TOTAL_POINTS = 28;
+
+    const answerKey = {
+        q1: { type: 'single', key: 'A', exp: `<b>Kunci Jawaban: A</b><br><b>Pembahasan:</b> The text comprehensively covers physical landforms, harsh climates, and how plants and animals survive in the Sahara. Options B, C, D, and E are either too specific or factually incorrect.` },
+        q2: { type: 'multiple', key: ['A', 'B', 'C'], exp: `<b>Kunci Jawaban: A, B, C</b><br><b>Pembahasan:</b> The table and text confirm A, B, and C. D is incorrect (Mountainous area is 30°C, the lowest). E is incorrect (rainfall is very low).` },
+        q3: { type: 'single', key: 'B', exp: `<b>Kunci Jawaban: B</b><br><b>Pembahasan:</b> The text explicitly states in paragraph 2: "because the dry air cannot trap heat effectively, nighttime temperatures can drop drastically."` },
+        q4: { type: 'multiple', key: ['A', 'C', 'E'], exp: `<b>Kunci Jawaban: A, C, E</b><br><b>Pembahasan:</b> High school students, geography teachers, and environmental researchers benefit most from the academic regional climate and landform data presented here.` },
+        q5: { type: 'single', key: 'A', exp: `<b>Kunci Jawaban: A</b><br><b>Pembahasan:</b> The passage comprehensively explains a structured step-by-step method to calculate a river's flow rate and discharge volume.` },
+        q6: { type: 'single', key: 'B', exp: `<b>Kunci Jawaban: B</b><br><b>Pembahasan:</b> Paragraph 4 states explicitly: "...apply a correction factor of 0.85, because water near the riverbed and banks moves slower than surface water due to friction."` },
+        q7: { type: 'single', key: 'C', exp: `<b>Kunci Jawaban: C</b><br><b>Pembahasan:</b> Depth readings are required to calculate the average depth, which is then multiplied by the width to find the cross-sectional area. Skipping this means the area cannot be calculated.` },
+        q8: { type: 'single', key: 'B', exp: `<b>Kunci Jawaban: B</b><br><b>Pembahasan:</b> A sensible student learning a field procedure would gather the tools and find a safe location to practice it, as instructed by the text.` },
+        q9: { type: 'single', key: 'A', exp: `<b>Kunci Jawaban: A</b><br><b>Pembahasan:</b> The text is a biography highlighting her overall career: her pioneering immersive methods, her findings on poverty, and her impact on housing policy and advocacy.` },
+        q10: { type: 'single', key: 'A', exp: `<b>Kunci Jawaban: A</b><br><b>Pembahasan:</b> Option A perfectly captures the paragraph-by-paragraph flow of the recount text from her early life, to her 5-year field research, to her 2010 book/foundation, and finally her retirement/legacy.` },
+        q11: { type: 'single', key: 'B', exp: `<b>Kunci Jawaban: B</b><br><b>Pembahasan:</b> The last sentence states her legacy continues to "inspire new generations of social scientists". The logical next paragraph would elaborate on how these new researchers apply her methods today.` },
+        q12: { type: 'single', key: 'C', exp: `<b>Kunci Jawaban: C</b><br><b>Pembahasan:</b> Sentence C explicitly states she used qualitative field research (participant observation and interviews) rather than relying only on numbers (statistical surveys).` },
+        q13: { type: 'single', key: 'B', exp: `<b>Kunci Jawaban: B</b><br><b>Pembahasan:</b> Chronologically, between traveling to the Land of Toys and rescuing Geppetto, Pinocchio faces the consequences of his actions (donkey ears/nose) and regrets them.` },
+        q14: { 
+            type: 'categorize', 
+            subKeys: { q14_1: 'Pinocchio', q14_2: 'Geppetto', q14_3: 'Pinocchio', q14_4: 'Geppetto', q14_5: 'Pinocchio' },
+            exp: `<b>Kunci Jawaban: [1. Pinocchio, 2. Geppetto, 3. Pinocchio, 4. Geppetto, 5. Pinocchio]</b><br><b>Pembahasan:</b> All actions align chronologically with the specific characters as described in the story.` 
+        },
+        q15: { type: 'multiple', key: ['A', 'B', 'D'], exp: `<b>Kunci Jawaban: A, B, D</b><br><b>Pembahasan:</b> The story teaches that honesty and selflessness are rewarded (A), disobedience brings trouble (B), and family love inspires courage (D).` },
+        q16: { type: 'single', key: 'B', exp: `<b>Kunci Jawaban: B</b><br><b>Pembahasan:</b> Pinocchio shows significant character development, evolving from a misguided puppet into a brave, honest, and selfless boy.` },
+        q17: { type: 'single', key: 'A', exp: `<b>Kunci Jawaban: A</b><br><b>Pembahasan:</b> The text is an analytical exposition that explains what inflation is, its causes (cost-push, demand-pull), and the monetary controls used by governments/central banks.` },
+        q18: { type: 'single', key: 'A', exp: `<b>Kunci Jawaban: A</b><br><b>Pembahasan:</b> Option A effectively summarizes the main points: the definition of inflation, its causes, its negative impacts, and the solutions (monetary controls).` },
+        q19: { type: 'single', key: 'C', exp: `<b>Kunci Jawaban: C</b><br><b>Pembahasan:</b> The text states that raising rates cools down spending and curbs demand-pull pressures, implying that adjusting these rates is a tool to influence and control consumer behavior.` },
+        q20: { 
+            type: 'categorize', 
+            subKeys: { q20_1: 'Fact', q20_2: 'Fact', q20_3: 'Opinion', q20_4: 'Fact', q20_5: 'Opinion' },
+            exp: `<b>Kunci Jawaban: [1. Fact, 2. Fact, 3. Opinion, 4. Fact, 5. Opinion]</b><br><b>Pembahasan:</b> Statements 1, 2, and 4 are verifiable facts/actions. Statement 3 uses a conditional prediction ("can destroy"), making it an opinion/assertion. Statement 5 contains highly subjective language ("undoubtedly the most terrifying").` 
+        }
+    };
+
+    function updateProgress() {
+        let answeredCount = 0;
+        for (let qKey in answerKey) {
+            let qData = answerKey[qKey];
+            if (qData.type === 'single' || qData.type === 'multiple') {
+                let checked = document.querySelectorAll(`input[name="${qKey}"]:checked`);
+                if (checked.length > 0) answeredCount++;
+            } else if (qData.type === 'categorize') {
+                for (let subKey in qData.subKeys) {
+                    let checked = document.querySelectorAll(`input[name="${subKey}"]:checked`);
+                    if (checked.length > 0) answeredCount++;
+                }
+            }
+        }
+        let percent = (answeredCount / TOTAL_POINTS) * 100;
+        document.getElementById('progressBar').style.width = percent + '%';
+        document.getElementById('progressText').innerText = `Terjawab: ${answeredCount} / ${TOTAL_POINTS}`;
+    }
+
+    document.querySelectorAll('input').forEach(input => {
+        input.addEventListener('change', updateProgress);
+    });
+
+    function gradeQuiz() {
+        let correctCount = 0;
+        let incorrectCount = 0;
+
+        for (let qKey in answerKey) {
+            let qData = answerKey[qKey];
+            let expBox = document.getElementById('exp-' + qKey);
+            let userAnsText = '';
+            let statusBadge = '';
+            
+            if (qData.type === 'single') {
+                let selected = document.querySelector(`input[name="${qKey}"]:checked`);
+                let userVal = selected ? selected.value : null;
+                userAnsText = userVal ? `Jawaban Anda: ${userVal}` : 'Jawaban Anda: (Belum diisi)';
+                
+                if (userVal === qData.key) {
+                    correctCount++;
+                    statusBadge = `<span class="user-status status-correct">&#10004; BENAR</span>`;
+                } else {
+                    incorrectCount++;
+                    statusBadge = `<span class="user-status status-incorrect">&#10008; SALAH</span>`;
+                }
+            } else if (qData.type === 'multiple') {
+                let selected = document.querySelectorAll(`input[name="${qKey}"]:checked`);
+                let userVals = Array.from(selected).map(el => el.value);
+                userAnsText = userVals.length > 0 ? `Jawaban Anda: ${userVals.join(', ')}` : 'Jawaban Anda: (Belum diisi)';
+                
+                let isCorrect = (userVals.length === qData.key.length) && qData.key.every(val => userVals.includes(val));
+                
+                if (isCorrect) {
+                    correctCount++;
+                    statusBadge = `<span class="user-status status-correct">&#10004; BENAR</span>`;
+                } else {
+                    incorrectCount++;
+                    statusBadge = `<span class="user-status status-incorrect">&#10008; SALAH</span>`;
+                }
+            } else if (qData.type === 'categorize') {
+                let correctRows = 0;
+                let userValsArr = [];
+                for (let subKey in qData.subKeys) {
+                    let selected = document.querySelector(`input[name="${subKey}"]:checked`);
+                    let userVal = selected ? selected.value : '-';
+                    userValsArr.push(userVal);
+                    
+                    if (userVal === qData.subKeys[subKey]) {
+                        correctRows++;
+                        correctCount++;
+                    } else {
+                        incorrectCount++;
+                    }
+                }
+                userAnsText = `Jawaban Anda: [${userValsArr.join(', ')}]`;
+                
+                if (correctRows === 5) {
+                    statusBadge = `<span class="user-status status-correct">&#10004; BENAR SEMUA (5/5)</span>`;
+                } else if (correctRows > 0) {
+                    statusBadge = `<span class="user-status status-warning" style="background:#fef08a; color:#a16207; border:1px solid #fde047;">&#9888; BENAR ${correctRows}/5</span>`;
+                } else {
+                    statusBadge = `<span class="user-status status-incorrect">&#10008; SALAH SEMUA</span>`;
+                }
+            }
+            
+            expBox.innerHTML = `
+                <div class="explanation-header">${statusBadge} <span style="font-size:0.85rem; color:var(--text-muted);">${userAnsText}</span></div>
+                <div>${qData.exp}</div>
+            `;
+            expBox.classList.add('show');
+        }
+
+        let finalScore = Math.round((correctCount / TOTAL_POINTS) * 100);
+        document.getElementById('finalScoreNum').innerText = finalScore;
+        document.getElementById('statCorrect').innerText = correctCount;
+        document.getElementById('statIncorrect').innerText = incorrectCount;
+        document.getElementById('statAccuracy').innerText = finalScore + '%';
+        
+        let dashboard = document.getElementById('resultDashboard');
+        dashboard.classList.add('show');
+        dashboard.scrollIntoView({ behavior: 'smooth' });
+
+        let submitBtn = document.getElementById('submitBtn');
+        submitBtn.innerText = 'Hasil Telah Ditampilkan';
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = '0.6';
+        submitBtn.style.cursor = 'not-allowed';
+    }
+
+    function resetQuiz() {
+        if (confirm("Apakah Anda yakin ingin mengulang Latihan dari awal? Semua jawaban akan direset.")) {
+            document.getElementById('quizForm').reset();
+            document.querySelectorAll('.explanation-box').forEach(box => {
+                box.classList.remove('show');
+                box.innerHTML = '';
+            });
+            document.getElementById('resultDashboard').classList.remove('show');
+            let submitBtn = document.getElementById('submitBtn');
+            submitBtn.innerText = 'Selesai & Lihat Hasil';
+            submitBtn.disabled = false;
+            submitBtn.style.opacity = '1';
+            submitBtn.style.cursor = 'pointer';
+            updateProgress();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    }
+</script>
+
+</body>
+</html>
