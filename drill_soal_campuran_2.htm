@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drill Soal Campuran 2 - TKA English</title>
+    <!-- Font Poppins untuk tampilan modern -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Include Chart.js for the graph -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #3b82f6;
+            --background: #f1f5f9;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        
+        /* Header Styling */
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        .header p {
+            margin: 10px 0 0;
+            font-size: 15px;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: -30px auto 40px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* Progress Bar */
+        .progress-container {
+            position: sticky;
+            top: 15px;
+            background: white;
+            padding: 15px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .progress-bar {
+            flex-grow: 1;
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 5px;
+            margin: 0 15px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: var(--success);
+            width: 0%;
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .progress-text {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary-color);
+            min-width: 95px;
+            text-align: right;
+        }
+
+        /* Reading Text Section */
+        .section-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border-top: 5px solid var(--primary-color);
+        }
+        .section-card h2 {
+            color: var(--primary-color);
+            font-size: 22px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+            font-weight: 600;
+        }
+        .text-box {
+            background-color: #f8fafc;
+            padding: 20px 25px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            font-size: 15px;
+            color: #334155;
+            text-align: justify;
+        }
+        .text-box p {
+            margin-top: 0;
+        }
+
+        /* Tooltip styling for difficult words */
+        .difficult-word {
+            position: relative;
+            cursor: help;
+            border-bottom: 2px dotted var(--primary-color);
+            color: var(--primary-color);
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        .difficult-word:hover {
+            color: var(--secondary-color);
+        }
+        .difficult-word::after {
+            content: attr(data-translate);
+            position: absolute;
+            bottom: 130%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background-color: #1e293b;
+            color: #fff;
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 20;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+            pointer-events: none;
+        }
+        .difficult-word::before {
+            content: '';
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            border-width: 6px;
+            border-style: solid;
+            border-color: #1e293b transparent transparent transparent;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 20;
+            pointer-events: none;
+        }
+        .difficult-word:hover::after, .difficult-word:hover::before {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Questions Layout */
+        .question {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+            border: 1px solid #e2e8f0;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .question:hover {
+            box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+            transform: translateY(-2px);
+        }
+        .question p {
+            font-weight: 600;
+            margin-top: 0;
+            color: #1e293b;
+            font-size: 16px;
+        }
+
+        /* Options */
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 15px;
+        }
+        .options label {
+            display: flex;
+            align-items: flex-start;
+            padding: 14px 18px;
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+        .options label:hover {
+            background: #f1f5f9;
+            border-color: var(--primary-color);
+        }
+        .options label.selected {
+            background: #eff6ff;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 1px var(--primary-color);
+        }
+        .options input[type="radio"], .options input[type="checkbox"] {
+            margin-top: 3px;
+            margin-right: 15px;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary-color);
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        /* Categorization Tables */
+        .cat-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 0 1px #e2e8f0;
+        }
+        .cat-table th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 14px;
+            font-weight: 500;
+            font-size: 15px;
+        }
+        .cat-table td {
+            border-bottom: 1px solid #e2e8f0;
+            padding: 14px;
+            text-align: center;
+            background: #fff;
+        }
+        .cat-table tr:last-child td {
+            border-bottom: none;
+        }
+        .cat-table td:first-child {
+            text-align: left;
+            font-weight: 500;
+            color: #334155;
+            font-size: 14px;
+        }
+
+        /* Graph Container */
+        .graph-container {
+            width: 100%;
+            max-width: 650px;
+            margin: 25px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+            margin-top: 30px;
+        }
+        .submit-btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(37, 99, 235, 0.35);
+        }
+
+        /* Feedback Area */
+        .feedback {
+            display: none;
+            margin-top: 20px;
+            padding: 18px;
+            border-radius: 8px;
+            animation: fadeIn 0.4s ease-out;
+        }
+        .feedback.correct {
+            background-color: #ecfdf5;
+            border-left: 5px solid var(--success);
+        }
+        .feedback.incorrect {
+            background-color: #fef2f2;
+            border-left: 5px solid var(--danger);
+        }
+        .status {
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+        .correct-text { color: var(--success); }
+        .incorrect-text { color: var(--danger); }
+        .explanation {
+            font-size: 14px;
+            color: #334155;
+            line-height: 1.6;
+        }
+        .explanation strong {
+            color: #1e293b;
+        }
+
+        #result-banner {
+            display: none;
+            text-align: center;
+            font-size: 24px;
+            font-weight: 700;
+            padding: 25px;
+            margin-top: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        /* Disable interaction after submit */
+        .disabled-element {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>TKA English Practice Quiz 2</h1>
+    <p>Complete all sections carefully. Hover over the dotted text for difficult word translations.</p>
+</div>
+
+<div class="container">
+    
+    <div class="progress-container">
+        <span>Progress:</span>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <span class="progress-text" id="progress-text">0% Terjawab</span>
+    </div>
+
+    <!-- TEXT 1 -->
+    <div class="section-card">
+        <h2>Text 1</h2>
+        <div class="text-box">
+            <p><span class="difficult-word" data-translate="Dapat diperbarui">Renewable</span> energy comes from natural sources that clean themselves faster than they are <span class="difficult-word" data-translate="Dikonsumsi / dihabiskan">consumed</span>. Sunlight and wind are two common examples. Around the world, many countries are building solar panels and wind <span class="difficult-word" data-translate="Turbin / mesin penggerak">turbines</span> to create electricity. Using renewable energy helps reduce air pollution and keeps our environment clean for the future.</p>
+            <p>In recent years, the global use of solar and wind power has grown <span class="difficult-word" data-translate="Dengan stabil">steadily</span>. Solar energy uses sunlight to make power, while wind energy uses big wind turbines to turn moving air into electricity. Hydroelectric power, which uses moving water from rivers or dams, remains the largest single source of renewable energy, but solar and wind power are growing much faster.</p>
+            <p>The following graph shows the share of global electricity produced by three major renewable sources from 2018 to 2022:</p>
+            
+            <div class="graph-container">
+                <canvas id="energyChart"></canvas>
+            </div>
+
+            <p>As shown in the data, hydroelectric power stayed mostly stable at 15% to 16%. On the other hand, solar power increased from 2% in 2018 to 7% in 2022. Wind power also showed strong growth, going from 4% to 9% over the same five-year period. Governments plan to <span class="difficult-word" data-translate="Berinvestasi / menanam modal">invest</span> more money in these technologies to help fight global climate change.</p>
+        </div>
+
+        <div class="question" data-type="single" data-answer="B">
+            <p>1. Which option is the best summary of the text?</p>
+            <div class="options">
+                <label><input type="radio" name="q1" value="A"> A. Hydroelectric power is decreasing rapidly, so solar and wind power will replace all power plants by 2022.</label>
+                <label><input type="radio" name="q1" value="B"> B. Renewable energy is clean, with solar and wind power growing significantly while hydroelectric power remains the largest stable source.</label>
+                <label><input type="radio" name="q1" value="C"> C. Global climate change is caused entirely by wind power turbines and solar panels installed near big rivers.</label>
+                <label><input type="radio" name="q1" value="D"> D. Governments are spending money only on hydroelectric power dams because solar energy is too expensive.</label>
+                <label><input type="radio" name="q1" value="E"> E. Wind turbines are the only reliable way to produce electricity in modern cities today.</label>
+            </div>
+            <div class="feedback">
+                <span class="status"></span>
+                <div class="explanation"><strong>Explanation:</strong> The text explains that renewable energy is clean. Solar and wind power are growing fast, but hydroelectric is still the biggest stable source.</div>
+            </div>
+        </div>
+
+        <div class="question" data-type="single" data-answer="C">
+            <p>2. Based on both the text and the graph data, what can we conclude about solar power between 2018 and 2022?</p>
+            <div class="options">
+                <label><input type="radio" name="q2" value="A"> A. Solar power surpassed hydroelectric power as the largest energy source in 2022.</label>
+                <label><input type="radio" name="q2" value="B"> B. Solar power share remained unchanged at 2% throughout the entire five-year period.</label>
+                <label><input type="radio" name="q2" value="C"> C. Solar power experienced steady growth, increasing its share of global electricity from 2% to 7%.</label>
+                <label><input type="radio" name="q2" value="D"> D. Solar power produced more electricity than wind power in every listed year.</label>
+                <label><input type="radio" name="q2" value="E"> E. Solar power dropped to almost zero percent because wind power grew faster.</label>
+            </div>
+            <div class="feedback">
+                <span class="status"></span>
+                <div class="explanation"><strong>Explanation:</strong> The text and graph show that solar power grew from 2% in 2018 to 7% in 2022.</div>
+            </div>
+        </div>
+
+        <div class="question" data-type="multiple" data-answer="A,C,D">
+            <p>3. Who would benefit the most from reading this text? (Check all that apply)</p>
+            <div class="options">
+                <label><input type="checkbox" name="q3" value="A"> A. High school students learning about modern clean energy sources.</label>
+                <label><input type="checkbox" name="q3" value="B"> B. Engineers looking for advanced formulas to build electric sports cars.</label>
+                <label><input type="checkbox" name="q3" value="C"> C. Geography teachers looking for simple global energy data for class.</label>
+                <label><input type="checkbox" name="q3" value="D"> D. Citizens who want to learn basic facts about renewable energy growth.</label>
+                <label><input type="checkbox" name="q3" value="E"> E. Professional pilots planning flight routes over wind turbine farms.</label>
+            </div>
+            <div class="feedback">
+                <span class="status"></span>
+                <div class="explanation"><strong>Explanation:</strong> High school students, geography teachers, and normal citizens want to learn basic facts about clean energy from this text.</div>
+            </div>
+        </div>
+
+        <div class="question" data-type="multiple" data-answer="A,C,E">
+            <p>4. Which additional information would make the claims in the text more valid and complete?</p>
+            <div class="options">
+                <label><input type="checkbox" name="q4" value="A"> A. Official reports from international energy agencies with exact regional data.</label>
+                <label><input type="checkbox" name="q4" value="B"> B. A personal story about a student who likes bright sunny weather.</label>
+                <label><input type="checkbox" name="q4" value="C"> C. Scientific comparisons of production costs between solar and fossil fuels.</label>
+                <label><input type="checkbox" name="q4" value="D"> D. A list of famous movies about natural disasters in large cities.</label>
+                <label><input type="checkbox" name="q4" value="E"> E. Explanations of environmental benefits backed by environmental research.</label>
+            </div>
+            <div class="feedback">
+                <span class="status"></span>
+                <div class="explanation"><strong>Explanation:</strong> Official reports, science cost comparisons, and environmental research make the information more complete and true.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TEXT 2 -->
+    <div class="section-card">
+        <h2>Text 2</h2>
+        <div class="text-box">
+            <p>Testing soil pH is a simple and important science lab experiment. The pH level tells us if soil is <span class="difficult-word" data-translate="Asam">acidic</span>, neutral, or <span class="difficult-word" data-translate="Basa">alkaline</span>. Plants need the right soil pH to absorb <span class="difficult-word" data-translate="Nutrisi / zat gizi">nutrients</span> and grow healthy. By following these steps, students can easily measure soil pH in a school laboratory.</p>
+            <p>First, collect a small soil sample from a garden or field. Place the soil on a clean paper towel to remove small stones, leaves, and <span class="difficult-word" data-translate="Ranting-ranting kecil">twigs</span>. Second, put two spoonfuls of the clean soil into a clean glass jar. Add four spoonfuls of <span class="difficult-word" data-translate="Disuling / murni">distilled</span> water into the jar. Do not use tap water because tap water contains <span class="difficult-word" data-translate="Mineral">minerals</span> that can change the pH test result.</p>
+            <p>Third, stir the mixture gently with a clean spoon for one minute. Let the glass jar sit untouched for 10 minutes so the soil can settle at the bottom and the water becomes clear. Fourth, take a piece of pH <span class="difficult-word" data-translate="Penunjuk / indikator">indicator</span> paper strip. Dip the tip of the pH strip into the clear liquid at the top of the jar for two seconds.</p>
+            <p>Finally, remove the strip and wait 30 seconds for the color to change. Compare the color on the strip with the official pH color chart provided in your lab kit. A pH value of 7 means neutral soil, below 7 means acidic soil, and above 7 means alkaline soil. Record your result in your science notebook.</p>
+        </div>
+
+        <div class="question" data-type="single" data-answer="B">
+            <p>5. What is the primary purpose of the text?</p>
+            <div class="options">
+                <label><input type="radio" name="q5" value="A"> A. To explain how to grow different garden plants using chemical fertilizers.</label>
+                <label><input type="radio" name="q5" value="B"> B. To provide a step-by-step guide on how to test soil pH in a school laboratory.</label>
+                <label><input type="radio" name="q5" value="C"> C. To persuade readers to buy expensive soil testing kits from science stores.</label>
+                <label><input type="radio" name="q5" value="D"> D. To describe the physical appearance of different garden soils and rocks.</label>
+                <label><input type="radio" name="q5" value="E"> E. To compare the taste of distilled water with normal tap water.</label>
+            </div>
+            <div class="feedback">
+                <span class="status"></span>
+                <div class="explanation"><strong>Explanation:</strong> The main goal of the text is to give step-by-step instructions on how to test soil pH in a school lab.</div>
+            </div>
+        </div>
+
+        <div class="question" data-type="single" data-answer="B">
+            <p>6. Look at the following outline of the experiment. Which option best fills in step 3?<br><br>
+            1. Collect soil sample and clean out debris.<br>
+            2. Mix soil with distilled water in a jar.<br>
+            3. _________________________________<br>
+            4. Dip pH indicator paper into the clear liquid.<br>
+            5. Match strip color with the chart and record pH value.</p>
+            <div class="options">
+                <label><input type="radio" name="q6" value="A"> A. Wash the soil sample with hot tap water for 10 minutes.</label>
+                <label><input type="radio" name="q6" value="B"> B. Stir the mixture and let it sit for 10 minutes to settle.</label>
+                <label><input type="radio" name="q6" value="C"> C. Add chemical fertilizers to change the soil color quickly.</label>
+                <label><input type="radio" name="q6" value="D"> D. Boil the liquid over a flame until all water disappears.</label>
+                <label><input type="radio" name="q6" value="E"> E. Plant seeds inside the jar and place it under direct sunlight.</label>
+            </div>
+            <div class="feedback">
+                <span class="status"></span>
+                <div class="explanation"><strong>Explanation:</strong> Step 3 is stirring the mixture and letting it sit for 10 minutes so the water becomes clear.</div>
+            </div>
+        </div>
+
+        <div class="question" data-type="multiple" data-answer="B,D">
+            <p>7. Based on the text, what will most likely happen if a student uses tap water instead of distilled water?</p>
+            <div class="options">
+                <label><input type="checkbox" name="q7" value="A"> A. The pH strip will turn into solid stone inside the glass jar.</label>
+                <label><input type="checkbox" name="q7" value="B"> B. The test result may become inaccurate due to minerals in tap water.</label>
+                <label><input type="checkbox" name="q7" value="C"> C. The glass jar will break immediately after stirring the mixture.</label>
+                <label><input type="checkbox" name="q7" value="D"> D. The student might get a wrong pH reading for the soil sample.</label>
+                <label><input type="checkbox" name="q7" value="E"> E. The soil will transform into clean drinking water automatically.</label>
+            </div>
+            <div class="feedback">
+                <span class="status"></span>
+                <div class="explanation"><strong>Explanation:</strong> Tap water has minerals. This can change the result and give a wrong pH number.</div>
+            </div>
+        </div>
+
+        <div class="question" data-type="single" data-answer="B">
+            <p>8. Which step in the text best supports the idea that cleanliness is necessary for accurate test results?</p>
+            <div class="options">
+                <label><input type="radio" name="q8" value="A"> A. "Testing soil pH is a simple and important science lab experiment."</label>
+                <label><input type="radio" name="q8" value="B"> B. "Place the soil on a clean paper towel to remove small stones, leaves, and twigs."</label>
+                <label><input type="radio" name="q8" value="C"> C. "Compare the color on the strip with the official pH color chart..."</label>
+                <label><input type="radio" name="q8" value="D"> D. "A pH value of 7 means neutral soil, below 7 means acidic..."</label>
+                <label><input type="radio" name="q8" value="E"> E. "Record your result in your science notebook."</label>
+            </div>
+            <div class="feedback">
+                <span class="status"></span>
+                <div class="explanation"><strong>Explanation:</strong> Cleaning the soil from stones and leaves on a clean paper towel shows that cleanliness is very important for the test.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TEXT 3 -->
+    <div class="section-card">
+        <h2>Text 3</h2>
+        <div class="text-box">
+            <p>Ki Hajar Dewantara was a great Indonesian national hero and the <span class="difficult-word" data-translate="Pelopor / perintis">pioneer</span> of education in Indonesia. He was born on May 2, 1889, in Yogyakarta with the name Raden Mas Soewardi Soerjaningrat. Coming from a <span class="difficult-word" data-translate="Bangsawan">noble</span> family, he had the chance to attend school, which was a rare <span class="difficult-word" data-translate="Hak istimewa">privilege</span> for most Indonesian children during the Dutch colonial era.</p>
+            <p>When he grew up, Soewardi worked as a writer and journalist for several newspapers. He used his writing to <span class="difficult-word" data-translate="Mengkritik">criticize</span> the unfair Dutch colonial government. In 1913, he wrote a famous article titled "Als ik eens Nederlander was" (If I Were a Netherlander), which strongly protested Dutch celebrations paid for by Indonesian people. Because of his brave writings, the Dutch government <span class="difficult-word" data-translate="Mengasingkan / membuang">exiled</span> him to the Netherlands.</p>
+            <p>During his exile in Europe, Soewardi studied education concepts deeply. When he returned to Indonesia in 1919, he changed his name to Ki Hajar Dewantara so he could be closer to common people. On July 3, 1922, he founded Taman Siswa in Yogyakarta. This school allowed ordinary Indonesian children to get a good education, not just children from noble families.</p>
+            <p>Ki Hajar Dewantara introduced the famous educational motto: "Ing Ngarsa Sung Tuladha, Ing Madya Mangun Karsa, Tut Wuri Handayani" (In front giving example, in the middle building spirit, behind giving encouragement). After Indonesia gained <span class="difficult-word" data-translate="Kemerdekaan">independence</span>, he was appointed as the nation's first Minister of Education. His birthday, May 2, is celebrated every year as National Education Day.</p>
+        </div>
+
+        <div class="question" data-type="single" data-answer="A">
+            <p>9. What is the main idea of the text?</p>
+            <div class="options">
+                <label><input type="radio" name="q9" value="A"> A. Ki Hajar Dewantara was an Indonesian hero who fought for equal education and founded Taman Siswa.</label>
+                <label><input type="radio" name="q9" value="B"> B. Dutch colonial celebrations in 1913 were supported by all Indonesian people in Yogyakarta.</label>
+                <label><input type="radio" name="q9" value="C"> C. Raden Mas Soewardi Soerjaningrat lived in the Netherlands for his entire adult life as a writer.</label>
+                <label><input type="radio" name="q9" value="D"> D. Noble families in Indonesia did not allow their children to attend primary school.</label>
+                <label><input type="radio" name="q9" value="E"> E. May 2 is celebrated in Indonesia because it is the day Taman Siswa opened its first branch.</label>
+            </div>
+            <div class="feedback">
+                <span class="status"></span>
+                <div class="explanation"><strong>Explanation:</strong> The main idea is that Ki Hajar Dewantara was a national hero who fought for equal education and built Taman Siswa.</div>
+            </div>
+        </div>
+
+        <div class="question" data-type="categorization" data-answer="Before,Before,After,Before,After">
+            <p>10. Classify whether each event below happened Before Independence (1945) or After Independence (1945).</p>
+            <table class="cat-table">
+                <tr>
+                    <th>Event</th>
+                    <th>Before Independence</th>
+                    <th>After Independence</th>
+                </tr>
+                <tr>
+                    <td>1. Writing the critical article "Als ik eens Nederlander was"</td>
+                    <td><input type="radio" name="q10_1" value="Before"></td>
+                    <td><input type="radio" name="q10_1" value="After"></td>
+                </tr>
+                <tr>
+                    <td>2. Founding the Taman Siswa school in Yogyakarta</td>
+                    <td><input type="radio" name="q10_2" value="Before"></td>
+                    <td><input type="radio" name="q10_2" value="After"></td>
+                </tr>
+                <tr>
+                    <td>3. Being appointed as Indonesia's first Minister of Education</td>
+                    <td><input type="radio" name="q10_3" value="Before"></td>
+                    <td><input type="radio" name="q10_3" value="After"></td>
+                </tr>
+                <tr>
+                    <td>4. Being exiled to the Netherlands by the Dutch government</td>
+                    <td><input type="radio" name="q10_4" value="Before"></td>
+                    <td><input type="radio" name="q10_4" value="After"></td>
+                </tr>
+                <tr>
+                    <td>5. Celebrating his birthday as National Education Day every year</td>
+                    <td><input type="radio" name="q10_5" value="Before"></td>
+                    <td><input type="radio" name="q10_5" value="After"></td>
+                </tr>
+            </table>
+            <div class="feedback">
+                <span class="status"></span>
+                <div class="explanation"><strong>Explanation:</strong> Items 1, 2, and 4 happened before 1945 (1913 and 1922). Items 3 and 5 happened after Indonesia became independent.</div>
+            </div>
+        </div>
+
+        <div class="question" data-type="multiple" data-answer="B,C,E">
+            <p>11. Which of the following can be inferred from the text?</p>
+            <div class="options">
+                <label><input type="checkbox" name="q11" value="A"> A. Education was easily accessible to all Indonesian children under Dutch rule.</label>
+                <label><input type="checkbox" name="q11" value="B"> B. Ki Hajar Dewantara believed that education should be available to everyone, regardless of social class.</label>
+                <label><input type="checkbox" name="q11" value="C"> C. Changing his name showed his desire to break social barriers between nobles and common people.</label>
+                <label><input type="checkbox" name="q11" value="D"> D. The Dutch colonial government welcomed criticism from local journalists with enthusiasm.</label>
+                <label><input type="checkbox" name="q11" value="E"> E. Ki Hajar Dewantara's ideas continue to influence Indonesian education today.</label>
+            </div>
+            <div class="feedback">
+                <span class="status"></span>
+                <div class="explanation"><strong>Explanation:</strong> He wanted education for everyone, changed his name to be close to common people, and his ideas still inspire us today.</div>
+            </div>
+        </div>
+
+        <div class="question" data-type="single" data-answer="B">
+            <p>12. As a student, what is the most meaningful way to honor Ki Hajar Dewantara's spirit after reading this text?</p>
+            <div class="options">
+                <label><input type="radio" name="q12" value="A"> A. Avoid reading newspapers or articles written by local journalists.</label>
+                <label><input type="radio" name="q12" value="B"> B. Study hard and respect equal education opportunities for all classmates.</label>
+                <label><input type="radio" name="q12" value="C"> C. Move to the Netherlands to live permanently without going to school.</label>
+                <label><input type="radio" name="q12" value="D"> D. Change your name to sound like a noble family member.</label>
+                <label><input type="radio" name="q12" value="E"> E. Stop attending school because education was established long ago.</label>
+            </div>
+            <div class="feedback">
+                <span class="status"></span>
+                <div class="explanation"><strong>Explanation:</strong> The best action for a student is to study hard and respect equal education for everyone.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TEXT 4 -->
+    <div class="section-card">
+        <h2>Text 4</h2>
+        <div class="text-box">
+            <p>In a large forest, a proud Hare loved to <span class="difficult-word" data-translate="Menyombongkan diri">boast</span> about his speed. "No one in this forest can run as fast as me!" he boasted to the other animals. Tired of his <span class="difficult-word" data-translate="Bualan / kesombongan">bragging</span>, a slow Tortoise calmly challenged the Hare to a three-kilometer race through the woods. The Hare laughed loudly and accepted, thinking the race would be very easy to win.</p>
+            <p>The next morning, the race began. The Hare ran very fast and soon left the Tortoise far behind. Seeing how slow the Tortoise was moving, the Hare decided to stop under a shady oak tree. "I have plenty of time," the Hare thought to himself. "I will take a short nap, wake up, and still win easily." He closed his eyes and fell fast asleep.</p>
+            <p>Meanwhile, the Tortoise kept walking step by step. He did not stop, and he did not complain about being tired. Slowly but <span class="difficult-word" data-translate="Secara stabil / konsisten">steadily</span>, he passed the sleeping Hare. Hours passed, and the sun began to set.</p>
+            <p>When the Hare finally woke up, he looked down the trail and saw the Tortoise just a few inches away from the finish line. The Hare jumped up and ran as fast as his legs could carry him, but it was too late. The Tortoise crossed the line first and won the race. All the forest animals cheered for the Tortoise's quiet <span class="difficult-word" data-translate="Kebulatan tekad / kegigihan">determination</span>.</p>
+        </div>
+
+        <div class="question" data-type="single" data-answer="B">
+            <p>13. What is the main idea of the text?</p>
+            <div class="options">
+                <label><input type="radio" name="q13" value="A"> A. Fast animals should never talk to slow animals in the forest.</label>
+                <label><input type="radio" name="q13" value="B"> B. A proud Hare lost a race to a steady Tortoise because he was overconfident and slept.</label>
+                <label><input type="radio" name="q13" value="C"> C. Running through a dark forest at night is dangerous for small animals.</label>
+                <label><input type="radio" name="q13" value="D"> D. The Tortoise cheated in the race by hiding behind a shady oak tree.</label>
+                <label><input type="radio" name="q13" value="E"> E. Shady oak trees are the best places for animals to take afternoon naps.</label>
+            </div>
+            <div class="feedback">
+                <span class="status"></span>
+                <div class="explanation"><strong>Explanation:</strong> The proud Hare lost the race to the steady Tortoise because he was too confident and fell asleep.</div>
+            </div>
+        </div>
+
+        <div class="question" data-type="multiple" data-answer="A,B,C,E">
+            <p>14. According to the text, which of the following details are true?</p>
+            <div class="options">
+                <label><input type="checkbox" name="q14" value="A"> A. The Hare boasted that no animal could run as fast as him.</label>
+                <label><input type="checkbox" name="q14" value="B"> B. The Tortoise challenged the Hare to a three-kilometer race.</label>
+                <label><input type="checkbox" name="q14" value="C"> C. The Hare decided to sleep under a shady oak tree during the race.</label>
+                <label><input type="checkbox" name="q14" value="D"> D. The Tortoise stopped many times to rest and eat fresh leaves.</label>
+                <label><input type="checkbox" name="q14" value="E"> E. The Tortoise reached the finish line before the Hare woke up and ran.</label>
+            </div>
+            <div class="feedback">
+                <span class="status"></span>
+                <div class="explanation"><strong>Explanation:</strong> The text states the Hare boasted, the Tortoise challenged him, the Hare slept under a tree, and the Tortoise finished first without resting.</div>
+            </div>
+        </div>
+
+        <div class="question" data-type="categorization" data-answer="Hare,Tortoise,Hare,Tortoise,Tortoise">
+            <p>15. Classify whether each personality trait below describes the Hare or the Tortoise.</p>
+            <table class="cat-table">
+                <tr>
+                    <th>Trait</th>
+                    <th>Hare</th>
+                    <th>Tortoise</th>
+                </tr>
+                <tr>
+                    <td>1. Overconfident and boastful</td>
+                    <td><input type="radio" name="q15_1" value="Hare"></td>
+                    <td><input type="radio" name="q15_1" value="Tortoise"></td>
+                </tr>
+                <tr>
+                    <td>2. Patient and persistent</td>
+                    <td><input type="radio" name="q15_2" value="Hare"></td>
+                    <td><input type="radio" name="q15_2" value="Tortoise"></td>
+                </tr>
+                <tr>
+                    <td>3. Lazy during the race</td>
+                    <td><input type="radio" name="q15_3" value="Hare"></td>
+                    <td><input type="radio" name="q15_3" value="Tortoise"></td>
+                </tr>
+                <tr>
+                    <td>4. Calm and humble</td>
+                    <td><input type="radio" name="q15_4" value="Hare"></td>
+                    <td><input type="radio" name="q15_4" value="Tortoise"></td>
+                </tr>
+                <tr>
+                    <td>5. Determined not to give up</td>
+                    <td><input type="radio" name="q15_5" value="Hare"></td>
+                    <td><input type="radio" name="q15_5" value="Tortoise"></td>
+                </tr>
+            </table>
+            <div class="feedback">
+                <span class="status"></span>
+                <div class="explanation"><strong>Explanation:</strong> The Hare was overconfident and lazy. The Tortoise was patient, calm, and determined.</div>
+            </div>
+        </div>
+
+        <div class="question" data-type="single" data-answer="B">
+            <p>16. What moral lesson can we learn from the story?</p>
+            <div class="options">
+                <label><input type="radio" name="q16" value="A"> A. Boasting about your talent will always make you many good friends.</label>
+                <label><input type="radio" name="q16" value="B"> B. Slow and steady wins the race, while overconfidence leads to failure.</label>
+                <label><input type="radio" name="q16" value="C"> C. Taking long naps during work is the secret to winning every competition.</label>
+                <label><input type="radio" name="q16" value="D"> D. You should only challenge others if you know you are much faster than them.</label>
+                <label><input type="radio" name="q16" value="E"> E. Sleeping under oak trees gives animals magical running abilities.</label>
+            </div>
+            <div class="feedback">
+                <span class="status"></span>
+                <div class="explanation"><strong>Explanation:</strong> The story teaches that slow and steady effort wins. Being too proud and lazy leads to losing.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TEXT 5 -->
+    <div class="section-card">
+        <h2>Text 5</h2>
+        <div class="text-box">
+            <p>Getting enough sleep is very important for high school students. Many teenagers stay up late playing video games, watching television, or scrolling on smartphones. However, sleeping 8 to 10 hours every night is <span class="difficult-word" data-translate="Sangat penting">essential</span> for good health, mental focus, and academic success.</p>
+            <p>First, <span class="difficult-word" data-translate="Cukup / memadai">adequate</span> sleep improves brain function and memory. When students sleep well, their brain organizes information learned during the day. This process helps students remember lessons better when taking exams at school. Conversely, tired students often struggle to concentrate in class and forget important facts easily.</p>
+            <p>Second, sufficient sleep supports physical health and emotional well-being. Sleep helps the body repair muscles and strengthens the <span class="difficult-word" data-translate="Sistem kekebalan tubuh">immune system</span> to fight off illness. Furthermore, well-rested students feel happier and less stressed, making it easier to handle daily school tasks and socialize with friends.</p>
+            <p>In conclusion, sleep is not a waste of time; it is a <span class="difficult-word" data-translate="Kebutuhan yang vital / penting">vital necessity</span> for young people. Students should set a regular bedtime and turn off electronic devices early to ensure a good night's rest for better learning and living.</p>
+        </div>
+
+        <div class="question" data-type="single" data-answer="B">
+            <p>17. What is the main purpose of the text?</p>
+            <div class="options">
+                <label><input type="radio" name="q17" value="A"> A. To explain the step-by-step process of repairing electronic devices.</label>
+                <label><input type="radio" name="q17" value="B"> B. To persuade readers that getting enough sleep is essential for students.</label>
+                <label><input type="radio" name="q17" value="C"> C. To entertain students with funny stories about staying up late.</label>
+                <label><input type="radio" name="q17" value="D"> D. To describe the physical design of modern high school classrooms.</label>
+                <label><input type="radio" name="q17" value="E"> E. To advise teachers to give students more homework every evening.</label>
+            </div>
+            <div class="feedback">
+                <span class="status"></span>
+                <div class="explanation"><strong>Explanation:</strong> The text wants to persuade readers that getting enough sleep is very important for high school students.</div>
+            </div>
+        </div>
+
+        <div class="question" data-type="multiple" data-answer="A,B,D">
+            <p>18. According to the text, what are the benefits of getting enough sleep?</p>
+            <div class="options">
+                <label><input type="checkbox" name="q18" value="A"> A. It improves brain function and helps memory retention.</label>
+                <label><input type="checkbox" name="q18" value="B"> B. It strengthens the immune system to fight illness.</label>
+                <label><input type="checkbox" name="q18" value="C"> C. It allows students to stay awake for three days without eating.</label>
+                <label><input type="checkbox" name="q18" value="D"> D. It helps students feel less stressed and handle school tasks better.</label>
+                <label><input type="checkbox" name="q18" value="E"> E. It automatically gives students top exam scores without studying.</label>
+            </div>
+            <div class="feedback">
+                <span class="status"></span>
+                <div class="explanation"><strong>Explanation:</strong> Sleep improves brain function, makes the immune system strong, and helps students feel less stressed.</div>
+            </div>
+        </div>
+
+        <div class="question" data-type="single" data-answer="B">
+            <p>19. What is the relationship between Paragraph 2 and Paragraph 3?</p>
+            <div class="options">
+                <label><input type="radio" name="q19" value="A"> A. Paragraph 3 presents a contrasting argument to disprove the main idea in Paragraph 2.</label>
+                <label><input type="radio" name="q19" value="B"> B. Paragraph 3 provides a second supporting reason (physical/emotional health) following the first reason in Paragraph 2 (brain/memory).</label>
+                <label><input type="radio" name="q19" value="C"> C. Paragraph 3 explains the historical background of the scientific facts introduced in Paragraph 2.</label>
+                <label><input type="radio" name="q19" value="D"> D. Paragraph 3 shows the negative consequences of the good habits described in Paragraph 2.</label>
+                <label><input type="radio" name="q19" value="E"> E. Paragraph 3 lists step-by-step instructions on how to set a bedroom alarm clock.</label>
+            </div>
+            <div class="feedback">
+                <span class="status"></span>
+                <div class="explanation"><strong>Explanation:</strong> Paragraph 3 gives a second supporting reason (physical and emotional health). It follows the first reason in Paragraph 2 (brain and memory).</div>
+            </div>
+        </div>
+
+        <div class="question" data-type="categorization" data-answer="Fact,Fact,Opinion,Fact,Opinion">
+            <p>20. Classify whether each statement from or about the text is a Fact or an Opinion.</p>
+            <table class="cat-table">
+                <tr>
+                    <th>Statement</th>
+                    <th>Fact</th>
+                    <th>Opinion</th>
+                </tr>
+                <tr>
+                    <td>1. Teenagers need about 8 to 10 hours of sleep every night for optimal health.</td>
+                    <td><input type="radio" name="q20_1" value="Fact"></td>
+                    <td><input type="radio" name="q20_1" value="Opinion"></td>
+                </tr>
+                <tr>
+                    <td>2. Sleep helps the immune system repair body tissue and fight off illness.</td>
+                    <td><input type="radio" name="q20_2" value="Fact"></td>
+                    <td><input type="radio" name="q20_2" value="Opinion"></td>
+                </tr>
+                <tr>
+                    <td>3. Playing video games late at night is the most fun activity for teenagers.</td>
+                    <td><input type="radio" name="q20_3" value="Fact"></td>
+                    <td><input type="radio" name="q20_3" value="Opinion"></td>
+                </tr>
+                <tr>
+                    <td>4. Well-rested students generally concentrate better during school lessons.</td>
+                    <td><input type="radio" name="q20_4" value="Fact"></td>
+                    <td><input type="radio" name="q20_4" value="Opinion"></td>
+                </tr>
+                <tr>
+                    <td>5. Video games are much more important than getting good sleep at night.</td>
+                    <td><input type="radio" name="q20_5" value="Fact"></td>
+                    <td><input type="radio" name="q20_5" value="Opinion"></td>
+                </tr>
+            </table>
+            <div class="feedback">
+                <span class="status"></span>
+                <div class="explanation"><strong>Explanation:</strong> Items 1, 2, and 4 are biological and academic facts. Items 3 and 5 are personal feelings (opinions).</div>
+            </div>
+        </div>
+    </div>
+
+    <button class="submit-btn" id="submitBtn" onclick="checkAnswers()">Submit Quiz</button>
+
+    <div id="result-banner"></div>
+</div>
+
+<script>
+    // Initialize Chart.js Graph for Text 1
+    const ctx = document.getElementById('energyChart').getContext('2d');
+    const energyChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['2018', '2020', '2022'],
+            datasets: [
+                {
+                    label: 'Hydroelectric (%)',
+                    data: [16, 16, 15],
+                    backgroundColor: 'rgba(37, 99, 235, 0.7)',
+                    borderColor: 'rgba(37, 99, 235, 1)',
+                    borderWidth: 1,
+                    borderRadius: 4
+                },
+                {
+                    label: 'Wind Power (%)',
+                    data: [4, 6, 9],
+                    backgroundColor: 'rgba(16, 185, 129, 0.7)',
+                    borderColor: 'rgba(16, 185, 129, 1)',
+                    borderWidth: 1,
+                    borderRadius: 4
+                },
+                {
+                    label: 'Solar Power (%)',
+                    data: [2, 4, 7],
+                    backgroundColor: 'rgba(245, 158, 11, 0.7)',
+                    borderColor: 'rgba(245, 158, 11, 1)',
+                    borderWidth: 1,
+                    borderRadius: 4
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 20,
+                    title: { display: true, text: 'Global Electricity Share (%)', font: {family: 'Poppins', size: 14} }
+                },
+                x: {
+                    title: { display: true, text: 'Year', font: {family: 'Poppins', size: 14} }
+                }
+            },
+            plugins: {
+                title: { display: true, text: 'Global Renewable Electricity Share (2018 - 2022)', font: { family: 'Poppins', size: 16 } },
+                legend: { labels: { font: { family: 'Poppins'} } }
+            }
+        }
+    });
+
+    // Real-time UI Updates & Progress Tracking
+    document.addEventListener('DOMContentLoaded', () => {
+        const inputs = document.querySelectorAll('input[type="radio"], input[type="checkbox"]');
+        const progressBar = document.getElementById('progress-fill');
+        const progressText = document.getElementById('progress-text');
+        const totalQuestions = 20;
+
+        function updateProgress() {
+            let answered = 0;
+            const questions = document.querySelectorAll('.question');
+            questions.forEach(q => {
+                if(q.querySelector('input:checked')) {
+                    answered++;
+                }
+            });
+            const percent = Math.round((answered / totalQuestions) * 100);
+            progressBar.style.width = percent + '%';
+            progressText.innerText = percent + '% Terjawab';
+            
+            // Turn bar green when 100%
+            if(percent === 100) {
+                progressBar.style.backgroundColor = '#10b981';
+            } else {
+                progressBar.style.backgroundColor = '#2563eb';
+            }
+        }
+
+        inputs.forEach(input => {
+            input.addEventListener('change', (e) => {
+                // Radio button logic for selected class
+                if(input.type === 'radio') {
+                    const name = input.name;
+                    document.querySelectorAll(`input[name="${name}"]`).forEach(rad => {
+                        const lbl = rad.closest('label');
+                        if(lbl) lbl.classList.remove('selected');
+                    });
+                    const lbl = input.closest('label');
+                    if(lbl) lbl.classList.add('selected');
+                } 
+                // Checkbox logic for selected class
+                else if (input.type === 'checkbox') {
+                    const lbl = input.closest('label');
+                    if(input.checked) {
+                        if(lbl) lbl.classList.add('selected');
+                    } else {
+                        if(lbl) lbl.classList.remove('selected');
+                    }
+                }
+                updateProgress();
+            });
+        });
+    });
+
+    // Quiz Validation Logic
+    function checkAnswers() {
+        let score = 0;
+        let total = 0;
+        const questions = document.querySelectorAll('.question');
+
+        questions.forEach((q) => {
+            const type = q.getAttribute('data-type');
+            const correctAnswer = q.getAttribute('data-answer');
+            const feedback = q.querySelector('.feedback');
+            const statusSpan = q.querySelector('.status');
+            
+            let isCorrect = false;
+
+            if (type === 'single') {
+                total++;
+                const selected = q.querySelector('input[type="radio"]:checked');
+                if (selected && selected.value === correctAnswer) {
+                    isCorrect = true;
+                    score++;
+                }
+            } else if (type === 'multiple') {
+                total++;
+                const correctArr = correctAnswer.split(',');
+                const selected = Array.from(q.querySelectorAll('input[type="checkbox"]:checked')).map(cb => cb.value);
+                
+                if (selected.length === correctArr.length && selected.every(val => correctArr.includes(val))) {
+                    isCorrect = true;
+                    score++;
+                }
+            } else if (type === 'categorization') {
+                total++;
+                const correctArr = correctAnswer.split(',');
+                const radios = q.querySelectorAll('input[type="radio"]:checked');
+                
+                if (radios.length === correctArr.length) {
+                    let allRowsCorrect = true;
+                    radios.forEach((radio, index) => {
+                        if (radio.value !== correctArr[index]) {
+                            allRowsCorrect = false;
+                        }
+                    });
+                    if (allRowsCorrect) {
+                        isCorrect = true;
+                        score++;
+                    }
+                }
+            }
+
+            // Lock interaction
+            q.classList.add('disabled-element');
+
+            // Display Feedback
+            feedback.style.display = 'block';
+            if (isCorrect) {
+                feedback.className = 'feedback correct';
+                statusSpan.innerHTML = '<span class="correct-text">✓ Correct!</span>';
+            } else {
+                feedback.className = 'feedback incorrect';
+                statusSpan.innerHTML = '<span class="incorrect-text">✗ Incorrect.</span>';
+            }
+        });
+
+        const banner = document.getElementById('result-banner');
+        banner.style.display = 'block';
+        banner.style.backgroundColor = (score === total) ? '#ecfdf5' : '#fef3c7';
+        banner.style.color = (score === total) ? '#065f46' : '#92400e';
+        banner.innerHTML = `You scored ${score} out of ${total}!`;
+        
+        // Disable submit button after scoring
+        const btn = document.getElementById('submitBtn');
+        btn.innerText = 'Quiz Submitted';
+        btn.disabled = true;
+        btn.style.backgroundColor = '#94a3b8';
+        btn.style.boxShadow = 'none';
+        btn.style.cursor = 'not-allowed';
+
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>
