@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drill Soal Campuran 3 - TKA English</title>
+    <!-- Font Poppins untuk tampilan modern -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #3b82f6;
+            --background: #f1f5f9;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        
+        /* Header Styling */
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        .header p {
+            margin: 10px 0 0;
+            font-size: 15px;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: -30px auto 40px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* Progress Bar */
+        .progress-container {
+            position: sticky;
+            top: 15px;
+            background: white;
+            padding: 15px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .progress-bar {
+            flex-grow: 1;
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 5px;
+            margin: 0 15px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: var(--success);
+            width: 0%;
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .progress-text {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary-color);
+            min-width: 95px;
+            text-align: right;
+        }
+
+        /* Reading Text Section */
+        .section-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border-top: 5px solid var(--primary-color);
+        }
+        .section-card h2 {
+            color: var(--primary-color);
+            font-size: 22px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+            font-weight: 600;
+        }
+        .text-box {
+            background-color: #f8fafc;
+            padding: 20px 25px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            font-size: 15px;
+            color: #334155;
+            text-align: justify;
+        }
+        .text-box p {
+            margin-top: 0;
+        }
+
+        /* Tooltip styling for difficult words */
+        .difficult-word {
+            position: relative;
+            cursor: help;
+            border-bottom: 2px dotted var(--primary-color);
+            color: var(--primary-color);
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        .difficult-word:hover {
+            color: var(--secondary-color);
+        }
+        .difficult-word::after {
+            content: attr(data-translate);
+            position: absolute;
+            bottom: 130%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background-color: #1e293b;
+            color: #fff;
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 20;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+            pointer-events: none;
+        }
+        .difficult-word::before {
+            content: '';
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            border-width: 6px;
+            border-style: solid;
+            border-color: #1e293b transparent transparent transparent;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 20;
+            pointer-events: none;
+        }
+        .difficult-word:hover::after, .difficult-word:hover::before {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Questions Layout */
+        .question {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+            border: 1px solid #e2e8f0;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .question:hover {
+            box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+            transform: translateY(-2px);
+        }
+        .question p {
+            font-weight: 600;
+            margin-top: 0;
+            color: #1e293b;
+            font-size: 16px;
+        }
+
+        /* Options */
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 15px;
+        }
+        .options label {
+            display: flex;
+            align-items: flex-start;
+            padding: 14px 18px;
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+        .options label:hover {
+            background: #f1f5f9;
+            border-color: var(--primary-color);
+        }
+        .options label.selected {
+            background: #eff6ff;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 1px var(--primary-color);
+        }
+        .options input[type="radio"], .options input[type="checkbox"] {
+            margin-top: 3px;
+            margin-right: 15px;
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary-color);
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        /* Categorization Tables */
+        .cat-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 0 1px #e2e8f0;
+        }
+        .cat-table th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 14px;
+            font-weight: 500;
+            font-size: 15px;
+        }
+        .cat-table td {
+            border-bottom: 1px solid #e2e8f0;
+            padding: 14px;
+            text-align: center;
+            background: #fff;
+        }
+        .cat-table tr:last-child td {
+            border-bottom: none;
+        }
+        .cat-table td:first-child {
+            text-align: left;
+            font-weight: 500;
+            color: #334155;
+            font-size: 14px;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+            margin-top: 30px;
+        }
+        .submit-btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(37, 99, 235, 0.35);
+        }
+
+        /* Feedback Area */
+        .feedback {
+            display: none;
+            margin-top: 20px;
+            padding: 18px;
+            border-radius: 8px;
+            animation: fadeIn 0.4s ease-out;
+        }
+        .feedback.correct {
+            background-color: #ecfdf5;
+            border-left: 5px solid var(--success);
+        }
+        .feedback.incorrect {
+            background-color: #fef2f2;
+            border-left: 5px solid var(--danger);
+        }
+        .status {
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+        .correct-text { color: var(--success); }
+        .incorrect-text { color: var(--danger); }
+        .explanation {
+            font-size: 14px;
+            color: #334155;
+            line-height: 1.6;
+        }
+        .explanation strong {
+            color: #1e293b;
+        }
+
+        #result-banner {
+            display: none;
+            text-align: center;
+            font-size: 24px;
+            font-weight: 700;
+            padding: 25px;
+            margin-top: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        /* Disable interaction after submit */
+        .disabled-element {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>TKA English Practice Quiz 3</h1>
+    <p>Complete all sections carefully. Hover over the dotted text for difficult word translations.</p>
+</div>
+
+<div class="container">
+    
+    <div class="progress-container">
+        <span>Progress:</span>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <span class="progress-text" id="progress-text">0% Terjawab</span>
+    </div>
+
+    <!-- TEXT 1 -->
+    <div class="section-card">
+        <h2>Text 1</h2>
+        <div class="text-box">
+            <p>Coral reefs are some of the most colorful and diverse <span class="difficult-word" data-translate="Ekosistem">ecosystems</span> on Earth. Although they cover less than one percent of the ocean floor, they are home to more than twenty-five percent of all marine species. Corals are actually small animals called polyps that live together in large <span class="difficult-word" data-translate="Koloni / kelompok">colonies</span>. They build hard limestone skeletons that form giant underwater structures over thousands of years.</p>
+            <p>Coral reefs provide <span class="difficult-word" data-translate="Sangat penting">crucial</span> benefits to marine animals and human communities. They offer food and shelter for thousands of fish, turtles, and sea creatures. For humans, coral reefs protect coastlines from storm waves, preventing severe <span class="difficult-word" data-translate="Pengikisan">erosion</span> near coastal towns. In addition, millions of people depend on coral reefs for fishing and tourism, which brings income to local economies.</p>
+            <p>Unfortunately, coral reefs are facing serious threats today. Ocean warming caused by global climate change leads to coral <span class="difficult-word" data-translate="Pemutihan karang">bleaching</span>. When ocean water becomes too warm, corals lose the colorful algae living inside them and turn completely white. If the water stays hot for too long, the corals die. Pollution from plastic waste and farm chemicals also harms these delicate ecosystems.</p>
+            <p>To save coral reefs, scientists and governments are taking action. They are creating marine protected areas where fishing is <span class="difficult-word" data-translate="Dibatasi">restricted</span>. Additionally, volunteers are planting nursery-grown corals back onto damaged reefs. Protecting these valuable ecosystems is essential to keep our oceans healthy for future generations.</p>
+        </div>
+
+        <div class="question" data-type="single" data-answer="B">
+            <p>1. What is the main idea of the text?</p>
+            <div class="options">
+                <label><input type="radio" name="q1" value="A"> A. Coral reefs cover most of the ocean floor and provide unlimited food for all marine creatures.</label>
+                <label><input type="radio" name="q1" value="B"> B. Coral reefs are vital marine ecosystems that offer many benefits but face severe environmental threats.</label>
+                <label><input type="radio" name="q1" value="C"> C. Plastic pollution is the only reason why corals turn white and die in warm ocean waters.</label>
+                <label><input type="radio" name="q1" value="D"> D. Governments are stopping all fishing activities in coastal cities to build artificial reefs.</label>
+                <label><input type="radio" name="q1" value="E"> E. Coral polyps are large fish that build limestone skeletons to catch smaller ocean animals.</label>
+            </div>
+            <div class="feedback">
+                <span class="status"></span>
+                <div class="explanation"><strong>Explanation:</strong> The text describes what coral reefs are, their benefits, environmental threats, and protection efforts.</div>
+            </div>
+        </div>
+
+        <div class="question" data-type="single" data-answer="B">
+            <p>2. What is the primary purpose of the text?</p>
+            <div class="options">
+                <label><input type="radio" name="q2" value="A"> A. To explain how local fishermen catch rare fish near coral reefs.</label>
+                <label><input type="radio" name="q2" value="B"> B. To describe coral reefs, their benefits, threats to them, and protection efforts.</label>
+                <label><input type="radio" name="q2" value="C"> C. To persuade readers to buy artificial corals for home aquariums.</label>
+                <label><input type="radio" name="q2" value="D"> D. To compare the speed of different sea turtles living in tropical oceans.</label>
+                <label><input type="radio" name="q2" value="E"> E. To instruct travelers how to scuba dive safely in deep ocean waters.</label>
+            </div>
+            <div class="feedback">
+                <span class="status"></span>
+                <div class="explanation"><strong>Explanation:</strong> The primary goal is to describe coral reefs, their importance, threats, and conservation.</div>
+            </div>
+        </div>
+
+        <div class="question" data-type="single" data-answer="A">
+            <p>3. The word "crucial" in paragraph 2 is closest in meaning to...</p>
+            <div class="options">
+                <label><input type="radio" name="q3" value="A"> A. Very important</label>
+                <label><input type="radio" name="q3" value="B"> B. Extremely dangerous</label>
+                <label><input type="radio" name="q3" value="C"> C. Unusually slow</label>
+                <label><input type="radio" name="q3" value="D"> D. Very small</label>
+                <label><input type="radio" name="q3" value="E"> E. Fairly cheap</label>
+            </div>
+            <div class="feedback">
+                <span class="status"></span>
+                <div class="explanation"><strong>Explanation:</strong> The word "crucial" means extremely important or vital.</div>
+            </div>
+        </div>
+
+        <div class="question" data-type="single" data-answer="C">
+            <p>4. The word "They" in paragraph 1 ("They build hard limestone skeletons...") refers to...</p>
+            <div class="options">
+                <label><input type="radio" name="q4" value="A"> A. Ocean floors</label>
+                <label><input type="radio" name="q4" value="B"> B. Marine species</label>
+                <label><input type="radio" name="q4" value="C"> C. Small animals called polyps</label>
+                <label><input type="radio" name="q4" value="D"> D. Colorful ecosystems</label>
+                <label><input type="radio" name="q4" value="E"> E. Large colonies of fish</label>
+            </div>
+            <div class="feedback">
+                <span class="status"></span>
+                <div class="explanation"><strong>Explanation:</strong> The word "They" refers back to "small animals called polyps".</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TEXT 2 -->
+    <div class="section-card">
+        <h2>Text 2</h2>
+        <div class="text-box">
+            <p>Clean water is essential for human health and survival. In many science classes, students learn how natural <span class="difficult-word" data-translate="Penyaringan">filtration</span> systems clean dirty water. Building a simple water filter using everyday materials is a great way to understand how soil and sand filter rainwater in nature. Here is a step-by-step guide to making a basic water filter in a school laboratory.</p>
+            <p>First, take a clean plastic bottle and cut it in half using scissors. Turn the top half upside down so it looks like a <span class="difficult-word" data-translate="Corong">funnel</span>, and place it inside the bottom half of the bottle. Second, put a small piece of cotton or a coffee filter into the neck of the bottle. This initial layer prevents sand and charcoal from falling through the opening into the clean water container.</p>
+            <p>Third, add a layer of crushed activated charcoal on top of the cotton. Charcoal is very important because it absorbs tiny <span class="difficult-word" data-translate="Kotoran / zat pengotor">impurities</span> and removes unpleasant odors from the dirty liquid. Fourth, add a thick layer of fine sand over the charcoal, followed by a layer of <span class="difficult-word" data-translate="Kasar">coarse</span> gravel at the top. The gravel traps large <span class="difficult-word" data-translate="Puing / sisa-sisa">debris</span> like leaves and twigs, while the sand catches smaller dirt particles.</p>
+            <p>Finally, pour muddy water slowly into the top of the filter. Watch as the dirty liquid passes through each layer. The water coming out at the bottom will look much clearer. Remember, this simple lab filter removes visible dirt, but it does not kill bacteria. Therefore, you must boil the filtered water before drinking it.</p>
+        </div>
+
+        <div class="question" data-type="single" data-answer="B">
+            <p>5. What is the primary purpose of the text?</p>
+            <div class="options">
+                <label><input type="radio" name="q5" value="A"> A. To describe the physical properties of clean drinking water in nature.</label>
+                <label><input type="radio" name="q5" value="B"> B. To provide instructions on how to build a simple water filter in a lab.</label>
+                <label><input type="radio" name="q5" value="C"> C. To convince readers that tap water is cleaner than bottled water.</label>
+                <label><input type="radio" name="q5" value="D"> D. To compare different brands of commercial water filters sold in stores.</label>
+                <label><input type="radio" name="q5" value="E"> E. To explain why rivers become muddy during heavy rainstorms.</label>
+            </div>
+            <div class="feedback">
+                <span class="status"></span>
+                <div class="explanation"><strong>Explanation:</strong> The text gives step-by-step instructions on how to make a simple water filter in a lab.</div>
+            </div>
+        </div>
+
+        <div class="question" data-type="multiple" data-answer="A,B,D">
+            <p>6. Who would benefit the most from reading this text? (Check all that apply)</p>
+            <div class="options">
+                <label><input type="checkbox" name="q6" value="A"> A. Science students learning about natural water filtration methods.</label>
+                <label><input type="checkbox" name="q6" value="B"> B. Teachers looking for a simple hands-on classroom experiment.</label>
+                <label><input type="checkbox" name="q6" value="C"> C. Plumbers fixing broken metal water pipes in large buildings.</label>
+                <label><input type="checkbox" name="q6" value="D"> D. Campers who need a basic emergency method to clean muddy water.</label>
+                <label><input type="checkbox" name="q6" value="E"> E. Engineers designing giant chemical factories for nuclear power plants.</label>
+            </div>
+            <div class="feedback">
+                <span class="status"></span>
+                <div class="explanation"><strong>Explanation:</strong> Science students, teachers doing lab activities, and campers needing clean water benefit most.</div>
+            </div>
+        </div>
+
+        <div class="question" data-type="single" data-answer="A">
+            <p>7. The word "essential" in paragraph 1 is closest in meaning to...</p>
+            <div class="options">
+                <label><input type="radio" name="q7" value="A"> A. Extremely necessary</label>
+                <label><input type="radio" name="q7" value="B"> B. Slightly difficult</label>
+                <label><input type="radio" name="q7" value="C"> C. Completely optional</label>
+                <label><input type="radio" name="q7" value="D"> D. Unusually cold</label>
+                <label><input type="radio" name="q7" value="E"> E. Very expensive</label>
+            </div>
+            <div class="feedback">
+                <span class="status"></span>
+                <div class="explanation"><strong>Explanation:</strong> The word "essential" means extremely necessary.</div>
+            </div>
+        </div>
+
+        <div class="question" data-type="single" data-answer="B">
+            <p>8. The word "it" in paragraph 3 ("...because it absorbs tiny impurities...") refers to...</p>
+            <div class="options">
+                <label><input type="radio" name="q8" value="A"> A. The cotton piece</label>
+                <label><input type="radio" name="q8" value="B"> B. Crushed activated charcoal</label>
+                <label><input type="radio" name="q8" value="C"> C. Dirty liquid</label>
+                <label><input type="radio" name="q8" value="D"> D. The plastic bottle</label>
+                <label><input type="radio" name="q8" value="E"> E. Coffee filter</label>
+            </div>
+            <div class="feedback">
+                <span class="status"></span>
+                <div class="explanation"><strong>Explanation:</strong> The word "it" refers to crushed activated charcoal which absorbs impurities.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TEXT 3 -->
+    <div class="section-card">
+        <h2>Text 3</h2>
+        <div class="text-box">
+            <p>On a warm summer day, a lazy Grasshopper was resting under a <span class="difficult-word" data-translate="Rindang">shady</span> tree, singing songs and playing his guitar. Nearby, a tiny Ant was working hard under the hot sun, carrying heavy corn seeds to her underground nest. The Grasshopper laughed at the busy Ant and said, "Why work so hard on such a beautiful day? Come and sing with me instead!"</p>
+            <p>The Ant stopped for a moment and replied, "I am storing food for the cold winter months. I advise you to do the same, my friend, because winter will arrive sooner than you think." However, the Grasshopper ignored her advice. "Winter is still far away, and there is plenty of green leaves to eat right now," he cheered, continuing to dance throughout the warm summer and autumn.</p>
+            <p>When winter finally arrived, freezing winds blew across the forest, and deep snow covered all the plants and trees. The hungry Grasshopper searched everywhere for food, but he found nothing to eat. Weak and <span class="difficult-word" data-translate="Gemetaran">shivering</span> from the cold, he remembered the hardworking Ant and crawled to her warm underground home to beg for help.</p>
+            <p>The Ant opened her door and saw the <span class="difficult-word" data-translate="Sangat kelaparan">starving</span> Grasshopper. She felt <span class="difficult-word" data-translate="Rasa kasihan">pity</span> for him and invited him inside to share her warm meal. While eating, the Grasshopper realized his mistake and promised never to be lazy again. From that day on, he learned that working hard today prepares us for the difficulties of tomorrow.</p>
+        </div>
+
+        <div class="question" data-type="single" data-answer="B">
+            <p>9. Look at the following outline of the story. Which option best fills in step 3?<br><br>
+            1. The Ant works hard collecting food while the Grasshopper plays music.<br>
+            2. The Ant warns the Grasshopper to prepare for winter, but he ignores her.<br>
+            3. __________________________________________________<br>
+            4. The Ant shares her food and the Grasshopper learns his lesson.</p>
+            <div class="options">
+                <label><input type="radio" name="q9" value="A"> A. The Grasshopper buys a new guitar and travels to another forest.</label>
+                <label><input type="radio" name="q9" value="B"> B. Winter arrives, covering the forest in snow, and the Grasshopper becomes hungry.</label>
+                <label><input type="radio" name="q9" value="C"> C. The Ant falls asleep under a shady tree during the hot summer afternoon.</label>
+                <label><input type="radio" name="q9" value="D"> D. The Grasshopper builds a large underground nest to store fresh corn seeds.</label>
+                <label><input type="radio" name="q9" value="E"> E. The forest animals hold a singing contest during the freezing winter.</label>
+            </div>
+            <div class="feedback">
+                <span class="status"></span>
+                <div class="explanation"><strong>Explanation:</strong> Step 3 is winter arriving, covering the forest with snow, and making the Grasshopper hungry.</div>
+            </div>
+        </div>
+
+        <div class="question" data-type="multiple" data-answer="A,B,D">
+            <p>10. What moral lessons can we learn from the story? (Check all that apply)</p>
+            <div class="options">
+                <label><input type="checkbox" name="q10" value="A"> A. Hard work and preparation today help us survive future difficulties.</label>
+                <label><input type="checkbox" name="q10" value="B"> B. Being lazy and ignoring good advice can lead to hardship later.</label>
+                <label><input type="checkbox" name="q10" value="C"> C. You should always make fun of others who work hard under the hot sun.</label>
+                <label><input type="checkbox" name="q10" value="D"> D. Kindness and helping those in trouble can give them a second chance.</label>
+                <label><input type="checkbox" name="q10" value="E"> E. Sleeping all day during winter is the best way to save energy.</label>
+            </div>
+            <div class="feedback">
+                <span class="status"></span>
+                <div class="explanation"><strong>Explanation:</strong> Lessons include: hard work pays off, laziness leads to trouble, and helping others gives them a second chance.</div>
+            </div>
+        </div>
+
+        <div class="question" data-type="single" data-answer="A">
+            <p>11. The word "starving" in paragraph 4 is closest in meaning to...</p>
+            <div class="options">
+                <label><input type="radio" name="q11" value="A"> A. Extremely hungry</label>
+                <label><input type="radio" name="q11" value="B"> B. Very sleepy</label>
+                <label><input type="radio" name="q11" value="C"> C. Exceptionally fast</label>
+                <label><input type="radio" name="q11" value="D"> D. Completely blind</label>
+                <label><input type="radio" name="q11" value="E"> E. Unusually noisy</label>
+            </div>
+            <div class="feedback">
+                <span class="status"></span>
+                <div class="explanation"><strong>Explanation:</strong> The word "starving" means extremely hungry.</div>
+            </div>
+        </div>
+
+        <div class="question" data-type="single" data-answer="B">
+            <p>12. The word "he" in paragraph 2 ("...'Winter is still far away...' he cheered...") refers to...</p>
+            <div class="options">
+                <label><input type="radio" name="q12" value="A"> A. The hardworking Ant</label>
+                <label><input type="radio" name="q12" value="B"> B. The lazy Grasshopper</label>
+                <label><input type="radio" name="q12" value="C"> C. The tiny seed</label>
+                <label><input type="radio" name="q12" value="D"> D. The forest animal</label>
+                <label><input type="radio" name="q12" value="E"> E. The cold winter</label>
+            </div>
+            <div class="feedback">
+                <span class="status"></span>
+                <div class="explanation"><strong>Explanation:</strong> The word "he" refers to the lazy Grasshopper.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TEXT 4 -->
+    <div class="section-card">
+        <h2>Text 4</h2>
+        <div class="text-box">
+            <p>Bacharuddin Jusuf Habibie, widely known as B.J. Habibie, was the third President of Indonesia and a brilliant <span class="difficult-word" data-translate="Penerbangan / antariksa">aerospace</span> engineer. Born on June 25, 1936, in Parepare, South Sulawesi, Habibie showed a passionate interest in science and technology from a very young age. After completing his high school education in Bandung, he traveled to Germany to study aeronautical engineering at the prestigious RWTH Aachen University.</p>
+            <p>Habibie <span class="difficult-word" data-translate="Sangat berprestasi">excelled</span> in his academic studies through incredible determination and hard work. He earned his doctorate degree with top honors and worked for several <span class="difficult-word" data-translate="Terkemuka / terkenal">prominent</span> German aircraft companies. During his time in Europe, he developed a famous scientific theory regarding aircraft structure known as the "Habibie Factor," which calculated crack progression in airplane wings. His <span class="difficult-word" data-translate="Terobosan baru">groundbreaking</span> discovery earned him international recognition in the global aviation industry.</p>
+            <p>In 1974, President Soeharto invited Habibie to return to Indonesia to help build the nation's technology sector. Habibie led the state-owned aircraft company IPTN and successfully designed the N-250 Gatotkaca, the first regional passenger aircraft built entirely by Indonesian engineers. Later, during a major economic crisis in 1998, Habibie assumed the presidency and successfully led the country through a peaceful democratic transition.</p>
+            <p>Throughout his life, Habibie demonstrated extraordinary intelligence, <span class="difficult-word" data-translate="Cinta tanah air">patriotism</span>, and <span class="difficult-word" data-translate="Rendah hati">humility</span>. He dedicated his life to proving that Indonesian minds could compete on the world stage of science and innovation. Even after retiring from politics, he remained a beloved figure who inspired millions of young Indonesians to pursue education and technological excellence.</p>
+        </div>
+
+        <div class="question" data-type="categorization" data-answer="Describes,Does Not Describe,Describes,Does Not Describe,Describes">
+            <p>13. Classify whether each character trait below Describes B.J. Habibie or Does Not Describe B.J. Habibie.</p>
+            <table class="cat-table">
+                <tr>
+                    <th>Trait</th>
+                    <th>Describes B.J. Habibie</th>
+                    <th>Does Not Describe B.J. Habibie</th>
+                </tr>
+                <tr>
+                    <td>1. Brilliant and intelligent</td>
+                    <td><input type="radio" name="q13_1" value="Describes"></td>
+                    <td><input type="radio" name="q13_1" value="Does Not Describe"></td>
+                </tr>
+                <tr>
+                    <td>2. Lazy and easily discouraged</td>
+                    <td><input type="radio" name="q13_2" value="Describes"></td>
+                    <td><input type="radio" name="q13_2" value="Does Not Describe"></td>
+                </tr>
+                <tr>
+                    <td>3. Patriotic and devoted to his nation</td>
+                    <td><input type="radio" name="q13_3" value="Describes"></td>
+                    <td><input type="radio" name="q13_3" value="Does Not Describe"></td>
+                </tr>
+                <tr>
+                    <td>4. Arrogant and disrespectful to others</td>
+                    <td><input type="radio" name="q13_4" value="Describes"></td>
+                    <td><input type="radio" name="q13_4" value="Does Not Describe"></td>
+                </tr>
+                <tr>
+                    <td>5. Hardworking and determined</td>
+                    <td><input type="radio" name="q13_5" value="Describes"></td>
+                    <td><input type="radio" name="q13_5" value="Does Not Describe"></td>
+                </tr>
+            </table>
+            <div class="feedback">
+                <span class="status"></span>
+                <div class="explanation"><strong>Explanation:</strong> Traits 1, 3, and 5 describe B.J. Habibie. Traits 2 and 4 do not describe him.</div>
+            </div>
+        </div>
+
+        <div class="question" data-type="multiple" data-answer="A,C,E">
+            <p>14. Which of the following can be inferred about B.J. Habibie? (Check all that apply)</p>
+            <div class="options">
+                <label><input type="checkbox" name="q14" value="A"> A. His scientific contributions were recognized both nationally and internationally.</label>
+                <label><input type="checkbox" name="q14" value="B"> B. He struggled academically and failed to finish his studies in Germany.</label>
+                <label><input type="checkbox" name="q14" value="C"> C. He was deeply committed to advancing Indonesia's technological capabilities.</label>
+                <label><input type="checkbox" name="q14" value="D"> D. He refused to return to Indonesia because he preferred living in Europe forever.</label>
+                <label><input type="checkbox" name="q14" value="E"> E. His leadership helped Indonesia navigate a critical transition toward democracy.</label>
+            </div>
+            <div class="feedback">
+                <span class="status"></span>
+                <div class="explanation"><strong>Explanation:</strong> Habibie was famous globally, dedicated to Indonesian technology, and led the country during a democratic transition.</div>
+            </div>
+        </div>
+
+        <div class="question" data-type="single" data-answer="A">
+            <p>15. The word "prominent" in paragraph 2 is closest in meaning to...</p>
+            <div class="options">
+                <label><input type="radio" name="q15" value="A"> A. Famous and important</label>
+                <label><input type="radio" name="q15" value="B"> B. Tiny and unknown</label>
+                <label><input type="radio" name="q15" value="C"> C. Dark and dangerous</label>
+                <label><input type="radio" name="q15" value="D"> D. Highly dangerous</label>
+                <label><input type="radio" name="q15" value="E"> E. Very expensive</label>
+            </div>
+            <div class="feedback">
+                <span class="status"></span>
+                <div class="explanation"><strong>Explanation:</strong> The word "prominent" means famous and important.</div>
+            </div>
+        </div>
+
+        <div class="question" data-type="single" data-answer="B">
+            <p>16. The word "His" in paragraph 2 ("His groundbreaking discovery earned him...") refers to...</p>
+            <div class="options">
+                <label><input type="radio" name="q16" value="A"> A. President Soeharto</label>
+                <label><input type="radio" name="q16" value="B"> B. B.J. Habibie</label>
+                <label><input type="radio" name="q16" value="C"> C. A German professor</label>
+                <label><input type="radio" name="q16" value="D"> D. An Indonesian pilot</label>
+                <label><input type="radio" name="q16" value="E"> E. A foreign scientist</label>
+            </div>
+            <div class="feedback">
+                <span class="status"></span>
+                <div class="explanation"><strong>Explanation:</strong> The word "His" refers to B.J. Habibie's discovery ("Habibie Factor").</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TEXT 5 -->
+    <div class="section-card">
+        <h2>Text 5</h2>
+        <div class="text-box">
+            <p>Traffic <span class="difficult-word" data-translate="Kemacetan">congestion</span> is a major problem in many modern growing cities around the world. Every morning, millions of private cars and motorcycles crowd city streets, causing severe traffic jams and air pollution. To solve this urban crisis, city governments must invest more resources in expanding public transportation systems, such as buses, trains, and subways.</p>
+            <p>First, public transportation significantly reduces traffic congestion on urban roads. A single passenger bus or train can carry dozens or even hundreds of <span class="difficult-word" data-translate="Pengguna jalan / penglaju">commuters</span> at once. If more citizens choose to ride public transit instead of driving private vehicles, the total number of cars on the road will decrease dramatically. Consequently, daily travel times will become faster and safer for everyone.</p>
+            <p>Second, public transit helps protect the environment by cutting carbon <span class="difficult-word" data-translate="Emisi / gas buang">emissions</span>. Private vehicles release large amounts of harmful exhaust gases that pollute city air and contribute to global climate change. In contrast, modern electric trains and hybrid buses produce far fewer emissions per passenger kilometer. Furthermore, using public transport saves citizens money on fuel, parking fees, and vehicle maintenance.</p>
+            <p>In conclusion, developing a strong public transportation network is essential for <span class="difficult-word" data-translate="Berkelanjutan">sustainable</span> city living. Governments should make public transit affordable, comfortable, and reliable so that citizens feel encouraged to leave their private cars at home.</p>
+        </div>
+
+        <div class="question" data-type="single" data-answer="B">
+            <p>17. Which statement best summarizes the text?</p>
+            <div class="options">
+                <label><input type="radio" name="q17" value="A"> A. Private cars are the safest and cheapest way to travel across modern crowded cities.</label>
+                <label><input type="radio" name="q17" value="B"> B. Expanding public transportation is vital because it reduces traffic, cuts air pollution, and saves money.</label>
+                <label><input type="radio" name="q17" value="C"> C. City governments should ban all public buses and trains to build wider parking lots for cars.</label>
+                <label><input type="radio" name="q17" value="D"> D. Global climate change is caused entirely by citizens who walk or ride bicycles to work.</label>
+                <label><input type="radio" name="q17" value="E"> E. Fuel prices are too low, so citizens should buy more private motorcycles for daily travel.</label>
+            </div>
+            <div class="feedback">
+                <span class="status"></span>
+                <div class="explanation"><strong>Explanation:</strong> Expanding public transportation reduces traffic congestion, cuts air pollution, and saves money.</div>
+            </div>
+        </div>
+
+        <div class="question" data-type="categorization" data-answer="Fact,Fact,Opinion,Fact,Opinion">
+            <p>18. Classify whether each statement from or about the text is a Fact or an Opinion.</p>
+            <table class="cat-table">
+                <tr>
+                    <th>Statement</th>
+                    <th>Fact</th>
+                    <th>Opinion</th>
+                </tr>
+                <tr>
+                    <td>1. A single passenger bus can carry dozens of commuters at once.</td>
+                    <td><input type="radio" name="q18_1" value="Fact"></td>
+                    <td><input type="radio" name="q18_1" value="Opinion"></td>
+                </tr>
+                <tr>
+                    <td>2. Public transportation helps reduce traffic congestion on urban roads.</td>
+                    <td><input type="radio" name="q18_2" value="Fact"></td>
+                    <td><input type="radio" name="q18_2" value="Opinion"></td>
+                </tr>
+                <tr>
+                    <td>3. Driving a personal sports car is much more fun than riding a public bus.</td>
+                    <td><input type="radio" name="q18_3" value="Fact"></td>
+                    <td><input type="radio" name="q18_3" value="Opinion"></td>
+                </tr>
+                <tr>
+                    <td>4. Private vehicles release exhaust gases that pollute city air.</td>
+                    <td><input type="radio" name="q18_4" value="Fact"></td>
+                    <td><input type="radio" name="q18_4" value="Opinion"></td>
+                </tr>
+                <tr>
+                    <td>5. Public transit is without a doubt the most pleasant way to spend your morning.</td>
+                    <td><input type="radio" name="q18_5" value="Fact"></td>
+                    <td><input type="radio" name="q18_5" value="Opinion"></td>
+                </tr>
+            </table>
+            <div class="feedback">
+                <span class="status"></span>
+                <div class="explanation"><strong>Explanation:</strong> Items 1, 2, and 4 are facts about transport and pollution. Items 3 and 5 are personal feelings (opinions).</div>
+            </div>
+        </div>
+
+        <div class="question" data-type="single" data-answer="A">
+            <p>19. The word "essential" in paragraph 4 is closest in meaning to...</p>
+            <div class="options">
+                <label><input type="radio" name="q19" value="A"> A. Extremely vital and necessary</label>
+                <label><input type="radio" name="q19" value="B"> B. Completely useless</label>
+                <label><input type="radio" name="q19" value="C"> C. Unusually difficult</label>
+                <label><input type="radio" name="q19" value="D"> D. Highly dangerous</label>
+                <label><input type="radio" name="q19" value="E"> E. Slightly annoying</label>
+            </div>
+            <div class="feedback">
+                <span class="status"></span>
+                <div class="explanation"><strong>Explanation:</strong> The word "essential" means extremely vital and necessary.</div>
+            </div>
+        </div>
+
+        <div class="question" data-type="single" data-answer="B">
+            <p>20. The word "They" in paragraph 1 ("...causing severe traffic jams...") refers to...</p>
+            <div class="options">
+                <label><input type="radio" name="q20" value="A"> A. City governments</label>
+                <label><input type="radio" name="q20" value="B"> B. Millions of private cars and motorcycles</label>
+                <label><input type="radio" name="q20" value="C"> C. Buses and trains</label>
+                <label><input type="radio" name="q20" value="D"> D. Morning commuters</label>
+                <label><input type="radio" name="q20" value="E"> E. Traffic jams</label>
+            </div>
+            <div class="feedback">
+                <span class="status"></span>
+                <div class="explanation"><strong>Explanation:</strong> The phrase refers back to "millions of private cars and motorcycles" crowding city streets.</div>
+            </div>
+        </div>
+    </div>
+
+    <button class="submit-btn" id="submitBtn" onclick="checkAnswers()">Submit Quiz</button>
+
+    <div id="result-banner"></div>
+</div>
+
+<script>
+    // Real-time UI Updates & Progress Tracking
+    document.addEventListener('DOMContentLoaded', () => {
+        const inputs = document.querySelectorAll('input[type="radio"], input[type="checkbox"]');
+        const progressBar = document.getElementById('progress-fill');
+        const progressText = document.getElementById('progress-text');
+        const totalQuestions = 20;
+
+        function updateProgress() {
+            let answered = 0;
+            const questions = document.querySelectorAll('.question');
+            questions.forEach(q => {
+                if(q.querySelector('input:checked')) {
+                    answered++;
+                }
+            });
+            const percent = Math.round((answered / totalQuestions) * 100);
+            progressBar.style.width = percent + '%';
+            progressText.innerText = percent + '% Terjawab';
+            
+            // Turn bar green when 100%
+            if(percent === 100) {
+                progressBar.style.backgroundColor = '#10b981';
+            } else {
+                progressBar.style.backgroundColor = '#2563eb';
+            }
+        }
+
+        inputs.forEach(input => {
+            input.addEventListener('change', (e) => {
+                // Radio button logic for selected class
+                if(input.type === 'radio') {
+                    const name = input.name;
+                    document.querySelectorAll(`input[name="${name}"]`).forEach(rad => {
+                        const lbl = rad.closest('label');
+                        if(lbl) lbl.classList.remove('selected');
+                    });
+                    const lbl = input.closest('label');
+                    if(lbl) lbl.classList.add('selected');
+                } 
+                // Checkbox logic for selected class
+                else if (input.type === 'checkbox') {
+                    const lbl = input.closest('label');
+                    if(input.checked) {
+                        if(lbl) lbl.classList.add('selected');
+                    } else {
+                        if(lbl) lbl.classList.remove('selected');
+                    }
+                }
+                updateProgress();
+            });
+        });
+    });
+
+    // Quiz Validation Logic
+    function checkAnswers() {
+        let score = 0;
+        let total = 0;
+        const questions = document.querySelectorAll('.question');
+
+        questions.forEach((q) => {
+            const type = q.getAttribute('data-type');
+            const correctAnswer = q.getAttribute('data-answer');
+            const feedback = q.querySelector('.feedback');
+            const statusSpan = q.querySelector('.status');
+            
+            let isCorrect = false;
+
+            if (type === 'single') {
+                total++;
+                const selected = q.querySelector('input[type="radio"]:checked');
+                if (selected && selected.value === correctAnswer) {
+                    isCorrect = true;
+                    score++;
+                }
+            } else if (type === 'multiple') {
+                total++;
+                const correctArr = correctAnswer.split(',');
+                const selected = Array.from(q.querySelectorAll('input[type="checkbox"]:checked')).map(cb => cb.value);
+                
+                if (selected.length === correctArr.length && selected.every(val => correctArr.includes(val))) {
+                    isCorrect = true;
+                    score++;
+                }
+            } else if (type === 'categorization') {
+                total++;
+                const correctArr = correctAnswer.split(',');
+                const radios = q.querySelectorAll('input[type="radio"]:checked');
+                
+                if (radios.length === correctArr.length) {
+                    let allRowsCorrect = true;
+                    radios.forEach((radio, index) => {
+                        if (radio.value !== correctArr[index]) {
+                            allRowsCorrect = false;
+                        }
+                    });
+                    if (allRowsCorrect) {
+                        isCorrect = true;
+                        score++;
+                    }
+                }
+            }
+
+            // Lock interaction
+            q.classList.add('disabled-element');
+
+            // Display Feedback
+            feedback.style.display = 'block';
+            if (isCorrect) {
+                feedback.className = 'feedback correct';
+                statusSpan.innerHTML = '<span class="correct-text">✓ Correct!</span>';
+            } else {
+                feedback.className = 'feedback incorrect';
+                statusSpan.innerHTML = '<span class="incorrect-text">✗ Incorrect.</span>';
+            }
+        });
+
+        const banner = document.getElementById('result-banner');
+        banner.style.display = 'block';
+        banner.style.backgroundColor = (score === total) ? '#ecfdf5' : '#fef3c7';
+        banner.style.color = (score === total) ? '#065f46' : '#92400e';
+        banner.innerHTML = `You scored ${score} out of ${total}!`;
+        
+        // Disable submit button after scoring
+        const btn = document.getElementById('submitBtn');
+        btn.innerText = 'Quiz Submitted';
+        btn.disabled = true;
+        btn.style.backgroundColor = '#94a3b8';
+        btn.style.boxShadow = 'none';
+        btn.style.cursor = 'not-allowed';
+
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>
